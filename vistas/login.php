@@ -17,9 +17,9 @@
         ?>
         <h2>Iniciar sesión</h2>
         <p>Nombre de usuario: <br>
-        <input type="text" name="username"></p>
-        <p>Password: <br>
-        <input type="password" name="password"></p>
+        <input type="text" name="usuario"></p>
+        <p>Contraseña: <br>
+        <input type="password" name="contrasenia"></p>
         <p class="center"><input type="submit" value="Iniciar Sesión"></p>
     </form>
 </body>
