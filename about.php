@@ -8,7 +8,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Herpic - contact</title>
+  <title>Herpic - About</title>
 
   <!-- Bootstrap core CSS -->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -28,7 +28,7 @@
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand" href="index.html"><img src="./img/logo.png" height="45" width="45"> Herpic</a>
+      <a class="navbar-brand" href="index.php"><img src="./img/logo.png" height="45" width="45"> Herpic</a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         Menu
         <i class="fas fa-bars"></i>
@@ -36,13 +36,13 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a class="nav-link" href="index.html">Home</a>
+            <a class="nav-link" href="index.php">Inicio</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="about.html">About</a>
+            <a class="nav-link" href="about.php">Servicios</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="contact.html">Contact</a>
+            <a class="nav-link" href="contact.php">Contacto</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="login.php">Login/sing up</a>
@@ -53,14 +53,14 @@
   </nav>
 
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('img/contact.jpg')">
+  <header class="masthead" style="background-image: url('img/nosotros.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="page-heading">
-            <h1>Contáctanos</h1>
-            <span class="subheading">¿Tienes alguna pregunta? Nosotros tenemos la respuesta.</span>
+            <h1>Nuestros servicios</h1>
+            <span class="subheading">Te ayudamos a aprender.</span>
           </div>
         </div>
       </div>
@@ -71,51 +71,48 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
-        <p>¿Quieres ponerte en contacto? Complete el siguiente formulario para enviarme un mensaje y me pondré en contacto con usted lo antes posible.</p>
-        <!-- Contact Form - Enter your email address on line 19 of the mail/contact_me.php file to make this form work. -->
-        <!-- WARNING: Some web hosts do not allow emails to be sent through forms to common mail hosts like Gmail or Yahoo. It's recommended that you use a private domain email address! -->
-        <!-- To use the contact form, your site must be on a live web host with PHP! The form will not work locally! -->
-        <form name="sentMessage" id="contactForm" novalidate>
-          <div class="control-group">
-            <div class="form-group floating-label-form-group controls">
-              <label>Nombre</label>
-              <input type="text" class="form-control" placeholder="Nombre" id="name" required data-validation-required-message="Por favor, escribe tu nombre.">
-              <p class="help-block text-danger"></p>
-            </div>
-          </div>
-          <div class="control-group">
-            <div class="form-group floating-label-form-group controls">
-              <label>Email</label>
-              <input type="email" class="form-control" placeholder="Email" id="email" required data-validation-required-message="Por favor, escribe tu email.">
-              <p class="help-block text-danger"></p>
-            </div>
-          </div>
-          <div class="control-group">
-            <div class="form-group col-xs-12 floating-label-form-group controls">
-              <label>Número de telefono</label>
-              <input type="tel" class="form-control" placeholder="Número de teléfono" id="phone" required data-validation-required-message="Por favor, escribe tu número de teléfono.">
-              <p class="help-block text-danger"></p>
-            </div>
-          </div>
-          <div class="control-group">
-            <div class="form-group floating-label-form-group controls">
-              <label>Mensaje</label>
-              <textarea rows="5" class="form-control" placeholder="Mensaje" id="message" required data-validation-required-message="Por favor, escribe el mensaje."></textarea>
-              <p class="help-block text-danger"></p>
-            </div>
-          </div>
-          <br>
-          <div id="success"></div>
-          <div class="form-group">
-            <button type="submit" class="btn btn-primary" id="sendMessageButton">Send</button>
-          </div>
-        </form>
+        <p>En Herpic ofrecemos 2 servicios principales</p>
+        <p><b>Idiomas</b>: Con nostros podrás aprender Inglés, Alemán, Chino y Francés con suma facilidad, regístrate ahora y empieza a aprender</p>
+        <p><b>Oposiciones</b>: Muchos de nuestros alumnos tienen problemas para prepararse las oposiones, por eso en Herpic les ayudamos con todos los materiales y exámenes de prueba que necesiten</p>
       </div>
     </div>
+    <!-- Pager -->
+      <div class="clearfix">
+        <a class="btn btn-primary float-right" href="login.php">Registrate ahora &rarr;</a>
+      </div>
+      </div>
+    </div>
+    </div>
   </div>
-
   <hr>
 
+  <!-- Main Content 
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <div class="post-preview">
+          <a href="about.html">
+            <h2 class="post-title">
+              Descubre nuestros servicios.
+            </h2>
+            <h3 class="post-subtitle">
+              Oposiciones e idiomas son nuestra especilidad.
+            </h3>
+          </a>
+        </div>
+        <hr>
+        <div class="post-preview">
+          <a href="contact.html">
+            <h2 class="post-title">
+              Conctáctanos, te ayudaremos con lo que necesites.
+            </h2>
+            <h3 class="post-subtitle">
+              Horarios y precios a medida.
+            </h3>
+          </a>
+        </div>
+        <hr>
+-->
   <!-- Footer -->
   <footer>
     <div class="container">
@@ -149,12 +146,9 @@
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-  <!-- Contact Form JavaScript -->
-  <script src="js/jqBootstrapValidation.js"></script>
-  <script src="js/contact_me.js"></script>
-
   <!-- Custom scripts for this template -->
   <script src="js/clean-blog.min.js"></script>
 
 </body>
+
 </html>

@@ -10,6 +10,9 @@
 
   <title>Herpic - contact</title>
 
+  <!--Css para el login-->
+  <link href="./css/login.css" rel="stylesheet">
+
   <!-- Bootstrap core CSS -->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -29,7 +32,7 @@
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand" href="index.html"><img src="./img/logo.png" height="45" width="45"> Herpic</a>
+      <a class="navbar-brand" href="index.php"><img src="./img/logo.png" height="45" width="45"> Herpic</a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         Menu
         <i class="fas fa-bars"></i>
@@ -37,13 +40,13 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a class="nav-link" href="index.html">Home</a>
+            <a class="nav-link" href="index.php">Inicio</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="about.html">About</a>
+            <a class="nav-link" href="about.php">Servicios</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="contact.html">Contact</a>
+            <a class="nav-link" href="contact.php">Contacto</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="login.php">Login/sing up</a>
@@ -57,37 +60,48 @@
   <header class="masthead" style="background-image: url('img/ciudad.jpg')">
     <div class="overlay"></div>
     <div class="container">
-      <div class="row">
+      <div class="row"> 
         <div class="col-lg-8 col-md-10 mx-auto">
-          <div class="page-heading">
-            <h1>Registrate</h1>
-            <span class="subheading">¡Únete y aprende!</span>
+         <div class="page-heading">
+            <div class="login-page">
+              <div class="form">
+                <!-- registro -->
+                <form class="register-form" action="registro.php" method="POST">
+                  <input type="text" name="nombre" placeholder="Nombre"/>
+                  <input type="text" name="apellidos" placeholder="Apellidos"/>
+                  <input type="text" name="usuario" placeholder="Nombre de Usuario"/>
+                  <input type="text" name="email" placeholder="Correo electrónico"/>
+                  <input type="password" name="contrasenia" placeholder="Contraseña"/>
+                  <!--<p>¿Quién eres?
+                  <label for="alumno">Alumno</label>
+                  <input type="radio" name="tipo" value="alumno" placeholder="Alumno">
+                  <label for="profesor">Profesor</label>
+                  <input type="radio" name="tipo" value="profesor" placeholder="Profesor">
+                  </p> -->
+                  <button>Registrar</button>
+                  <p class="message">¿Ya estás registrado? <a href="#">Iniciar sesión</a></p>
+                </form>
+                <!-- inicio de sesión -->
+                <form class="login-form" action="who.php" method="POST">
+                  <input type="text" placeholder="Nombre de Usuario"/>
+                  <input type="password" placeholder="Contraseña"/>
+                  <p>¿Quién eres?
+                  <label for="alumno">Alumno</label>
+                  <input type="radio" name="tipo" value="alumno" placeholder="Alumno">
+                  <label for="profesor">Profesor</label>
+                  <input type="radio" name="tipo" value="profesor" placeholder="Profesor">
+                  </p>
+                  <button>Iniciar sesión</button>
+                  <p class="message">¿No estas registrado? <a href="#">Crear una cuenta</a></p>
+                </form>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </header>
-
-  <!-- Iniciar sesión -->
-  <link href="css/login.css" rel="stylesheet">
-  <div class="login-page">
-  <div class="form">
-    <form class="register-form">
-      <input type="text" placeholder="name"/>
-      <input type="password" placeholder="password"/>
-      <input type="text" placeholder="email address"/>
-      <button>create</button>
-      <p class="message">Already registered? <a href="#">Sign In</a></p>
-    </form>
-    <form class="login-form">
-      <input type="text" placeholder="username"/>
-      <input type="password" placeholder="password"/>
-      <button>login</button>
-      <p class="message">Not registered? <a href="#">Create an account</a></p>
-    </form>
-  </div>
-</div>
-
+  <hr>
   <!-- Footer -->
   <footer>
     <div class="container">
