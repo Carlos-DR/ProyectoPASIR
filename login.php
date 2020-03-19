@@ -10,7 +10,7 @@
 
   <title>Herpic - contact</title>
 
-  <!--Css para el login-->
+  <!--Css para el login -->
   <link href="./css/login.css" rel="stylesheet">
 
   <!-- Bootstrap core CSS -->
@@ -23,8 +23,6 @@
 
   <!-- Custom styles for this template -->
   <link href="css/clean-blog.min.css" rel="stylesheet">
-
-  
 
 </head>
 
@@ -63,34 +61,22 @@
       <div class="row"> 
         <div class="col-lg-8 col-md-10 mx-auto">
          <div class="page-heading">
-            <div class="login-page">
+           <div class="login-page">
               <div class="form">
-                <!-- registro -->
+               <!-- registro -->
                 <form class="register-form" action="registro.php" method="POST">
                   <input type="text" name="nombre" placeholder="Nombre"/>
                   <input type="text" name="apellidos" placeholder="Apellidos"/>
                   <input type="text" name="usuario" placeholder="Nombre de Usuario"/>
                   <input type="text" name="email" placeholder="Correo electrónico"/>
                   <input type="password" name="contrasenia" placeholder="Contraseña"/>
-                  <!--<p>¿Quién eres?
-                  <label for="alumno">Alumno</label>
-                  <input type="radio" name="tipo" value="alumno" placeholder="Alumno">
-                  <label for="profesor">Profesor</label>
-                  <input type="radio" name="tipo" value="profesor" placeholder="Profesor">
-                  </p> -->
                   <button>Registrar</button>
                   <p class="message">¿Ya estás registrado? <a href="#">Iniciar sesión</a></p>
                 </form>
-                <!-- inicio de sesión -->
+                <!-- inicio de sesión--> 
                 <form class="login-form" action="who.php" method="POST">
-                  <input type="text" placeholder="Nombre de Usuario"/>
-                  <input type="password" placeholder="Contraseña"/>
-                  <p>¿Quién eres?
-                  <label for="alumno">Alumno</label>
-                  <input type="radio" name="tipo" value="alumno" placeholder="Alumno">
-                  <label for="profesor">Profesor</label>
-                  <input type="radio" name="tipo" value="profesor" placeholder="Profesor">
-                  </p>
+                  <input type="text" name="usuario" placeholder="Nombre de Usuario"/>
+                  <input type="password" name="contrasenia" placeholder="Contraseña"/>
                   <button>Iniciar sesión</button>
                   <p class="message">¿No estas registrado? <a href="#">Crear una cuenta</a></p>
                 </form>

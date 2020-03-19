@@ -11,7 +11,7 @@
     $ape = $_POST['apellidos'];
     $usu = $_POST['usuario'];
     $email = $_POST['email'];
-    $contra = $_POST['contrasenia'];
+    $contra = md5($_POST['contrasenia']);
 
     print_r($usu);
     echo "<p>";
