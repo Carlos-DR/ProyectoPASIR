@@ -8,11 +8,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Herpic - contact</title>
-
-  <!--Css para el login -->
-  <link href="./css/login.css" rel="stylesheet">
-  <link href="./css/select-alumno-profesor.css" rel="stylesheet">
+  <title>Herpic - Home</title>
 
   <!-- Bootstrap core CSS -->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -28,6 +24,7 @@
 </head>
 
 <body>
+
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
@@ -48,7 +45,10 @@
             <a class="nav-link" href="contact.php">Contacto</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="login.php">Login/sing up</a>
+            <a class="nav-link" href="cursos.php">Cursos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="login.php">CERRAR SESIÓN</a>
           </li>
         </ul>
       </div>
@@ -56,47 +56,77 @@
   </nav>
 
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('img/ciudad.jpg')">
+  <header class="masthead" style="background-image: url('img/profesor.jpg')">
     <div class="overlay"></div>
     <div class="container">
-      <div class="row"> 
+      <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
-         <div class="page-heading">
-           <div class="login-page">
-              <div class="form">
-               <!-- registro -->
-                <form class="register-form" action="registro.php" method="POST">
-                  <input type="text" name="nombre" placeholder="Nombre"/>
-                  <input type="text" name="apellidos" placeholder="Apellidos"/>
-                  <input type="text" name="usuario" placeholder="Nombre de Usuario"/>
-                  <input type="text" name="email" placeholder="Correo electrónico"/>
-                  <input type="password" name="contrasenia" placeholder="Contraseña"/>
-                  <button>Registrar</button>
-                  <p class="message">¿Ya estás registrado? <a href="#">Iniciar sesión</a></p>
-                </form>
-                <!-- inicio de sesión--> 
-                <form class="login-form" action="who.php" method="POST">
-                  <input type="text" name="usuario" placeholder="Nombre de Usuario"/>
-                  <input type="password" name="contrasenia" placeholder="Contraseña"/>
-                  <div class="custom-select" style="width:200px;">
-                    <select name="tipo">
-                      <option value="0">¿Quien eres?</option>
-                      <option value="alumno">Alumno</option>
-                      <option value="profesor">Profesor</option>
-                    </select>
-                  </div>
-                  <p>
-                  <button>Iniciar sesión</button>
-                  <p class="message">¿No estas registrado? <a href="#">Crear una cuenta</a></p>
-                </form>
-              </div>
-            </div>
+          <div class="site-heading">
+            <h1>Bienvenido</h1>
+            <span class="subheading">Aqui viene el nombre</span>
           </div>
         </div>
       </div>
     </div>
   </header>
-  <hr>
+
+  <!-- Cursos matriculados -->
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <div class="post-preview">
+          <a href="about.html">
+            <h2 class="post-title">
+              Aqui viene un curso que imparte.
+            </h2>
+            <h3 class="post-subtitle">
+              Nombre del alumno 1 matriculado.
+            </h3>
+            <h4 class="post-subtitle">
+              Examen x alumno 1.
+            </h4>
+            <h4 class="post-subtitle">
+              Examen x alumno 1.
+            </h4>
+            <h3 class="post-subtitle">
+              Nombre del alumno 2 matriculado.
+            </h3>
+            <h4 class="post-subtitle">
+              Examen x alumno 2.
+            </h4>
+            <h4 class="post-subtitle">
+              Examen x alumno 2.
+            </h4>
+          </a>
+        </div>
+        <hr>
+        <div class="post-preview">
+        <a href="about.html">
+            <h2 class="post-title">
+              Aqui viene un curso que imparte.
+            </h2>
+            <h3 class="post-subtitle">
+              Nombre del alumno 1 matriculado.
+            </h3>
+            <h4 class="post-subtitle">
+              Examen x alumno 1.
+            </h4>
+            <h4 class="post-subtitle">
+              Examen x alumno 1.
+            </h4>
+            <h3 class="post-subtitle">
+              Nombre del alumno 2 matriculado.
+            </h3>
+            <h4 class="post-subtitle">
+              Examen x alumno 2.
+            </h4>
+            <h4 class="post-subtitle">
+              Examen x alumno 2.
+            </h4>
+          </a>
+        </div>
+        <hr>
+
   <!-- Footer -->
   <footer>
     <div class="container">
@@ -128,18 +158,10 @@
 
   <!-- Bootstrap core JavaScript -->
   <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script> 
-
-  <!-- Contact Form JavaScript 
-  <script src="js/jqBootstrapValidation.js"></script>
-  <script src="js/contact_me.js"></script> -->
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
   <!-- Custom scripts for this template -->
-  <script src="js/clean-blog.min.js"></script> 
+  <script src="js/clean-blog.min.js"></script>
 
-  <!-- Menú de login -->
-  <script src="./js/login.js"></script>
-  <script src="./js/select-alumno-profesor.js"></script>
-  </div>
 </body>
 </html>
