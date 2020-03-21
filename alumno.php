@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<?php session_start(); ?>
 <html lang="en">
 
 <head>
@@ -63,7 +64,13 @@
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="site-heading">
             <h1>Bienvenido</h1>
-            <span class="subheading">Aqui viene el nombre</span>
+            <span class="subheading">
+            <?php
+              if(!empty($_SESSION['sesion'])){
+                echo $_SESSION['sesion'] . "PRUEBA";
+              }
+            ?>
+            </span>
           </div>
         </div>
       </div>

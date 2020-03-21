@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<?php session_start(); ?>
 <html lang="en">
 
 <head>
@@ -78,7 +79,7 @@
                 <form class="login-form" action="who.php" method="POST">
                   <input type="text" name="usuario" placeholder="Nombre de Usuario"/>
                   <input type="password" name="contrasenia" placeholder="Contraseña"/>
-                  <div class="custom-select" style="width:200px;">
+                  <div class="custom-select" style="width:250px;">
                     <select name="tipo">
                       <option value="0">¿Quien eres?</option>
                       <option value="alumno">Alumno</option>
@@ -88,7 +89,15 @@
                   <p>
                   <button>Iniciar sesión</button>
                   <p class="message">¿No estas registrado? <a href="#">Crear una cuenta</a></p>
+                  <p class="message">¿Has olvidado tu contraseña? <a href="#">Recuperar contraseña</a></p>
                 </form>
+                <!-- recuperación de contraseña
+                  <form class="register-form" action="recuperar-cont.php" method="POST"> 
+                  <input type="text" name="usuario" placeholder="Nombre de Usuario"/>
+                  <input type="text" name="email" placeholder="Correo electrónico"/>
+                  <button>Solicitar contraseña temporal</button>
+                  <p class="message">¿Recuerdas tu contraseña? <a href="#">Iniciar sesión</a></p>
+                </form>-->
               </div>
             </div>
           </div>
