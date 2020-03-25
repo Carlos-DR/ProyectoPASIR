@@ -1,0 +1,128 @@
+Hola Antonio, aprovecho esta entrega parcfial del proyecto para preguntarte algundas dudas.
+
+Alguna de las dudas que tengo son
+    En la página de login/sign up puse un selector de alumno o profesor, le di un etilo en azul muy bonito 
+    pero hay restos del estilo por defecto y queda muy feo ¿Como lo soluciono?
+
+    Nuevamente en esa misma página, cuando le das al botón de "recuperar contraseña" deberia hacer la misma animación
+    que cuando le da a "Crear una cuenta" y salir un pequeño formulario que pide el usuario y la contraseña
+    sin embargo, sale todo seguido y no encuentro el fallo ¿como lo soluciono?
+
+    Generar una contraseña aleatoria es fácil pero ¿Como hago que sea tempotal? 
+    y ¿Como detecto que el usuario está entrando con la contraseña temporal y le obligo a cambiarla?
+        
+    ¿Está bien la base de datos que he planteado? ¿Me falta o me sobra algo?
+
+Me gustaria que revises esta lista de tareas he prepado separando todos los apartados en pequeños ejercicios para saber si está todo
+
+- Página Inicial
+
+- Página Servicios
+
+- Página Contactar
+    - Formulario Contactar
+        - Almacenar contacto (no se como ni donde)
+
+- Página Login/SignUp 
+    - Puede registarse
+        - No puede registrar si el usuario/coreo existe
+    - Puede iniciar sesión
+        - No puede iniciar sesión si el usuario no existe
+        - No puede iniciar sesión si la contraseña no es correcta
+
+- Página Alumno
+    - Curso matriculado
+        - Exámenes relizados (con nota)
+        - Exámenes disponibles
+        - Pruebas
+    - Botón modificar datos
+
+- Página Modificar datos
+    - Se puede cambiar el correo
+    - Se puede cambiar la contraseña
+    - Botón de enviar
+
+- Página exámenes test
+    - Mostrar temporizador
+    - Las preguntas salen en orden aleatorio
+        - Las respuestas salen en orden aleatorio
+    - Botón siguiente pregunta
+        - En la última pregunta en vez siguiente pregunta es un botón de calificar examen
+
+- Página resultado examen test
+    - Se muestra el nº de respuestas correctas
+    - Se muestra el nº de respuestas incorrectas
+    - Se pone una nota del 0  al 10
+    - Se visualizan las respuestas correctas de todas las preguntas
+
+- Página examen mixto
+    - Mostrar temporizador
+    - Las preguntas salen en orden aleatorio
+        - Las respuestas salen en orden aleatorio
+    - Botón siguiente pregunta
+        - En la última pregunta en vez siguiente pregunta es un botón de calificar examen
+    - Las preguntas de tipo test se corrigen solas
+    - Las preguntas de escribir las corrige el profesor
+
+- Recuperación de contraseñas
+    - Escribe el correo
+        - Se genera una contraseña temporal
+        - Redirigimos al usuario a la página Modificar datos para obligarle a cambiar la contraseña
+
+- Página profesor
+    - Cursos que imparte
+        - Exámenes
+            - Botón abrir examen
+            - Botón eliminar examen
+            - Botón exportar examen
+            - Botón subir exámenes
+        - Alumno matriculado
+            - Exámenes realizados por Alumno
+            - Pruebas realizadas por Alumno
+
+- Página subir examen
+    - Nombre del examen (o tema)
+    - Curso al que pertenece
+    - Subir fichero XML
+        - Si no está escrito con la devida estructura salta un error y no se sube
+        - Si está bien, se sube sin problema
+    - Botón subir examen
+
+- Base de datos
+    - Alumnos
+        - id
+        - Nombre
+        - apellidos
+        - usuario
+        - email
+        - contraseña
+        - curso
+    - Profesores
+        - id
+        - Nombre
+        - apellidos
+        - usuario
+        - email
+        - contraseña
+        - curso
+    - Cursos
+        - id
+        - Nombre
+        - descripción
+    - Exámenes
+        - id
+        - tema
+        - curso_id
+    - Preguntas
+        - id
+        - examen_id
+        - pregunta
+        - respuesta correcta
+        - respuesta incorrecta_1
+        - respuesta incorrecta_2
+        - respuesta incorrecta_3
+    - Notas
+        - id
+        - Alumno_id
+        - Examen_id
+        - Nota

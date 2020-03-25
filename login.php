@@ -49,7 +49,7 @@
             <a class="nav-link" href="contact.php">Contacto</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="login.php">Login/sing up</a>
+            <a class="nav-link" href="login.php">Login/Sign Up</a>
           </li>
         </ul>
       </div>
@@ -91,13 +91,13 @@
                   <p class="message">¿No estas registrado? <a href="#">Crear una cuenta</a></p>
                   <p class="message">¿Has olvidado tu contraseña? <a href="#">Recuperar contraseña</a></p>
                 </form>
-                <!-- recuperación de contraseña
-                  <form class="register-form" action="recuperar-cont.php" method="POST"> 
+                <!-- recuperación de contraseña -->
+                <form class="contra-form" action="recuperar-cont.php" method="POST"> 
                   <input type="text" name="usuario" placeholder="Nombre de Usuario"/>
                   <input type="text" name="email" placeholder="Correo electrónico"/>
                   <button>Solicitar contraseña temporal</button>
                   <p class="message">¿Recuerdas tu contraseña? <a href="#">Iniciar sesión</a></p>
-                </form>-->
+                </form>
               </div>
             </div>
           </div>

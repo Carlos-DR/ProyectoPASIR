@@ -49,7 +49,7 @@
             <a class="nav-link" href="cursos.php">Cursos</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="login.php">CERRAR SESIÓN</a>
+            <a class="nav-link" href="login.php">Login/Sign Up</a>
           </li>
         </ul>
       </div>
