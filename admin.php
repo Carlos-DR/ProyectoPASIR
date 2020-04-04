@@ -9,7 +9,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Herpic - Cursos</title>
+  <title>ADMIN</title>
 
   <!-- Bootstrap core CSS -->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -37,19 +37,7 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a class="nav-link" href="index.php">Inicio</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="about.php">Servicios</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="contact.php">Contacto</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="cursos.php">Cursos</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="login.php">Login/Sign Up</a>
+            <a class="nav-link" href="login.php">Cerrar sesión</a>
           </li>
         </ul>
       </div>
@@ -63,8 +51,8 @@
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="site-heading">
-            <h1>Cursos</h1>
-            <span class="subheading">Matriculate en el curso que más te guste</span>
+            <h1>ADMINISTRACIÓN</h1>
+            <span class="subheading">Crea y elimina profesores</span>
           </div>
         </div>
       </div>
@@ -78,8 +66,9 @@
     if (!$conn) {
         die("Connection failed: " . mysqli_connect_error());
     }
+    mysqli_select_db($conn, "cursos");
     $tildes = $conn->query("SET NAMES 'utf8'"); //Con esto muestra las tíldes
-    $mostar_cursos = mysqli_query($conn, "SELECT nombre,descripcion FROM cursos")
+    $registros = mysqli_query($conn, "SELECT nombre, apellidos, usuario, email FROM profesores")
   ?>
 
   <!-- Cursos matriculados -->
@@ -88,33 +77,42 @@
       <div class="col-lg-8 col-md-10 mx-auto">
       <!-- bucle para mostrar todos los cursos  -->
       <?php
-        while ($reg = mysqli_fetch_array($mostar_cursos)){
+        while ($reg = mysqli_fetch_array($registros)){
       ?>
       <div class="post-preview">
           <a>
             <h2 class="post-title">
               <?php
-                echo $reg['nombre'];
+                echo $reg['nombre'] . $reg['apellidos'];
               ?>
             </h2>
             <h3 class="post-subtitle">
               <?php
-                echo $reg['descripcion'];
+                echo $reg['usuario'];
+              ?>
+            </h3>
+            <h3 class="post-subtitle">
+              <?php
+                echo $reg['email'];
               ?>
             </h3>
           </a>
-            <form action="matricular.php">
+            <form action="#">
               <div class="form-group">
-                <button type="submit" class="btn btn-primary" id="sendMessageButton">Matricular</button>
+                <button type="submit" class="btn btn-primary" id="sendMessageButton">Eliminar</button>
               </div>
             </form>
         </div>
-        <hr>
-
+        <hr>     
       <?php
       }
       mysqli_close($conn);
       ?>
+      <form action="newprof.php">
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary" id="sendMessageButton">Nuevo Profesor</button>
+        </div>
+      </form>   
 
   <!-- Footer -->
   <footer>

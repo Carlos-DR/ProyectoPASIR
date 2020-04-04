@@ -1,7 +1,0 @@
-La página que vas a ver está muy verde, de momento podriamos decir que es una cáscara vacia.
-
-De momento tengo la parte del frontend aunque creo que me siguen faltando páginas.
-
-Tengo que ordenar mejor los archivos.
-
-Tengo algunas dudas que he dejado en el archivo DUDAS.txt

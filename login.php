@@ -9,7 +9,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Herpic - contact</title>
+  <title>Herpic - login</title>
 
   <!--Css para el login -->
   <link href="./css/login.css" rel="stylesheet">
@@ -91,13 +91,14 @@
                   <p class="message">¿No estas registrado? <a href="#">Crear una cuenta</a></p>
                   <p class="message">¿Has olvidado tu contraseña? <a href="#">Recuperar contraseña</a></p>
                 </form>
-                <!-- recuperación de contraseña -->
+                <!-- recuperación de contraseña 
                 <form class="contra-form" action="recuperar-cont.php" method="POST"> 
                   <input type="text" name="usuario" placeholder="Nombre de Usuario"/>
                   <input type="text" name="email" placeholder="Correo electrónico"/>
                   <button>Solicitar contraseña temporal</button>
                   <p class="message">¿Recuerdas tu contraseña? <a href="#">Iniciar sesión</a></p>
                 </form>
+                -->
               </div>
             </div>
           </div>

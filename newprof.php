@@ -9,7 +9,11 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Herpic - Cursos</title>
+  <title>Admin - crear profesor</title>
+
+  <!--Css para el login -->
+  <link href="./css/login.css" rel="stylesheet">
+  <link href="./css/select-alumno-profesor.css" rel="stylesheet">
 
   <!-- Bootstrap core CSS -->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -25,7 +29,6 @@
 </head>
 
 <body>
-
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
@@ -37,19 +40,7 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a class="nav-link" href="index.php">Inicio</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="about.php">Servicios</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="contact.php">Contacto</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="cursos.php">Cursos</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="login.php">Login/Sign Up</a>
+            <a class="nav-link" href="admin.php">Cancelar</a>
           </li>
         </ul>
       </div>
@@ -57,65 +48,32 @@
   </nav>
 
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('img/alumno.jpg')">
+  <header class="masthead" style="background-image: url('img/ciudad.jpg')">
     <div class="overlay"></div>
     <div class="container">
-      <div class="row">
+      <div class="row"> 
         <div class="col-lg-8 col-md-10 mx-auto">
-          <div class="site-heading">
-            <h1>Cursos</h1>
-            <span class="subheading">Matriculate en el curso que más te guste</span>
+         <div class="page-heading">
+           <div class="login-page">
+              <div class="form">
+                <!-- registro de profesores --> 
+                <form class="login-form" action="crearprof.php" method="POST">
+                  <input type="text" name="nombre" placeholder="Nombre"/>
+                  <input type="text" name="apellidos" placeholder="Apellidos"/>
+                  <input type="text" name="usuario" placeholder="Nombre de Usuario"/>
+                  <input type="text" name="email" placeholder="Correo electrónico"/>
+                  <input type="password" name="contrasenia" placeholder="Contraseña"/>
+                  <p>
+                  <button>Registrar profesor</button>
+                </form>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </header>
-
-  <!-- conexión base de datos -->
-  <?php
-    $conn = mysqli_connect('localhost', 'root', '1234', 'herpic');
-
-    if (!$conn) {
-        die("Connection failed: " . mysqli_connect_error());
-    }
-    $tildes = $conn->query("SET NAMES 'utf8'"); //Con esto muestra las tíldes
-    $mostar_cursos = mysqli_query($conn, "SELECT nombre,descripcion FROM cursos")
-  ?>
-
-  <!-- Cursos matriculados -->
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-8 col-md-10 mx-auto">
-      <!-- bucle para mostrar todos los cursos  -->
-      <?php
-        while ($reg = mysqli_fetch_array($mostar_cursos)){
-      ?>
-      <div class="post-preview">
-          <a>
-            <h2 class="post-title">
-              <?php
-                echo $reg['nombre'];
-              ?>
-            </h2>
-            <h3 class="post-subtitle">
-              <?php
-                echo $reg['descripcion'];
-              ?>
-            </h3>
-          </a>
-            <form action="matricular.php">
-              <div class="form-group">
-                <button type="submit" class="btn btn-primary" id="sendMessageButton">Matricular</button>
-              </div>
-            </form>
-        </div>
-        <hr>
-
-      <?php
-      }
-      mysqli_close($conn);
-      ?>
-
+  <hr>
   <!-- Footer -->
   <footer>
     <div class="container">
@@ -147,10 +105,18 @@
 
   <!-- Bootstrap core JavaScript -->
   <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script> 
+
+  <!-- Contact Form JavaScript 
+  <script src="js/jqBootstrapValidation.js"></script>
+  <script src="js/contact_me.js"></script> -->
 
   <!-- Custom scripts for this template -->
-  <script src="js/clean-blog.min.js"></script>
+  <script src="js/clean-blog.min.js"></script> 
 
+  <!-- Menú de login -->
+  <script src="./js/login.js"></script>
+  <script src="./js/select-alumno-profesor.js"></script>
+  </div>
 </body>
 </html>
