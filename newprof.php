@@ -48,7 +48,7 @@
   </nav>
 
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('img/ciudad.jpg')">
+  <header class="masthead" style="background-image: url('img/newprof.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row"> 

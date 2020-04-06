@@ -45,7 +45,7 @@
   </nav>
 
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('img/alumno.jpg')">
+  <header class="masthead" style="background-image: url('img/admin.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
@@ -71,43 +71,58 @@
     $registros = mysqli_query($conn, "SELECT nombre, apellidos, usuario, email FROM profesores")
   ?>
 
+  <!-- conexión base de datos -->
+  <?php
+    $conn = mysqli_connect('localhost', 'root', '1234', 'herpic');
+
+    if (!$conn) {
+        die("Connection failed: " . mysqli_connect_error());
+    }
+    $tildes = $conn->query("SET NAMES 'utf8'"); //Con esto muestra las tíldes
+    $mostar_cursos = mysqli_query($conn, "SELECT id, nombre, apellidos, usuario, email FROM profesores")
+  ?>
+
   <!-- Cursos matriculados -->
   <div class="container">
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
       <!-- bucle para mostrar todos los cursos  -->
       <?php
-        while ($reg = mysqli_fetch_array($registros)){
+        while ($reg = mysqli_fetch_array($mostar_cursos)){
+          $idprof = $reg['id'];
       ?>
       <div class="post-preview">
           <a>
             <h2 class="post-title">
               <?php
-                echo $reg['nombre'] . $reg['apellidos'];
+                echo $reg['nombre'] . " " .$reg['apellidos'];
               ?>
             </h2>
             <h3 class="post-subtitle">
               <?php
-                echo $reg['usuario'];
-              ?>
-            </h3>
-            <h3 class="post-subtitle">
-              <?php
-                echo $reg['email'];
+                echo "Usuario: " . $reg['usuario'];
+                echo "<br>";
+                echo "Email: " . $reg['email'];
               ?>
             </h3>
           </a>
-            <form action="#">
+            <form action="editprof.php" method="POST">
               <div class="form-group">
-                <button type="submit" class="btn btn-primary" id="sendMessageButton">Eliminar</button>
+                <button type="submit" class="btn btn-primary" id="sendMessageButton" name="editar" value="idprof">Editar</button>
               </div>
             </form>
+            <form action="eliminarprof.php" method="POST">
+              <div class="form-group">
+              <button type="submit" class="btn btn-primary" id="sendMessageButton" name="eliminar" value="idprof">Eliminar</button>
+              </div>
+            </form>      
         </div>
-        <hr>     
+        <hr>
+
       <?php
       }
       mysqli_close($conn);
-      ?>
+      ?>  
       <form action="newprof.php">
         <div class="form-group">
           <button type="submit" class="btn btn-primary" id="sendMessageButton">Nuevo Profesor</button>

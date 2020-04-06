@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 04-04-2020 a las 12:11:32
+-- Tiempo de generación: 06-04-2020 a las 13:24:00
 -- Versión del servidor: 10.4.11-MariaDB
 -- Versión de PHP: 7.4.3
 
@@ -39,6 +39,14 @@ CREATE TABLE `alumnos` (
   `contrasenia` varchar(75) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Volcado de datos para la tabla `alumnos`
+--
+
+INSERT INTO `alumnos` (`id`, `nombre`, `apellidos`, `usuario`, `email`, `contrasenia`) VALUES
+(1, 'Carlos', 'Domínguez Rastrojo', 'cdomras', 'carlos.dominguez.rastrojo@ciudadjardin.com', '81dc9bdb52d04dc20036dbd8313ed055'),
+(3, '', '', '', '', 'd41d8cd98f00b204e9800998ecf8427e');
+
 -- --------------------------------------------------------
 
 --
@@ -73,8 +81,15 @@ CREATE TABLE `contactos` (
 CREATE TABLE `cursos` (
   `id` int(11) NOT NULL,
   `nombre` varchar(50) NOT NULL,
-  `descipcion` varchar(255) NOT NULL
+  `descripcion` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `cursos`
+--
+
+INSERT INTO `cursos` (`id`, `nombre`, `descripcion`) VALUES
+(7, 'ingles B1', 'Aprende ingles desde cero hasta B1');
 
 -- --------------------------------------------------------
 
@@ -124,7 +139,7 @@ CREATE TABLE `preguntas` (
   `incorrecta1` varchar(50) NOT NULL,
   `incorrecta2` varchar(50) NOT NULL,
   `incorrecta3` varchar(50) NOT NULL,
-  `examenid` int(11) NOT NULL
+  `idexamen` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -139,8 +154,18 @@ CREATE TABLE `profesores` (
   `apellidos` varchar(100) NOT NULL,
   `usuario` varchar(50) NOT NULL,
   `email` varchar(100) NOT NULL,
-  `contrasenia` varchar(75) NOT NULL
+  `contrasenia` varchar(75) NOT NULL,
+  `admin` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `profesores`
+--
+
+INSERT INTO `profesores` (`id`, `nombre`, `apellidos`, `usuario`, `email`, `contrasenia`, `admin`) VALUES
+(1, 'Antonio Javier', 'Cruz', 'antoniocruz', 'antoniocruz@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055', 0),
+(2, 'Herpic', '', 'Herpic', 'herpic@gmail.com', '9150a8de9b1304a546f29798de4db840', 1),
+(3, 'Manolito', 'Gafotas', 'manolito', 'gafotas@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055', 0);
 
 --
 -- Índices para tablas volcadas
@@ -150,7 +175,9 @@ CREATE TABLE `profesores` (
 -- Indices de la tabla `alumnos`
 --
 ALTER TABLE `alumnos`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `usuario` (`usuario`),
+  ADD UNIQUE KEY `email` (`email`);
 
 --
 -- Indices de la tabla `alumnos_cursos`
@@ -169,7 +196,9 @@ ALTER TABLE `contactos`
 -- Indices de la tabla `cursos`
 --
 ALTER TABLE `cursos`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `nombre` (`nombre`),
+  ADD KEY `descipcion` (`descripcion`);
 
 --
 -- Indices de la tabla `cursos_profesores`
@@ -197,13 +226,15 @@ ALTER TABLE `notas`
 --
 ALTER TABLE `preguntas`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `examenid` (`examenid`);
+  ADD KEY `examenid` (`idexamen`);
 
 --
 -- Indices de la tabla `profesores`
 --
 ALTER TABLE `profesores`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `usuario` (`usuario`),
+  ADD UNIQUE KEY `email` (`email`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -213,7 +244,7 @@ ALTER TABLE `profesores`
 -- AUTO_INCREMENT de la tabla `alumnos`
 --
 ALTER TABLE `alumnos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `contactos`
@@ -225,7 +256,7 @@ ALTER TABLE `contactos`
 -- AUTO_INCREMENT de la tabla `cursos`
 --
 ALTER TABLE `cursos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `examenes`
@@ -243,7 +274,7 @@ ALTER TABLE `preguntas`
 -- AUTO_INCREMENT de la tabla `profesores`
 --
 ALTER TABLE `profesores`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Restricciones para tablas volcadas
@@ -253,13 +284,8 @@ ALTER TABLE `profesores`
 -- Filtros para la tabla `alumnos_cursos`
 --
 ALTER TABLE `alumnos_cursos`
-  ADD CONSTRAINT `alumnos_cursos_ibfk_1` FOREIGN KEY (`idalumno`) REFERENCES `alumnos` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Filtros para la tabla `cursos`
---
-ALTER TABLE `cursos`
-  ADD CONSTRAINT `cursos_ibfk_1` FOREIGN KEY (`id`) REFERENCES `alumnos_cursos` (`idcurso`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `alumnos_cursos_ibfk_1` FOREIGN KEY (`idalumno`) REFERENCES `alumnos` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `alumnos_cursos_ibfk_2` FOREIGN KEY (`idcurso`) REFERENCES `cursos` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `cursos_profesores`
@@ -285,7 +311,7 @@ ALTER TABLE `notas`
 -- Filtros para la tabla `preguntas`
 --
 ALTER TABLE `preguntas`
-  ADD CONSTRAINT `preguntas_ibfk_1` FOREIGN KEY (`examenid`) REFERENCES `examenes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `preguntas_ibfk_1` FOREIGN KEY (`idexamen`) REFERENCES `examenes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
