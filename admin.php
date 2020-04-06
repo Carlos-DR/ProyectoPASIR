@@ -108,12 +108,12 @@
           </a>
             <form action="editprof.php" method="POST">
               <div class="form-group">
-                <button type="submit" class="btn btn-primary" id="sendMessageButton" name="editar" value="idprof">Editar</button>
+                <button type="submit" class="btn btn-primary" id="sendMessageButton" name="editar" value="<?php echo $idprof ?>">Editar</button>
               </div>
             </form>
             <form action="eliminarprof.php" method="POST">
               <div class="form-group">
-              <button type="submit" class="btn btn-primary" id="sendMessageButton" name="eliminar" value="idprof">Eliminar</button>
+              <button type="submit" class="btn btn-primary" id="sendMessageButton" name="eliminar" value="<?php echo $idprof ?>">Eliminar</button>
               </div>
             </form>      
         </div>
