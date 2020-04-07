@@ -22,7 +22,7 @@ $contra = $_POST['contrasenia'];
                 }
             }
         }
-        header('Location: profesor.php');
+        header('Location: profesores/profesor.php');
     }
 
     elseif ($who == 'alumno'){
@@ -43,7 +43,7 @@ $contra = $_POST['contrasenia'];
                 }
             }
         }
-        header('Location: alumno.php');
+        header('Location: alumnos/alumno.php');
     }
 
     else {

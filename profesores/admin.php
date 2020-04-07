@@ -12,15 +12,15 @@
   <title>ADMIN</title>
 
   <!-- Bootstrap core CSS -->
-  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
   <!-- Custom fonts for this template -->
-  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
 
   <!-- Custom styles for this template -->
-  <link href="css/clean-blog.min.css" rel="stylesheet">
+  <link href="../css/clean-blog.min.css" rel="stylesheet">
 
 </head>
 
@@ -29,7 +29,7 @@
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand" href="index.php"><img src="./img/logo.png" height="45" width="45"> Herpic</a>
+      <a class="navbar-brand" href="index.php"><img src="../img/logo.png" height="45" width="45"> Herpic</a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         Menu
         <i class="fas fa-bars"></i>
@@ -37,7 +37,7 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a class="nav-link" href="login.php">Cerrar sesión</a>
+            <a class="nav-link" href="../login.php">Cerrar sesión</a>
           </li>
         </ul>
       </div>
@@ -45,7 +45,7 @@
   </nav>
 
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('img/admin.jpg')">
+  <header class="masthead" style="background-image: url('../img/admin.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
@@ -66,20 +66,8 @@
     if (!$conn) {
         die("Connection failed: " . mysqli_connect_error());
     }
-    mysqli_select_db($conn, "cursos");
     $tildes = $conn->query("SET NAMES 'utf8'"); //Con esto muestra las tíldes
-    $registros = mysqli_query($conn, "SELECT nombre, apellidos, usuario, email FROM profesores")
-  ?>
-
-  <!-- conexión base de datos -->
-  <?php
-    $conn = mysqli_connect('localhost', 'root', '1234', 'herpic');
-
-    if (!$conn) {
-        die("Connection failed: " . mysqli_connect_error());
-    }
-    $tildes = $conn->query("SET NAMES 'utf8'"); //Con esto muestra las tíldes
-    $mostar_cursos = mysqli_query($conn, "SELECT id, nombre, apellidos, usuario, email FROM profesores")
+    $mostar_profe = mysqli_query($conn, "SELECT id, nombre, apellidos, usuario, email FROM profesores WHERE admin=0")
   ?>
 
   <!-- Cursos matriculados -->
@@ -88,7 +76,7 @@
       <div class="col-lg-8 col-md-10 mx-auto">
       <!-- bucle para mostrar todos los cursos  -->
       <?php
-        while ($reg = mysqli_fetch_array($mostar_cursos)){
+        while ($reg = mysqli_fetch_array($mostar_profe)){
           $idprof = $reg['id'];
       ?>
       <div class="post-preview">
@@ -159,11 +147,11 @@
   </footer>
 
   <!-- Bootstrap core JavaScript -->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../vendor/jquery/jquery.min.js"></script>
+  <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
   <!-- Custom scripts for this template -->
-  <script src="js/clean-blog.min.js"></script>
+  <script src="../js/clean-blog.min.js"></script>
 
 </body>
 </html>
