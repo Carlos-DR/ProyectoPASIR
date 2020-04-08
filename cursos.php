@@ -37,19 +37,10 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a class="nav-link" href="index.php">Inicio</a>
+            <a class="nav-link" href="alumnos/alumno.php">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="about.php">Servicios</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="contact.php">Contacto</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="cursos.php">Cursos</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="login.php">Login/Sign Up</a>
+            <a class="nav-link" href="login.php">CERRAR SESIÓN</a>
           </li>
         </ul>
       </div>

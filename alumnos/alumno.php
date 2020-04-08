@@ -9,7 +9,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Herpic - Home</title>
+  <title>Herpic - Alumno</title>
 
   <!-- Bootstrap core CSS -->
   <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -37,15 +37,6 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a class="nav-link" href="../index.php">Inicio</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="../about.php">Servicios</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="../contact.php">Contacto</a>
-          </li>
-          <li class="nav-item">
             <a class="nav-link" href="../cursos.php">Cursos</a>
           </li>
           <li class="nav-item">
@@ -65,10 +56,11 @@
           <div class="site-heading">
             <h1>Bienvenido</h1>
             <span class="subheading">
-            <?php
+            Manolito
+            <?php/*
               if(!empty($_SESSION['sesion'])){
                 echo $_SESSION['sesion'] . "PRUEBA";
-              }
+              }*/
             ?>
             </span>
           </div>
@@ -77,32 +69,45 @@
     </div>
   </header>
 
+  <!-- conexión base de datos -->
+  <?php
+    $conn = mysqli_connect('localhost', 'root', '1234', 'herpic');
+
+    if (!$conn) {
+        die("Connection failed: " . mysqli_connect_error());
+    }
+    $tildes = $conn->query("SET NAMES 'utf8'"); //Con esto muestra las tíldes
+    $mostar_cursos_matriculados = mysqli_query($conn, "SELECT nombre FROM cursos;") 
+  ?>
+
   <!-- Cursos matriculados -->
   <div class="container">
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
-        <div class="post-preview">
-          <a href="../about.php">
+  <!-- bucle para mostrar todos los cursos  -->
+      <?php
+        while ($reg = mysqli_fetch_array($mostar_cursos_matriculados)){
+      ?>
+      <div class="post-preview">
+          <a>
             <h2 class="post-title">
-              Aqui viene un curso matriculado.
+              <?php
+                echo $reg['nombre'];
+              ?>
             </h2>
             <h3 class="post-subtitle">
-              Curso impartido por PROFESOR.
+              <?php
+                echo $reg['nombre'];
+              ?>
             </h3>
           </a>
         </div>
         <hr>
-        <div class="post-preview">
-        <a href="../about.php">
-            <h2 class="post-title">
-              Aqui viene un curso matriculado.
-            </h2>
-            <h3 class="post-subtitle">
-            Curso impartido por PROFESOR.
-            </h3>
-          </a>
-        </div>
-        <hr>
+
+      <?php
+      }
+      mysqli_close($conn);
+      ?>
 
   <!-- Footer -->
   <footer>
