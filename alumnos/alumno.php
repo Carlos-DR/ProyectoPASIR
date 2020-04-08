@@ -1,5 +1,5 @@
-<!DOCTYPE html>
 <?php session_start(); ?>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -40,7 +40,7 @@
             <a class="nav-link" href="../cursos.php">Cursos</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="../login.php">CERRAR SESIÓN</a>
+            <a class="nav-link" href="../logout.php">CERRAR SESIÓN</a>
           </li>
         </ul>
       </div>
@@ -56,11 +56,8 @@
           <div class="site-heading">
             <h1>Bienvenido</h1>
             <span class="subheading">
-            Manolito
-            <?php/*
-              if(!empty($_SESSION['sesion'])){
-                echo $_SESSION['sesion'] . "PRUEBA";
-              }*/
+            <?php
+              echo $_SESSION['usuario'];
             ?>
             </span>
           </div>

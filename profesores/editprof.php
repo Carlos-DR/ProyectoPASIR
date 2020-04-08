@@ -10,13 +10,13 @@
   }
 
   $idprof = $_POST['editar'];
-  echo $idprof;
-  $nom = mysqli_query($conn, "SELECT nombre FROM profesores WHERE id='$idprof'");
-  $ape = mysqli_query($conn, "SELECT apellidos FROM profesores WHERE id='$idprof'");
-  $usu = mysqli_query($conn, "SELECT usuario FROM profesores WHERE id='$idprof'");
-  $email = mysqli_query($conn, "SELECT email FROM profesores WHERE id='$idprof'");
-  $contra = mysqli_query($conn, "SELECT contrasenia FROM profesores WHERE id='$idprof'");
-
+  $profesor = mysqli_query($conn, "SELECT nombre, apellidos, usuario, email, contrasenia FROM profesores WHERE id='$idprof'");
+  while ($reg = mysqli_fetch_array($profesor)) {
+    $nom = $reg['nombre'];
+    $ape = $reg['apellidos'];
+    $usu = $reg['usuario'];
+    $email = $reg['email'];
+  }
 
   mysqli_close($conn);
 
@@ -77,14 +77,14 @@
            <div class="login-page">
               <div class="form">
                 <!-- registro de profesores --> 
-                <form class="login-form" action="crearprof.php" method="POST">
+                <form class="login-form" action="updateprof.php" method="POST">
                   <input type="text" name="nombre" value="<?php echo $nom ?>"/>
                   <input type="text" name="apellidos"  value="<?php echo $ape; ?>"/>
                   <input type="text" name="usuario"  value="<?php echo $usu; ?>"/>
                   <input type="text" name="email"  value="<?php echo $email; ?>"/>
-                  <input type="password" name="contrasenia"  value="<?php echo $contra; ?>"/>
+                  <input type="password" name="contrasenia" placeholder="Contraseña" required/>
                   <p>
-                  <button>Editar profesor</button>
+                  <button name="idprofesor" value="<?php echo $idprof ?>">Editar profesor</button>
                 </form>
               </div>
             </div>

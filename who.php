@@ -22,7 +22,35 @@ $contra = $_POST['contrasenia'];
                 }
             }
         }
-        header('Location: profesores/profesor.php');
+        session_unset();
+        session_destroy();
+        $usu = trim(htmlspecialchars($_REQUEST["usuario"], ENT_QUOTES, "UTF-8"));
+        $contrasenia_req = trim(htmlspecialchars($_REQUEST["contrasenia"], ENT_QUOTES, "UTF-8"));
+        $contrasenia_md5= md5($contrasenia_req);
+
+        $conn = mysqli_connect("localhost", "root", "1234", "herpic") 
+        or die("Problemas en la conexion");
+
+        $consulta = "SELECT usuario, contrasenia FROM profesores WHERE usuario='$usu' AND contrasenia='$contrasenia_md5'";
+        $registros = mysqli_query($conn, $consulta) or die(mysqli_error($conn));
+        $contador = mysqli_num_rows($registros);
+        if ($contador != 1) {
+            header('location: index.php?error=Usuario o contraseña incorrectos');
+        }
+        elseif ($usu == 'Herpic') {
+            session_start();
+            $_SESSION['usuario'] = $usu; 
+            $_SESSION['estado'] = 'autenticado';
+            header('location: profesores/admin.php');
+        }    
+        else {
+            session_start();
+            $_SESSION['usuario'] = $usu;
+            $_SESSION['estado'] = 'autenticado';
+            header('location: profesores/profesor.php');
+        }
+            
+        mysqli_close($conn);
     }
 
     elseif ($who == 'alumno'){
@@ -43,7 +71,29 @@ $contra = $_POST['contrasenia'];
                 }
             }
         }
-        header('Location: alumnos/alumno.php');
+        session_unset();
+        session_destroy();
+        $usu = trim(htmlspecialchars($_REQUEST["usuario"], ENT_QUOTES, "UTF-8"));
+        $contrasenia_req = trim(htmlspecialchars($_REQUEST["contrasenia"], ENT_QUOTES, "UTF-8"));
+        $contrasenia_md5= md5($contrasenia_req);
+
+        $conn = mysqli_connect("localhost", "root", "1234", "herpic") 
+        or die("Problemas en la conexion");
+
+        $consulta = "SELECT usuario, contrasenia FROM alumnos WHERE usuario='$usu' AND contrasenia='$contrasenia_md5'";
+        $registros = mysqli_query($conn, $consulta) or die(mysqli_error($conn));
+        $contador = mysqli_num_rows($registros);
+        if ($contador != 1) {
+            header('location: index.php?error=Usuario o contraseña incorrectos');
+        } 
+        else {
+            session_start();
+            $_SESSION['usuario'] = $usu;
+            $_SESSION['estado'] = 'autenticado';
+            header('location: alumnos/alumno.php');
+        }
+            
+        mysqli_close($conn);
     }
 
     else {

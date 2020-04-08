@@ -37,7 +37,7 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a class="nav-link" href="../login.php">CERRAR SESIÓN</a>
+            <a class="nav-link" href="../logout.php">CERRAR SESIÓN</a>
           </li>
         </ul>
       </div>
@@ -52,7 +52,11 @@
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="site-heading">
             <h1>Bienvenido</h1>
-            <span class="subheading">Aqui viene el nombre</span>
+            <span class="subheading">
+            <?php
+              echo $_SESSION['usuario'];
+            ?>
+            </span>
           </div>
         </div>
       </div>
