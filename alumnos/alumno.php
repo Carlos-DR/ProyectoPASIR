@@ -1,4 +1,6 @@
-<?php session_start(); ?>
+<?php session_start(); 
+  $usu = $_SESSION['usuario'];
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -29,7 +31,7 @@
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand" href="index.php"><img src="../img/logo.png" height="45" width="45"> Herpic</a>
+      <a class="navbar-brand"><img src="../img/logo.png" height="45" width="45"> Herpic</a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         Menu
         <i class="fas fa-bars"></i>
@@ -37,7 +39,7 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a class="nav-link" href="../cursos.php">Cursos</a>
+            <a class="nav-link" href="cursos.php">Cursos</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="../logout.php">CERRAR SESIÓN</a>
@@ -57,7 +59,7 @@
             <h1>Bienvenido</h1>
             <span class="subheading">
             <?php
-              echo $_SESSION['usuario'];
+              echo $usu;
             ?>
             </span>
           </div>
@@ -74,7 +76,17 @@
         die("Connection failed: " . mysqli_connect_error());
     }
     $tildes = $conn->query("SET NAMES 'utf8'"); //Con esto muestra las tíldes
-    $mostar_cursos_matriculados = mysqli_query($conn, "SELECT nombre FROM cursos;") 
+
+    /* Sacamos las id que necesitemos y las guardamos en variables */
+    $consultaalumno = mysqli_query($conn, "SELECT id FROM alumnos WHERE usuario='$usu'");
+    $idalumno = mysqli_fetch_array($consultaalumno);
+      //echo $idalumno['id']
+
+    $consultacurso = mysqli_query($conn, "SELECT idcurso FROM alumnos_cursos WHERE idalumno='$idalumno[id]'");
+    $idcurso = mysqli_fetch_array($consultacurso);
+      //echo $idcurso['idcurso'];
+
+    $mostar_cursos_matriculados = mysqli_query($conn, "SELECT nombre, descripcion FROM cursos WHERE id='$idcurso[idcurso]'");
   ?>
 
   <!-- Cursos matriculados -->
@@ -94,10 +106,15 @@
             </h2>
             <h3 class="post-subtitle">
               <?php
-                echo $reg['nombre'];
+                echo $reg['descripcion'];
               ?>
             </h3>
           </a>
+          <form action="" method="POST">
+              <div class="form-group">
+                <button type="submit" class="btn btn-primary" id="sendMessageButton" name="matricular" value="<?php echo $id_curso_no ?>">Acceder</button>
+              </div>
+            </form>
         </div>
         <hr>
 
@@ -105,6 +122,12 @@
       }
       mysqli_close($conn);
       ?>
+
+      <form action="editalumno.php" method="POST">
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary" id="sendMessageButton" name="matricular" value="<?php echo $id_curso_no ?>">Editar datos</button>
+        </div>
+      </form>
 
   <!-- Footer -->
   <footer>

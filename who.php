@@ -37,7 +37,7 @@ $contra = $_POST['contrasenia'];
         if ($contador != 1) {
             header('location: index.php?error=Usuario o contraseña incorrectos');
         }
-        elseif ($usu == 'Herpic') {
+        elseif ($usu == 'Herpic' OR $usu == 'herpic') {
             session_start();
             $_SESSION['usuario'] = $usu; 
             $_SESSION['estado'] = 'autenticado';

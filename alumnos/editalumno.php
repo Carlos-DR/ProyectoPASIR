@@ -1,8 +1,26 @@
-<!DOCTYPE html>
 <?php session_start(); 
   $usu = $_SESSION['usuario'];
 ?>
+<!DOCTYPE html>
 <html lang="en">
+
+<?php
+
+  $conn = mysqli_connect('localhost', 'root', '1234', 'herpic');
+
+  if (!$conn) {
+      die("Connection failed: " . mysqli_connect_error());
+  }
+
+  $alumno = mysqli_query($conn, "SELECT email, contrasenia FROM alumnos WHERE usuario='$usu'");
+  while ($reg = mysqli_fetch_array($alumno)) {
+    $email = $reg['email'];
+    $contrasenia = $reg['contrasenia'];
+  }
+
+  mysqli_close($conn);
+
+?>
 
 <head>
 
@@ -11,7 +29,11 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Herpic - Home</title>
+  <title>Alumno - Cambiar datos</title>
+
+  <!--Css para el login -->
+  <link href="../css/login.css" rel="stylesheet">
+  <link href="../css/select-alumno-profesor.css" rel="stylesheet">
 
   <!-- Bootstrap core CSS -->
   <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -27,11 +49,10 @@
 </head>
 
 <body>
-
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand"><img src="../img/logo.png" height="45" width="45"> Herpic</a>
+      <a class="navbar-brand" ><img src="../img/logo.png" height="45" width="45"> Herpic</a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         Menu
         <i class="fas fa-bars"></i>
@@ -39,7 +60,7 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a class="nav-link" href="../logout.php">CERRAR SESIÓN</a>
+            <a class="nav-link" href="alumno.php">Cancelar</a>
           </li>
         </ul>
       </div>
@@ -47,81 +68,29 @@
   </nav>
 
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('../img/profesor.jpg')">
+  <header class="masthead" style="background-image: url('../img/editalumno.jpg')">
     <div class="overlay"></div>
     <div class="container">
-      <div class="row">
+      <div class="row"> 
         <div class="col-lg-8 col-md-10 mx-auto">
-          <div class="site-heading">
-            <h1>Bienvenido</h1>
-            <span class="subheading">
-            <?php
-              echo $usu;
-            ?>
-            </span>
+         <div class="page-heading">
+           <div class="login-page">
+              <div class="form">
+                <!-- editar alumnos --> 
+                <form class="login-form" action="updatealumno.php" method="POST">
+                  <input type="text" name="email"  value="<?php echo $email; ?>"/>
+                  <input type="password" name="contrasenia" placeholder="Nueva contraseña" required/>
+                  <p>
+                  <button name="cambiar_datos">Cambiar datos</button>
+                </form>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </header>
-
-    <!-- conexión base de datos -->
-    <?php
-    $conn = mysqli_connect('localhost', 'root', '1234', 'herpic');
-
-    if (!$conn) {
-        die("Connection failed: " . mysqli_connect_error());
-    }
-    $tildes = $conn->query("SET NAMES 'utf8'"); //Con esto muestra las tíldes
-
-    /* Sacamos las id que necesitamos y las guardamos en variables*/
-    $consultaprof = mysqli_query($conn, "SELECT id FROM profesores WHERE usuario='$usu'");
-    $idprof = mysqli_fetch_array($consultaprof);
-      //echo $idprof['id'];
-
-    $consultacurso = mysqli_query($conn, "SELECT idcurso FROM cursos_profesores WHERE idprofesor='$idprof[id]'");
-    $idcurso = mysqli_fetch_array($consultacurso);
-      //echo $idcurso['idcurso'];
-      
-    $consultaalumno = mysqli_query($conn, "SELECT idalumno FROM alumnos_cursos WHERE idcurso='$idcurso[idcurso]'");
-    $idalumno = mysqli_fetch_array($consultaalumno);
-      //echo $idalumno['idalumno'];
-
-    /* Con las id que hemos sacado antes, sacamos el nombre del curso que imparte el profesor y el alumnó que está matriculado en el cusro */
-    $mostar_alumno = mysqli_query($conn, "SELECT nombre, apellidos FROM alumnos WHERE id='$idalumno[idalumno]'");
-    $mostar_curso = mysqli_query($conn, "SELECT nombre FROM cursos WHERE id='$idcurso[idcurso]'");
-  ?>
-
-  <!-- Cursos matriculados -->
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-8 col-md-10 mx-auto">
-      <!-- bucle para mostrar todos los cursos  -->
-      <?php
-        while ($reg = mysqli_fetch_array($mostar_curso)){
-      ?>
-        <div class="post-preview">
-          <a href="../vercurso.php">
-            <h2 class="post-title">
-            <?php
-                echo $reg['nombre'];
-              ?>
-            </h2>
-            <h3 class="post-subtitle">
-            <?php
-              while ($reg2 = mysqli_fetch_array($mostar_alumno)){
-                echo $reg2['nombre'];
-              }
-            ?>
-            </h3>
-          </a>
-        </div>
-        <hr>
-      <?php
-      }
-      mysqli_close($conn);  
-      ?>
-
+  <hr>
   <!-- Footer -->
   <footer>
     <div class="container">
@@ -153,10 +122,18 @@
 
   <!-- Bootstrap core JavaScript -->
   <script src="../vendor/jquery/jquery.min.js"></script>
-  <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script> 
+
+  <!-- Contact Form JavaScript 
+  <script src="js/jqBootstrapValidation.js"></script>
+  <script src="js/contact_me.js"></script> -->
 
   <!-- Custom scripts for this template -->
-  <script src="../js/clean-blog.min.js"></script>
+  <script src="../js/clean-blog.min.js"></script> 
 
+  <!-- Menú de login -->
+  <script src="../js/login.js"></script>
+  <script src="../js/select-alumno-profesor.js"></script>
+  </div>
 </body>
 </html>
