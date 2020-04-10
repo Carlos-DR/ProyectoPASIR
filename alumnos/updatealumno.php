@@ -16,7 +16,7 @@
     //echo $contrasenia;
 
     //Creamos variable edit para editar al alumno
-    $edit = "UPDATE alumnos SET email='$email', contrasenia='$contrasenia' WHERE usuario=$usu";
+    $edit = "UPDATE alumnos SET email='$email', contrasenia='$contrasenia' WHERE usuario='$usu'";
 
     //Creamos variable return para conectarnos a la base de datos y editar al alumno seleccionado 
     $return = mysqli_query($conn, $edit);

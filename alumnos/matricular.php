@@ -17,13 +17,20 @@
     $idcurso = $_POST['matricular'];
     //echo $idcurso;
 
-    //Matriculamos al alumno
-    $insert = "INSERT INTO alumnos_cursos(idalumno, idcurso) VALUES('$idalumno[id]', $idcurso)";
+    $consultacurso = mysqli_query($conn, "SELECT idcurso, idalumno FROM alumnos_cursos WHERE idcurso=$idcurso AND idalumno=$idalumno");
+    $curso = mysqli_fetch_array($consultacurso); 
 
-    //Creamos variable return para conectarnos a la base de datos y matricular al alumno en el curso seleccionado 
-    $return = mysqli_query($conn, $insert);
-    echo "<br>" . "Se ha matriculado correctamente";
-    header('Location: alumno.php');
-    mysqli_close($conn);
+    //Matriculamos al alumno
+    if(isset($curso['idcurso'])){
+        echo "Ya estás matriculado";
+    }
+    else{
+        $insert = "INSERT INTO alumnos_cursos(idalumno, idcurso) VALUES('$idalumno[id]', $idcurso)";
+        //Creamos variable return para conectarnos a la base de datos y matricular al alumno en el curso seleccionado 
+        $return = mysqli_query($conn, $insert);
+        echo "<br>" . "Se ha matriculado correctamente";
+        header('Location: alumno.php');
+        mysqli_close($conn);
+    }
 
 ?>

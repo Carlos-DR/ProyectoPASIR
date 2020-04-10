@@ -80,13 +80,12 @@
     /* Sacamos las id que necesitemos y las guardamos en variables */
     $consultaalumno = mysqli_query($conn, "SELECT id FROM alumnos WHERE usuario='$usu'");
     $idalumno = mysqli_fetch_array($consultaalumno);
-      //echo $idalumno['id']
+      //echo $idalumno['id'];
 
     $consultacurso = mysqli_query($conn, "SELECT idcurso FROM alumnos_cursos WHERE idalumno='$idalumno[id]'");
-    $idcurso = mysqli_fetch_array($consultacurso);
       //echo $idcurso['idcurso'];
 
-    $mostar_cursos_matriculados = mysqli_query($conn, "SELECT nombre, descripcion FROM cursos WHERE id='$idcurso[idcurso]'");
+    
   ?>
 
   <!-- Cursos matriculados -->
@@ -95,6 +94,10 @@
       <div class="col-lg-8 col-md-10 mx-auto">
   <!-- bucle para mostrar todos los cursos  -->
       <?php
+      
+      while ($idcurso = mysqli_fetch_array($consultacurso)){
+      $mostar_cursos_matriculados = mysqli_query($conn, "SELECT nombre, descripcion FROM cursos WHERE id='$idcurso[idcurso]'") or die("No estás matriculado en ningún curso");
+    
         while ($reg = mysqli_fetch_array($mostar_cursos_matriculados)){
       ?>
       <div class="post-preview">
@@ -120,6 +123,7 @@
 
       <?php
       }
+    }
       mysqli_close($conn);
       ?>
 

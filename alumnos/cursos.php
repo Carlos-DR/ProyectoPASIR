@@ -78,11 +78,7 @@
     $idalumno = mysqli_fetch_array($consultaalumno);
       //echo $idalumno['id']
 
-    $consultacurso = mysqli_query($conn, "SELECT idcurso FROM alumnos_cursos WHERE idalumno='$idalumno[id]'");
-    $idcurso = mysqli_fetch_array($consultacurso);
-      //echo $idcurso['idcurso'];
-
-    $mostar_cursos = mysqli_query($conn, "SELECT id, nombre, descripcion FROM cursos WHERE id!='$idcurso[idcurso]';") 
+    $mostar_cursos = mysqli_query($conn, "SELECT id, nombre, descripcion FROM cursos") or die("No estás matriculado en ningún curso");
   ?>
 
   <!-- Cursos matriculados -->
@@ -90,9 +86,10 @@
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
   <!-- bucle para mostrar todos los cursos  -->
-      <?php
+      <?php      
+
         while ($reg = mysqli_fetch_array($mostar_cursos)){
-          $id_curso_no = $reg['id'];
+          $id_curso_no = $reg['id'];    
           //echo $id_curso_no;
       ?>
       <div class="post-preview">
@@ -110,7 +107,7 @@
           </a>
           <form action="matricular.php" method="POST">
               <div class="form-group">
-                <button type="submit" class="btn btn-primary" id="sendMessageButton" name="matricular" value="<?php echo $id_curso_no ?>">Matricular</button>
+                <button type="submit" class="btn btn-primary" id="sendMessageButton" name="matricular" value="<?php echo $idcurso ?>">Matricular</button>
               </div>
             </form>
         </div>
