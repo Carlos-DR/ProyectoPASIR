@@ -37,7 +37,7 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-            <a class="nav-link" href="contactos.php">Contactos</a>
+            <a class="nav-link" href="admin.php">Administración</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="../logout.php">Cerrar sesión</a>
@@ -48,14 +48,14 @@
   </nav>
 
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('../img/admin.jpg')">
+  <header class="masthead" style="background-image: url('../img/contacto.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="site-heading">
-            <h1>ADMINISTRACIÓN</h1>
-            <span class="subheading">Crea y elimina profesores</span>
+            <h1>CONTACTOS</h1>
+            <span class="subheading">Mira los mensajes recividos</span>
           </div>
         </div>
       </div>
@@ -70,7 +70,7 @@
         die("Connection failed: " . mysqli_connect_error());
     }
     $tildes = $conn->query("SET NAMES 'utf8'"); //Con esto muestra las tíldes
-    $mostar_profe = mysqli_query($conn, "SELECT id, nombre, apellidos, usuario, email FROM profesores WHERE admin=0")
+    $mostar_contact = mysqli_query($conn, "SELECT * FROM contactos")
   ?>
 
   <!-- Cursos matriculados -->
@@ -79,34 +79,26 @@
       <div class="col-lg-8 col-md-10 mx-auto">
       <!-- bucle para mostrar todos los profesores  -->
       <?php
-        while ($reg = mysqli_fetch_array($mostar_profe)){
-          $idprof = $reg['id'];
+        while ($reg = mysqli_fetch_array($mostar_contact)){
+          $idcontact = $reg['id'];
       ?>
       <div class="post-preview">
           <a>
             <h2 class="post-title">
               <?php
-                echo $reg['nombre'] . " " .$reg['apellidos'];
+                echo $reg['id'] . " - " .$reg['nombre'];
               ?>
             </h2>
             <h3 class="post-subtitle">
               <?php
-                echo "Usuario: " . $reg['usuario'];
-                echo "<br>";
                 echo "Email: " . $reg['email'];
+                echo "<br>";
+                echo "Teléfono: " . $reg['telefono'];
+                echo "<br>";
+                echo "Mensaje: " . $reg['mensaje'];
               ?>
             </h3>
-          </a>
-            <form action="editprof.php" method="POST">
-              <div class="form-group">
-                <button type="submit" class="btn btn-primary" id="sendMessageButton" name="editar" value="<?php echo $idprof ?>">Editar</button>
-              </div>
-            </form>
-            <form action="eliminarprof.php" method="POST">
-              <div class="form-group">
-              <button type="submit" class="btn btn-primary" id="sendMessageButton" name="eliminar" value="<?php echo $idprof ?>">Eliminar</button>
-              </div>
-            </form>      
+          </a>     
         </div>
         <hr>
 
@@ -114,9 +106,9 @@
       }
       mysqli_close($conn);
       ?>  
-      <form action="newprof.php">
+      <form action="dropmensajes.php">
         <div class="form-group">
-          <button type="submit" class="btn btn-primary" id="sendMessageButton">Nuevo Profesor</button>
+          <button type="submit" class="btn btn-primary" id="sendMessageButton">Vaciar TODOS los mensajes</button>
         </div>
       </form>   
 
