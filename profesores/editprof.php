@@ -52,7 +52,7 @@
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand" href="../index.php"><img src="../img/logo.png" height="45" width="45"> Herpic</a>
+      <a class="navbar-brand"><img src="../img/logo.png" height="45" width="45"> Herpic</a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         Menu
         <i class="fas fa-bars"></i>
@@ -68,21 +68,21 @@
   </nav>
 
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('../img/newprof.jpg')">
+  <header class="masthead" style="background-image: url('../img/editprof.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row"> 
         <div class="col-lg-8 col-md-10 mx-auto">
          <div class="page-heading">
            <div class="login-page">
-              <div class="form">
-                <!-- registro de profesores --> 
+            <div class="form">
+                <!-- información de profesores --> 
                 <form class="login-form" action="updateprof.php" method="POST">
-                  <input type="text" name="nombre" value="<?php echo $nom ?>"/>
-                  <input type="text" name="apellidos"  value="<?php echo $ape; ?>"/>
-                  <input type="text" name="usuario"  value="<?php echo $usu; ?>"/>
-                  <input type="text" name="email"  value="<?php echo $email; ?>"/>
-                  <input type="password" name="contrasenia" placeholder="Contraseña" required/>
+                  <input maxlength="50" type="text" name="nombre" value="<?php echo $nom ?>"/>
+                  <input maxlength="100" type="text" name="apellidos"  value="<?php echo $ape; ?>"/>
+                  <input maxlength="50" type="text" name="usuario"  value="<?php echo $usu; ?>"/>
+                  <input maxlength="100" type="text" name="email"  value="<?php echo $email; ?>"/>
+                  <input maxlength="75" type="password" name="contrasenia" placeholder="Contraseña" required/>
                   <p>
                   <button name="idprofesor" value="<?php echo $idprof ?>">Editar profesor</button>
                 </form>
@@ -126,10 +126,6 @@
   <!-- Bootstrap core JavaScript -->
   <script src="../vendor/jquery/jquery.min.js"></script>
   <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script> 
-
-  <!-- Contact Form JavaScript 
-  <script src="js/jqBootstrapValidation.js"></script>
-  <script src="js/contact_me.js"></script> -->
 
   <!-- Custom scripts for this template -->
   <script src="../js/clean-blog.min.js"></script> 

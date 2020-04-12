@@ -58,13 +58,15 @@
               <div class="form">
                 <!-- registro de profesores --> 
                 <form class="login-form" action="crearprof.php" method="POST">
-                  <input type="text" name="nombre" placeholder="Nombre"/>
-                  <input type="text" name="apellidos" placeholder="Apellidos"/>
-                  <input type="text" name="usuario" placeholder="Nombre de Usuario"/>
-                  <input type="text" name="email" placeholder="Correo electrónico"/>
-                  <input type="password" name="contrasenia" placeholder="Contraseña"/>
+                  <input maxlength="50" type="text" name="nombre" placeholder="Nombre"/>
+                  <input maxlength="100" type="text" name="apellidos" placeholder="Apellidos"/>
+                  <input maxlength="50" type="text" name="usuario" placeholder="Nombre de Usuario"/>
+                  <input maxlength="100" type="text" name="email" placeholder="Correo electrónico"/>
+                  <input maxlength="75" type="password" name="contrasenia" placeholder="Contraseña"/>
+                  <input max="2" type="number" name="curso" placeholder="ID del curso que imparte"/>
                   <p>
                   <button>Registrar profesor</button>
+                  <font size="2" style="color:black;">*Puedes consultar los id abajo</font>
                 </form>
               </div>
             </div>
@@ -74,6 +76,45 @@
     </div>
   </header>
   <hr>
+
+    <!-- conexión base de datos -->
+    <?php
+    $conn = mysqli_connect('localhost', 'root', '1234', 'herpic');
+
+    if (!$conn) {
+        die("Connection failed: " . mysqli_connect_error());
+    }
+    $tildes = $conn->query("SET NAMES 'utf8'"); //Con esto muestra las tíldes
+
+    $consultacurso = mysqli_query($conn, "SELECT id, nombre FROM cursos");
+
+  ?>
+
+  <!-- Cursos disponibles -->
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+      <!-- bucle para mostrar todos los cursos  -->
+      <?php
+        while ($curso = mysqli_fetch_array($consultacurso)){
+      ?>
+        <div class="post-preview">
+          <a>
+            <h3 class="post-subtitle">
+            <?php
+                echo "<b>Curso: </b>" . $curso['nombre'];
+                echo "<br>";
+                echo " <b>ID:</b> " . $curso['id'];
+              ?>
+            </h3>
+          </a>
+        </div>
+        <hr>
+      <?php
+      }
+      mysqli_close($conn);  
+      ?>
+
   <!-- Footer -->
   <footer>
     <div class="container">

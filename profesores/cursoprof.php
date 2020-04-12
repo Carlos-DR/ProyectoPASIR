@@ -1,7 +1,7 @@
+<!DOCTYPE html>
 <?php session_start(); 
   $usu = $_SESSION['usuario'];
 ?>
-<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -11,7 +11,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Herpic - Cursos</title>
+  <title>Herpic - Home</title>
 
   <!-- Bootstrap core CSS -->
   <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -31,15 +31,15 @@
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand" href="../index.php"><img src="../img/logo.png" height="45" width="45"> Herpic</a>
+      <a class="navbar-brand"><img src="../img/logo.png" height="45" width="45"> Herpic</a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         Menu
         <i class="fas fa-bars"></i>
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="alumno.php">Home</a>
+        <li class="nav-item">
+            <a class="nav-link" href="profesor.php">Home</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="../logout.php">CERRAR SESIÓN</a>
@@ -49,23 +49,29 @@
     </div>
   </nav>
 
+
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('../img/cursos.jpg')">
+  <header class="masthead" style="background-image: url('../img/cursoprof.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="site-heading">
-            <h1>Cursos</h1>
-            <span class="subheading">Matriculate en el curso que más te guste</span>
+            <h1>CURSO</h1>
+            <span class="subheading">
+            <?php
+                echo "Impartido por " . $usu;
+            ?>
+            </span>
           </div>
         </div>
       </div>
     </div>
   </header>
 
- <!-- conexión base de datos -->
- <?php
+  
+<!-- conexión base de datos -->
+    <?php
     $conn = mysqli_connect('localhost', 'root', '1234', 'herpic');
 
     if (!$conn) {
@@ -73,49 +79,50 @@
     }
     $tildes = $conn->query("SET NAMES 'utf8'"); //Con esto muestra las tíldes
 
-    /* Sacamos las id que necesitemos y las guardamos en variables 
-    $consultaalumno = mysqli_query($conn, "SELECT id FROM alumnos WHERE usuario='$usu'");
-    $idalumno = mysqli_fetch_array($consultaalumno);
-      //echo $idalumno['id']*/
+    /* Sacamos las id que necesitamos y las guardamos en variables*/
+    $idcurso = $_POST['mostrar'];
+    //echo $idcurso;
+      
+    $consultaalumno = mysqli_query($conn, "SELECT idalumno FROM alumnos_cursos WHERE idcurso='$idcurso'");
+      //echo $idalumno['idalumno'];
 
-    $mostar_cursos = mysqli_query($conn, "SELECT id, nombre, descripcion FROM cursos") or die("No estás matriculado en ningún curso");
+    /* Con las id que hemos sacado antes, sacamos el nombre del curso que imparte el profesor y el alumnó que está matriculado en el cusro */
+    
+
   ?>
 
   <!-- Cursos matriculados -->
   <div class="container">
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
-  <!-- bucle para mostrar todos los cursos  -->
-      <?php      
-
-        while ($reg = mysqli_fetch_array($mostar_cursos)){
-          $idcurso = $reg['id'];    
-          //echo $id_curso_no;
-      ?>
-      <div class="post-preview">
-          <a>
+      <!-- bucle para mostrar todos los cursos  -->
+        <?php
+            while ($idalumno = mysqli_fetch_array($consultaalumno)){
+                $mostar_alumno = mysqli_query($conn, "SELECT nombre, apellidos FROM alumnos WHERE id='$idalumno[idalumno]'");
+                while ($reg = mysqli_fetch_array($mostar_alumno)){
+            ?>
+        <div class="post-preview">
+          <a href="../vercurso.php">
             <h2 class="post-title">
-              <?php
-                echo $reg['nombre'];
+            <?php
+                echo $reg['apellidos'] . ", " . $reg['nombre'];
               ?>
             </h2>
             <h3 class="post-subtitle">
-              <?php
-                echo $reg['descripcion'];
-              ?>
+
             </h3>
           </a>
-          <form action="matricular.php" method="POST">
+          <form action="cursoprof.php" method="POST">
               <div class="form-group">
-                <button type="submit" class="btn btn-primary" id="sendMessageButton" name="matricular" value="<?php echo $idcurso ?>">Matricular</button>
+                <button type="submit" class="btn btn-primary" id="sendMessageButton" name="editar" value="<?php //echo $idcurso['idcurso'] ?>">Ver examenes</button>
               </div>
             </form>
         </div>
         <hr>
-
       <?php
       }
-      mysqli_close($conn);
+    }
+      mysqli_close($conn);  
       ?>
 
   <!-- Footer -->

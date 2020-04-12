@@ -73,11 +73,11 @@
     $mostar_contact = mysqli_query($conn, "SELECT * FROM contactos")
   ?>
 
-  <!-- Cursos matriculados -->
+  <!-- Mensajes contactos -->
   <div class="container">
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
-      <!-- bucle para mostrar todos los profesores  -->
+      <!-- bucle para mostrar todos los contactos  -->
       <?php
         while ($reg = mysqli_fetch_array($mostar_contact)){
           $idcontact = $reg['id'];
@@ -91,11 +91,11 @@
             </h2>
             <h3 class="post-subtitle">
               <?php
-                echo "Email: " . $reg['email'];
+                echo "<b> Email: </b>" . $reg['email'];
                 echo "<br>";
-                echo "Teléfono: " . $reg['telefono'];
+                echo "<b>Teléfono: </b>" . $reg['telefono'];
                 echo "<br>";
-                echo "Mensaje: " . $reg['mensaje'];
+                echo "<b>Mensaje: </b>" . $reg['mensaje'];
               ?>
             </h3>
           </a>     

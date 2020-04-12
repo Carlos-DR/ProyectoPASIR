@@ -80,16 +80,10 @@
       //echo $idprof['id'];
 
     $consultacurso = mysqli_query($conn, "SELECT idcurso FROM cursos_profesores WHERE idprofesor='$idprof[id]'");
-    $idcurso = mysqli_fetch_array($consultacurso);
-      //echo $idcurso['idcurso'];
-      
-    $consultaalumno = mysqli_query($conn, "SELECT idalumno FROM alumnos_cursos WHERE idcurso='$idcurso[idcurso]'");
-    $idalumno = mysqli_fetch_array($consultaalumno);
-      //echo $idalumno['idalumno'];
+
 
     /* Con las id que hemos sacado antes, sacamos el nombre del curso que imparte el profesor y el alumnó que está matriculado en el cusro */
-    $mostar_alumno = mysqli_query($conn, "SELECT nombre, apellidos FROM alumnos WHERE id='$idalumno[idalumno]'");
-    $mostar_curso = mysqli_query($conn, "SELECT nombre FROM cursos WHERE id='$idcurso[idcurso]'");
+    
   ?>
 
   <!-- Cursos matriculados -->
@@ -98,10 +92,12 @@
       <div class="col-lg-8 col-md-10 mx-auto">
       <!-- bucle para mostrar todos los cursos  -->
       <?php
-        while ($reg = mysqli_fetch_array($mostar_curso)){
+        while ($idcurso = mysqli_fetch_array($consultacurso)){
+          $mostar_curso = mysqli_query($conn, "SELECT nombre FROM cursos WHERE id='$idcurso[idcurso]'");
+          while ($reg = mysqli_fetch_array($mostar_curso)){
       ?>
         <div class="post-preview">
-          <a href="../vercurso.php">
+          <a>
             <h2 class="post-title">
             <?php
                 echo $reg['nombre'];
@@ -109,16 +105,23 @@
             </h2>
             <h3 class="post-subtitle">
             <?php
-              while ($reg2 = mysqli_fetch_array($mostar_alumno)){
-                echo $reg2['nombre'];
-              }
+              //while ($reg2 = mysqli_fetch_array($mostar_alumno)){
+                //echo $reg2['apellidos'] . ", " . $reg2['nombre'];
+                //echo "<br>";
+              //}
             ?>
             </h3>
           </a>
+          <form action="cursoprof.php" method="POST">
+              <div class="form-group">
+                <button type="submit" class="btn btn-primary" id="sendMessageButton" name="mostrar" value="<?php echo $idcurso['idcurso'] ?>">Mostrar</button>
+              </div>
+            </form>
         </div>
         <hr>
       <?php
       }
+    }
       mysqli_close($conn);  
       ?>
 

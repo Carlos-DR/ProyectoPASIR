@@ -67,18 +67,18 @@
               <div class="form">
                <!-- registro -->
                 <form class="register-form" action="registro.php" method="POST">
-                  <input type="text" name="nombre" placeholder="Nombre"/>
-                  <input type="text" name="apellidos" placeholder="Apellidos"/>
-                  <input type="text" name="usuario" placeholder="Nombre de Usuario"/>
-                  <input type="text" name="email" placeholder="Correo electrónico"/>
-                  <input type="password" name="contrasenia" placeholder="Contraseña"/>
+                  <input maxlength="50" type="text" name="nombre" placeholder="Nombre"/>
+                  <input maxlength="100" type="text" name="apellidos" placeholder="Apellidos"/>
+                  <input maxlength="50" type="text" name="usuario" placeholder="Nombre de Usuario"/>
+                  <input maxlength="100" type="text" name="email" placeholder="Correo electrónico"/>
+                  <input maxlength="75" type="password" name="contrasenia" placeholder="Contraseña"/>
                   <button>Registrar</button>
                   <p class="message">¿Ya estás registrado? <a href="#">Iniciar sesión</a></p>
                 </form>
                 <!-- inicio de sesión--> 
                 <form class="login-form" action="who.php" method="POST">
-                  <input type="text" name="usuario" placeholder="Nombre de Usuario"/>
-                  <input type="password" name="contrasenia" placeholder="Contraseña"/>
+                  <input maxlength="50" type="text" name="usuario" placeholder="Nombre de Usuario"/>
+                  <input maxlength="75" type="password" name="contrasenia" placeholder="Contraseña"/>
                   <div class="custom-select" style="width:250px;">
                     <select name="tipo" require>
                       <option value="0">¿Quien eres?</option>

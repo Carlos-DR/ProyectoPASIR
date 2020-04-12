@@ -77,28 +77,28 @@
           <div class="control-group">
             <div class="form-group floating-label-form-group controls">
               <label>Nombre</label>
-              <input type="text" class="form-control" placeholder="Nombre" id="name" name="nombre" required data-validation-required-message="Por favor, escribe tu nombre.">
+              <input maxlength="50" type="text" class="form-control" placeholder="Nombre" id="name" name="nombre" required data-validation-required-message="Por favor, escribe tu nombre.">
               <p class="help-block text-danger"></p>
             </div>
           </div>
           <div class="control-group">
             <div class="form-group floating-label-form-group controls">
               <label>Email</label>
-              <input type="email" class="form-control" placeholder="Email" id="email" name="email" required data-validation-required-message="Por favor, escribe tu email.">
+              <input maxlength="100" type="email" class="form-control" placeholder="Email" id="email" name="email" required data-validation-required-message="Por favor, escribe tu email.">
               <p class="help-block text-danger"></p>
             </div>
           </div>
           <div class="control-group">
             <div class="form-group col-xs-12 floating-label-form-group controls">
               <label>Número de telefono</label>
-              <input type="tel" class="form-control" placeholder="Número de teléfono" id="phone" name="telefono" required data-validation-required-message="Por favor, escribe tu número de teléfono.">
+              <input maxlength="9" type="tel" class="form-control" placeholder="Número de teléfono" id="phone" name="telefono" required data-validation-required-message="Por favor, escribe tu número de teléfono.">
               <p class="help-block text-danger"></p>
             </div>
           </div>
           <div class="control-group">
             <div class="form-group floating-label-form-group controls">
               <label>Mensaje</label>
-              <textarea rows="5" class="form-control" placeholder="Mensaje" id="message" name="mensaje" required data-validation-required-message="Por favor, escribe el mensaje."></textarea>
+              <textarea maxlength="255" rows="5" class="form-control" placeholder="Mensaje" id="message" name="mensaje" required data-validation-required-message="Por favor, escribe el mensaje."></textarea>
               <p class="help-block text-danger"></p>
             </div>
           </div>

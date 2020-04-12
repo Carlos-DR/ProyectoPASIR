@@ -4,6 +4,9 @@ $who = $_POST['tipo'];
 $usu = $_POST['usuario'];
 $contra = $_POST['contrasenia'];
 
+$admin = strtoupper($usu);
+
+
     if ($who == 'profesor'){
         echo 'Soy un profesor';
         class loguear {
@@ -37,7 +40,7 @@ $contra = $_POST['contrasenia'];
         if ($contador != 1) {
             header('location: index.php?error=Usuario o contraseña incorrectos');
         }
-        elseif ($usu == 'Herpic' OR $usu == 'herpic') {
+        elseif ($admin == 'HERPIC') {
             session_start();
             $_SESSION['usuario'] = $usu; 
             $_SESSION['estado'] = 'autenticado';

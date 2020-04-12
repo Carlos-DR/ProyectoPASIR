@@ -91,9 +91,9 @@
             </h2>
             <h3 class="post-subtitle">
               <?php
-                echo "Usuario: " . $reg['usuario'];
+                echo "<b> Usuario: </b>" . $reg['usuario'];
                 echo "<br>";
-                echo "Email: " . $reg['email'];
+                echo "<b> Email: </b>" . $reg['email'];
               ?>
             </h3>
           </a>
