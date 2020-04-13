@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-<?php session_start(); 
-  $usu = $_SESSION['usuario'];
-?>
+<?php session_start(); ?>
 <html lang="en">
 
 <head>
@@ -11,7 +9,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Herpic - Home</title>
+  <title>Herpic - contact</title>
 
   <!-- Bootstrap core CSS -->
   <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -38,110 +36,74 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
-        <li class="nav-item">
-            <a class="nav-link" href="profesor.php">Home</a>
-          </li>
           <li class="nav-item">
-            <a class="nav-link" href="../logout.php">CERRAR SESIÓN</a>
+            <a class="nav-link" href="profesor.php">CANCELAR</a>
           </li>
         </ul>
       </div>
     </div>
   </nav>
 
-<!-- conexión base de datos -->
-<?php
-    $conn = mysqli_connect('localhost', 'root', '1234', 'herpic');
-
-    if (!$conn) {
-        die("Connection failed: " . mysqli_connect_error());
-    }
-    $tildes = $conn->query("SET NAMES 'utf8'"); //Con esto muestra las tíldes
-
-    /* Sacamos las id que necesitamos y las guardamos en variables*/
-    $idcurso = $_POST['mostrar'];
-    $nombrecurso = mysqli_query($conn, "SELECT nombre FROM cursos WHERE id='$idcurso'");
-    $curso = mysqli_fetch_array($nombrecurso);
-      
-    $consultaalumno = mysqli_query($conn, "SELECT idalumno FROM alumnos_cursos WHERE idcurso='$idcurso'");
-      //echo $idalumno['idalumno'];
-
-    /* Con las id que hemos sacado antes, sacamos el nombre del curso que imparte el profesor y el alumnó que está matriculado en el cusro */
-    
-
-  ?>
-
-
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('../img/cursoprof.jpg')">
+  <header class="masthead" style="background-image: url('../img/contact.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
-          <div class="site-heading">
-            <h1>CURSO</h1>
-            <span class="subheading">
-            <?php
-                echo $curso['nombre'];
-            ?>
-            </span>
+          <div class="page-heading">
+            <h1>NUEVO EXAMEN</h1>
+            <span class="subheading">Crear y sube un nuevo examen</span>
           </div>
         </div>
       </div>
     </div>
   </header>
 
-  
-
-  <!-- Cursos matriculados -->
+  <!-- Main Content -->
   <div class="container">
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
-      <!-- bucle para mostrar todos los cursos  -->
-        <?php
-            while ($idalumno = mysqli_fetch_array($consultaalumno)){
-                $mostar_alumno = mysqli_query($conn, "SELECT nombre, apellidos FROM alumnos WHERE id='$idalumno[idalumno]'");
-                while ($reg = mysqli_fetch_array($mostar_alumno)){
-            ?>
-        <div class="post-preview">
-          <a href="../vercurso.php">
-            <h2 class="post-title">
-            <?php
-                echo $reg['apellidos'] . ", " . $reg['nombre'];
-              ?>
-            </h2>
-            <h3 class="post-subtitle">
-
-            </h3>
-          </a>
-          <form action="cursoprof.php" method="POST">
-              <div class="form-group">
-                <button type="submit" class="btn btn-primary" id="sendMessageButton" name="editar" value="<?php //echo $idcurso['idcurso'] ?>">Ver examenes</button>
-              </div>
-            </form>
-        </div>
-        <hr>
-      <?php
-                }
-            } 
-      ?>
-      <!-- bucle para mostrar todos los exámenes  -->
-      <!-- En proceso -->
-        <?php
-          mysqli_close($conn); 
-        ?>
-
-  <!-- Botón nuevo examen -->
-        <form action="nuevoexamen.php">
-          <div class="form-group">
-            <button type="submit" class="btn btn-primary" id="sendMessageButton" value="<?php echo $idcurso?>">Nuevo Examen</button>
+        <p>Escriba la pregunta y las respuestas. Si la respuesta es de desarrollo, por favor marque la opción "respuesta larga".</p>
+        <form name="sentMessage" novalidate action="newexam.php" method="POST">
+          <div class="control-group">
+            <div class="form-group floating-label-form-group controls">
+              <label>Pregunta</label>
+              <input maxlength="50" type="text" class="form-control" placeholder="Nombre" id="name" name="nombre" required data-validation-required-message="Por favor, escribe tu nombre.">
+              <p class="help-block text-danger"></p>
+            </div>
           </div>
-        </form> 
+          <div class="control-group">
+            <div class="form-group floating-label-form-group controls">
+              <label>Email</label>
+              <input maxlength="100" type="email" class="form-control" placeholder="Email" id="email" name="email" required data-validation-required-message="Por favor, escribe tu email.">
+              <p class="help-block text-danger"></p>
+            </div>
+          </div>
+          <div class="control-group">
+            <div class="form-group col-xs-12 floating-label-form-group controls">
+              <label>Número de telefono</label>
+              <input maxlength="9" type="tel" class="form-control" placeholder="Número de teléfono" id="phone" name="telefono" required data-validation-required-message="Por favor, escribe tu número de teléfono.">
+              <p class="help-block text-danger"></p>
+            </div>
+          </div>
+          <div class="control-group">
+            <div class="form-group floating-label-form-group controls">
+              <label>Mensaje</label>
+              <textarea maxlength="255" rows="5" class="form-control" placeholder="Mensaje" id="message" name="mensaje" required data-validation-required-message="Por favor, escribe el mensaje."></textarea>
+              <p class="help-block text-danger"></p>
+            </div>
+          </div>
+          <br>
+          <div id="success"></div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary" id="sendMessageButton">Enviar</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
 
-
+  <hr>
 
   <!-- Footer -->
   <footer>
@@ -175,6 +137,10 @@
   <!-- Bootstrap core JavaScript -->
   <script src="../vendor/jquery/jquery.min.js"></script>
   <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Contact Form JavaScript -->
+  <script src="../js/jqBootstrapValidation.js"></script>
+  <script src="../js/contact_me.js"></script>
 
   <!-- Custom scripts for this template -->
   <script src="../js/clean-blog.min.js"></script>
