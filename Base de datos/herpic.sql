@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 06-04-2020 a las 13:24:00
+-- Tiempo de generación: 14-04-2020 a las 20:37:25
 -- Versión del servidor: 10.4.11-MariaDB
 -- Versión de PHP: 7.4.3
 
@@ -36,16 +36,18 @@ CREATE TABLE `alumnos` (
   `apellidos` varchar(100) NOT NULL,
   `usuario` varchar(50) NOT NULL,
   `email` varchar(100) NOT NULL,
-  `contrasenia` varchar(75) NOT NULL
+  `contrasenia` varchar(75) NOT NULL,
+  `temp` tinyint(1) NOT NULL DEFAULT 0,
+  `psswd` varchar(75) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `alumnos`
 --
 
-INSERT INTO `alumnos` (`id`, `nombre`, `apellidos`, `usuario`, `email`, `contrasenia`) VALUES
-(1, 'Carlos', 'Domínguez Rastrojo', 'cdomras', 'carlos.dominguez.rastrojo@ciudadjardin.com', '81dc9bdb52d04dc20036dbd8313ed055'),
-(3, '', '', '', '', 'd41d8cd98f00b204e9800998ecf8427e');
+INSERT INTO `alumnos` (`id`, `nombre`, `apellidos`, `usuario`, `email`, `contrasenia`, `temp`, `psswd`) VALUES
+(1, 'Carlos', 'Domínguez Rastrojo', 'cdomras', 'carlos@ciudadjardin.com', '81dc9bdb52d04dc20036dbd8313ed055', 0, NULL),
+(2, 'Tanish', '3000', 'diosito', 'tanish@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055', 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -57,6 +59,17 @@ CREATE TABLE `alumnos_cursos` (
   `idalumno` int(11) NOT NULL,
   `idcurso` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `alumnos_cursos`
+--
+
+INSERT INTO `alumnos_cursos` (`idalumno`, `idcurso`) VALUES
+(1, 1),
+(1, 2),
+(1, 3),
+(2, 1),
+(2, 2);
 
 -- --------------------------------------------------------
 
@@ -71,6 +84,13 @@ CREATE TABLE `contactos` (
   `telefono` int(11) NOT NULL,
   `mensaje` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `contactos`
+--
+
+INSERT INTO `contactos` (`id`, `nombre`, `email`, `telefono`, `mensaje`) VALUES
+(5, '', 'juan@gmail.com', 0, '');
 
 -- --------------------------------------------------------
 
@@ -89,7 +109,9 @@ CREATE TABLE `cursos` (
 --
 
 INSERT INTO `cursos` (`id`, `nombre`, `descripcion`) VALUES
-(7, 'ingles B1', 'Aprende ingles desde cero hasta B1');
+(1, 'Inglés', 'Aprende inglés con nosotros'),
+(2, 'Oposiciones abogados', 'Prepárate para las oposiciones'),
+(3, 'Streamlabs', 'Aprende a stremear con el tio Herpic');
 
 -- --------------------------------------------------------
 
@@ -101,6 +123,17 @@ CREATE TABLE `cursos_profesores` (
   `idcurso` int(11) NOT NULL,
   `idprofesor` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `cursos_profesores`
+--
+
+INSERT INTO `cursos_profesores` (`idcurso`, `idprofesor`) VALUES
+(2, 2),
+(3, 8),
+(1, 3),
+(3, 2),
+(1, 9);
 
 -- --------------------------------------------------------
 
@@ -163,9 +196,11 @@ CREATE TABLE `profesores` (
 --
 
 INSERT INTO `profesores` (`id`, `nombre`, `apellidos`, `usuario`, `email`, `contrasenia`, `admin`) VALUES
-(1, 'Antonio Javier', 'Cruz', 'antoniocruz', 'antoniocruz@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055', 0),
-(2, 'Herpic', '', 'Herpic', 'herpic@gmail.com', '9150a8de9b1304a546f29798de4db840', 1),
-(3, 'Manolito', 'Gafotas', 'manolito', 'gafotas@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055', 0);
+(1, 'Herpic', '', 'Herpic', 'herpic@gmail.com', '9150a8de9b1304a546f29798de4db840', 1),
+(2, 'Antonio', 'Cruz', 'antoniocruz', 'antoniocruz@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055', 0),
+(3, 'David', 'Galván', 'Jakl2', 'ksjdhf@kjsdfn.com', '81dc9bdb52d04dc20036dbd8313ed055', 0),
+(8, 'Manolito', 'Gafotas', 'ManuGafo', 'manolitos@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055', 0),
+(9, 'Juan', 'Morales', 'juamo', 'morales@hotmail.com', '81dc9bdb52d04dc20036dbd8313ed055', 0);
 
 --
 -- Índices para tablas volcadas
@@ -183,6 +218,7 @@ ALTER TABLE `alumnos`
 -- Indices de la tabla `alumnos_cursos`
 --
 ALTER TABLE `alumnos_cursos`
+  ADD PRIMARY KEY (`idalumno`,`idcurso`),
   ADD KEY `idalumno` (`idalumno`),
   ADD KEY `idcurso` (`idcurso`);
 
@@ -244,19 +280,19 @@ ALTER TABLE `profesores`
 -- AUTO_INCREMENT de la tabla `alumnos`
 --
 ALTER TABLE `alumnos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `contactos`
 --
 ALTER TABLE `contactos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `cursos`
 --
 ALTER TABLE `cursos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `examenes`
@@ -274,7 +310,7 @@ ALTER TABLE `preguntas`
 -- AUTO_INCREMENT de la tabla `profesores`
 --
 ALTER TABLE `profesores`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Restricciones para tablas volcadas
