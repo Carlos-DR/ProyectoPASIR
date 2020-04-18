@@ -104,7 +104,7 @@
                 while ($reg = mysqli_fetch_array($mostar_alumno)){
             ?>
         <div class="post-preview">
-          <a href="../vercurso.php">
+          <a href="../cursos/vercurso.php">
             <h2 class="post-title">
             <?php
                 echo $reg['apellidos'] . ", " . $reg['nombre'];
@@ -128,13 +128,13 @@
       <!-- bucle para mostrar todos los exámenes  -->
       <!-- En proceso -->
         <?php
-          mysqli_close($conn); 
+          mysqli_close($conn);
         ?>
 
   <!-- Botón nuevo examen -->
-        <form action="nuevoexamen.php">
+        <form action="./examenes/temaexamen.php" method="POST">
           <div class="form-group">
-            <button type="submit" class="btn btn-primary" id="sendMessageButton" value="<?php echo $idcurso?>">Nuevo Examen</button>
+            <button type="submit" class="btn btn-primary" id="sendMessageButton" name="nuevo" value="<?php echo $idcurso?>">Nuevo Examen</button>
           </div>
         </form> 
       </div>

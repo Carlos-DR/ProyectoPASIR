@@ -90,7 +90,7 @@
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
         <div class="post-preview">
-          <a href="about.html">
+          <a href="about.php">
             <h2 class="post-title">
               Descubre nuestros servicios.
             </h2>
@@ -101,7 +101,7 @@
         </div>
         <hr>
         <div class="post-preview">
-          <a href="contact.html">
+          <a href="contact.php">
             <h2 class="post-title">
               Conctáctanos, te ayudaremos con lo que necesites.
             </h2>

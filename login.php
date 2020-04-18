@@ -81,7 +81,7 @@
                   <input maxlength="75" type="password" name="contrasenia" placeholder="Contraseña"/>
                   <div class="custom-select" style="width:250px;">
                     <select name="tipo" require>
-                      <option value="0">¿Quien eres?</option>
+                      <option value="alumno">Alumno</option>
                       <option value="alumno">Alumno</option>
                       <option value="profesor">Profesor</option>
                     </select>

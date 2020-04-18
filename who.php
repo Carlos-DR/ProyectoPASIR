@@ -44,7 +44,7 @@ $admin = strtoupper($usu);
             session_start();
             $_SESSION['usuario'] = $usu; 
             $_SESSION['estado'] = 'autenticado';
-            header('location: profesores/admin.php');
+            header('location: admin/admin.php');
         }    
         else {
             session_start();
