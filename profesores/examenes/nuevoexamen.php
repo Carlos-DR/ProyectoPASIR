@@ -2,7 +2,8 @@
 <?php session_start(); 
 $usu = $_SESSION['usuario'];
 $idexamen = $_SESSION['idexamen'];
-echo $idexamen;
+$i = $_SESSION['i'];
+//echo $idexamen;
 ?>
 <html lang="en">
 
@@ -41,7 +42,7 @@ echo $idexamen;
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a class="nav-link" href="../profesor.php">CANCELAR</a>
+            <a class="nav-link" href="cancelexamen.php">CANCELAR</a>
           </li>
         </ul>
       </div>
@@ -65,10 +66,16 @@ echo $idexamen;
 
   <!-- Main Content -->
 
+<?php
+  //Abrimos un if para controlar el bucle que hemos creado manualmente
+  if ($i < 10) {
+?>
+
   <div class="container">
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
         <p>Escriba la pregunta y las respuestas. Si la respuesta es de desarrollo, por favor marque la opción "respuesta larga".</p>
+        <p>El examen tiene <?php echo $i; ?> preguntas. </p>
         <form name="sentMessage" novalidate action="newexam.php" method="POST">
           <div class="control-group">
             <div class="form-group floating-label-form-group controls">
@@ -106,7 +113,12 @@ echo $idexamen;
             </div>
           </div>
           <br>
-          <div id="success"></div>
+          <label>Tipo</label>
+                <select name="tipo" require>
+                    <option value="0">Test</option>
+                    <option value="1">Respuesta larga</option>
+                </select>
+                  <p class="help-block text-danger"></p>
           <div class="form-group">
             <button type="submit" class="btn btn-primary" id="sendMessageButton">Enviar</button>
           </div>
@@ -115,6 +127,32 @@ echo $idexamen;
     </div>
   </div>
 <hr>
+
+<?php
+  //Cierre del if que hace el bucle
+  }
+
+  //Aqui abrimos otro if, que controla que ya tenemos 10 preguntas
+  elseif ($i == 10) {
+    ?>
+    <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <p>El examen ya está completado.</p>
+        <form name="sentMessage" novalidate action="../profesor.php">
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary" id="sendMessageButton">Finalizar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+<hr>
+<?php
+// Aquí cerramos el elsif
+  }
+
+?>
 
   <!-- Footer -->
   <footer>

@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <?php session_start(); 
   $usu = $_SESSION['usuario'];
-  $idcurso = $_POST['nuevo'];
+  $idcurso = $_SESSION['idcurso'];
+  $idexamen = $_POST['ver'];
 ?>
 <html lang="en">
 
@@ -12,7 +13,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Herpic - contact</title>
+  <title>Herpic - Examen</title>
 
   <!-- Bootstrap core CSS -->
   <link href="../../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -40,59 +41,94 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a class="nav-link" href="../profesor.php">CANCELAR</a>
+            <a class="nav-link" href="examenes.php">Atrás</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="../../logout.php">CERRAR SESIÓN</a>
           </li>
         </ul>
       </div>
     </div>
   </nav>
 
+    <!-- conexión base de datos -->
+    <?php
+    $conn = mysqli_connect('localhost', 'root', '1234', 'herpic');
+
+    if (!$conn) {
+        die("Connection failed: " . mysqli_connect_error());
+    }
+    $tildes = $conn->query("SET NAMES 'utf8'"); //Con esto muestra las tíldes
+
+    /* Sacamos las id que necesitamos y las guardamos en variables*/
+    $consultaexamen = mysqli_query($conn, "SELECT tema, temanum, publico FROM examenes WHERE id='$idexamen'");
+    $examen = mysqli_fetch_array($consultaexamen);
+
+    $consultapreg = mysqli_query($conn, "SELECT pregunta, correcta, incorrecta1, incorrecta2, incorrecta3 FROM preguntas WHERE idexamen='$idexamen'");
+
+  ?>
+
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('../../img/tema.jpg')">
+  <header class="masthead" style="background-image: url('../../img/verexamen.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
-          <div class="page-heading">
-            <h1>NUEVO EXAMEN</h1>
-            <span class="subheading">Crea un tema para un nuevo examen</span>
+          <div class="site-heading">
+            <h1>
+                <?php
+                    echo "Examen: <br>" . $examen['tema'];
+                ?>
+            </h1>
+            <span class="subheading">
+            <?php
+              echo "Tema: " . $examen['temanum'];
+            ?>
+            </span>
           </div>
         </div>
       </div>
     </div>
   </header>
 
-  <!-- Main Content -->
-
+  <!-- Cursos matriculados -->
   <div class="container">
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
-        <p>Escriba el título y numero del Tema. Depués podrás crear el examen.</p>
-        <form name="sentMessage" novalidate action="newtemaexamen.php" method="POST">
-          <div class="control-group">
-            <div class="form-group floating-label-form-group controls">
-              <label>Título del tema</label>
-              <input maxlength="50" type="text" class="form-control" placeholder="Título tema" id="tema" name="tema" required data-validation-required-message="Por favor, escribe el título.">
-              <p class="help-block text-danger"></p>
-            </div>
-          </div>
-          <div class="control-group">
-            <div class="form-group floating-label-form-group controls">
-              <label>Numero del tema</label>
-              <input maxlength="3" type="number" class="form-control" placeholder="Numero del tema" id="num" name="num" required data-validation-required-message="Por favor, indica el numero.">
-              <p class="help-block text-danger"></p>
-            </div>
-          </div>
-          <br>
-          <div id="success"></div>
-          <div class="form-group">
-            <button type="submit" class="btn btn-primary" id="sendMessageButton" name="curso" value="<?php echo $idcurso?>">Siguiente</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-<hr>
+      <!-- bucle para mostrar todos los cursos  -->
+      <?php
+        while ($preguntas = mysqli_fetch_array($consultapreg)){
+      ?>
+        <div class="post-preview">
+          <a>
+            <h2 class="post-title">
+            <?php
+                echo $preguntas['pregunta'];
+            ?>
+            </h2>
+            <h3 class="post-subtitle">
+            <?php
+            if ($preguntas['correcta'] == NULL) {
+                echo "La pregunta es de desarrollo";
+            }
+            else{
+                echo "<b>Respuesta correcta: </b>" . $preguntas['correcta'];
+                echo "<br>";
+                echo "<b>Respuesta incorrecta: </b>" . $preguntas['incorrecta1'];
+                echo "<br>";
+                echo "<b>Respuesta incorrecta: </b>" . $preguntas['incorrecta2'];
+                echo "<br>";
+                echo "<b>Respuesta incorrecta: </b>" . $preguntas['incorrecta3'];
+            }
+            ?>
+            </h3>
+          </a>
+        </div>
+        <hr>
+      <?php
+    }
+      mysqli_close($conn);  
+      ?>
 
   <!-- Footer -->
   <footer>
@@ -126,10 +162,6 @@
   <!-- Bootstrap core JavaScript -->
   <script src="../../vendor/jquery/jquery.min.js"></script>
   <script src="../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-  <!-- Contact Form JavaScript -->
-  <script src="../../js/jqBootstrapValidation.js"></script>
-  <script src="../../js/contact_me.js"></script>
 
   <!-- Custom scripts for this template -->
   <script src="../../js/clean-blog.min.js"></script>

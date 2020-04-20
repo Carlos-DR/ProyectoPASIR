@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <?php session_start(); 
   $usu = $_SESSION['usuario'];
-  $_SESSION['idcurso'] = $_POST['mostrar'];
-
   $idcurso = $_SESSION['idcurso'];
 ?>
 <html lang="en">
@@ -17,24 +15,23 @@
   <title>Herpic - Home</title>
 
   <!-- Bootstrap core CSS -->
-  <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
   <!-- Custom fonts for this template -->
-  <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="../../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
 
   <!-- Custom styles for this template -->
-  <link href="../css/clean-blog.min.css" rel="stylesheet">
+  <link href="../../css/clean-blog.min.css" rel="stylesheet">
 
 </head>
 
 <body>
-
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand"><img src="../img/logo.png" height="45" width="45"> Herpic</a>
+      <a class="navbar-brand"><img src="../../img/logo.png" height="45" width="45"> Herpic</a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         Menu
         <i class="fas fa-bars"></i>
@@ -42,11 +39,11 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-            <a class="nav-link" href="profesor.php">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="../logout.php">CERRAR SESIÓN</a>
-          </li>
+            <a class="nav-link" href="../profesor.php">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="../../logout.php">CERRAR SESIÓN</a>
+        </li>
         </ul>
       </div>
     </div>
@@ -64,27 +61,22 @@
     /* Sacamos las id que necesitamos y las guardamos en variables*/
     $nombrecurso = mysqli_query($conn, "SELECT nombre FROM cursos WHERE id='$idcurso'");
     $curso = mysqli_fetch_array($nombrecurso);
-      
-    $consultaalumno = mysqli_query($conn, "SELECT idalumno FROM alumnos_cursos WHERE idcurso='$idcurso'");
-      //echo $idalumno['idalumno'];
 
-    /* Con las id que hemos sacado antes, sacamos el nombre del curso que imparte el profesor y el alumnó que está matriculado en el cusro */
-    
+    $consultaexamen = mysqli_query($conn, "SELECT id, tema, temanum, publico FROM examenes WHERE idcurso='$idcurso'");
 
   ?>
 
-
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('../img/cursoprof.jpg')">
+  <header class="masthead" style="background-image: url('../../img/examenes.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="site-heading">
-            <h1>CURSO</h1>
+            <h1>EXÁMENES</h1>
             <span class="subheading">
             <?php
-                echo $curso['nombre'];
+                echo "Exámenes del curso " . $curso['nombre'];
             ?>
             </span>
           </div>
@@ -93,38 +85,78 @@
     </div>
   </header>
 
-  
 
-  <!-- Cursos matriculados -->
+  <!-- Exámenes disponibles para el curso -->
   <div class="container">
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
       <!-- bucle para mostrar todos los cursos  -->
         <?php
-            while ($idalumno = mysqli_fetch_array($consultaalumno)){
-                $mostar_alumno = mysqli_query($conn, "SELECT nombre, apellidos FROM alumnos WHERE id='$idalumno[idalumno]'");
-                while ($reg = mysqli_fetch_array($mostar_alumno)){
+            while ($examen = mysqli_fetch_array($consultaexamen)){
             ?>
         <div class="post-preview">
           <a>
             <h2 class="post-title">
             <?php
-                echo $reg['apellidos'] . ", " . $reg['nombre'];
+                echo $examen['tema'] . ", Tema: " . $examen['temanum'];
               ?>
             </h2>
             <h3 class="post-subtitle">
-
+            <?php
+                if ($examen['publico'] == 0) {
+                    echo "Estado del examen: NO PUBLICADO";
+                }
+                elseif ($examen['publico'] == 1) {
+                    echo "Estado del examen: PUBLICADO";
+                }
+                else {
+                    echo "ha dao un caske xD";
+                }
+              ?>
             </h3>
+            <div class="post-preview">
+                <form action="verexamen.php" method="POST">
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary" id="sendMessageButton" name="ver" value="<?php echo $examen['id']?>">Ver examen</button>
+                    </div>
+                </form>
+            </div>
+            <div class="post-preview">
+                <form action="dropexamen.php" method="POST">
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary" id="sendMessageButton" name="borrar" value="<?php echo $examen['id']?>">Borrar examen</button>
+                    </div>
+                </form>
+            </div>
+            <?php
+                if ($examen['publico'] == 0) {
+                
+            ?>
+            <div class="post-preview">
+                <form action="publicar.php" method="POST">
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary" id="sendMessageButton" name="publico" value="<?php echo $examen['id']?>">Publicar examen</button>
+                    </div>
+                </form>
+            </div>
+            <?php
+            }
+            elseif ($examen['publico'] == 1) {
+            ?>
+            <div class="post-preview">
+                <form action="publicar.php" method="POST">
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary" id="sendMessageButton" name="publico" value="<?php echo $examen['id']?>">Ocultar examen</button>
+                    </div>
+                </form>
+            </div>
+            <?php
+            }
+            ?>
           </a>
-          <form action="examenesalumnos.php" method="POST">
-              <div class="form-group">
-                <button type="submit" class="btn btn-primary" id="sendMessageButton" name="editar">Ver examenes</button>
-              </div>
-            </form>
         </div>
         <hr>
       <?php
-                }
             } 
       ?>
       <!-- bucle para mostrar todos los exámenes  -->
@@ -132,19 +164,9 @@
         <?php
           mysqli_close($conn);
         ?>
-
-  <!-- Botón ver exámenes -->
-      <div class="post-preview">
-        <form action="./examenes/examenes.php" method="POST">
-          <div class="form-group">
-            <button type="submit" class="btn btn-primary" id="sendMessageButton" name="examenes">Exámenes</button>
-          </div>
-        </form>
-        </div> 
-
   <!-- Botón nuevo examen -->
       <div class="post-preview">
-        <form action="./examenes/temaexamen.php" method="POST">
+        <form action="temaexamen.php" method="POST">
           <div class="form-group">
             <button type="submit" class="btn btn-primary" id="sendMessageButton" name="nuevo" value="<?php echo $idcurso?>">Nuevo Examen</button>
           </div>
@@ -183,11 +205,11 @@
   </footer>
 
   <!-- Bootstrap core JavaScript -->
-  <script src="../vendor/jquery/jquery.min.js"></script>
-  <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../../vendor/jquery/jquery.min.js"></script>
+  <script src="../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
   <!-- Custom scripts for this template -->
-  <script src="../js/clean-blog.min.js"></script>
+  <script src="../../js/clean-blog.min.js"></script>
 
 </body>
 </html>
