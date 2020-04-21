@@ -1,72 +1,17 @@
-<?php session_start(); 
-  $usu = $_SESSION['usuario'];
-?>
 <!DOCTYPE html>
-<html lang="en">
+<?php session_start(); 
+$usu = $_SESSION['usuario'];
+$idexamen = $_POST['examen'];
+$i = 0;
+$pregcont = array(0);
 
-<head>
+$_SESSION['i'] = $i;
+$_SESSION['idexamen'] = $idexamen;
+$_SESSION['pregunta'] = $pregcont;
 
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
+//print_r ($_SESSION['pregunta']);
 
-  <title>Herpic - Alumno</title>
-
-  <!-- Bootstrap core CSS -->
-  <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-  <!-- Custom fonts for this template -->
-  <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
-  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-
-  <!-- Custom styles for this template -->
-  <link href="../css/clean-blog.min.css" rel="stylesheet">
-
-</head>
-
-<body>
-
-  <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
-    <div class="container">
-      <a class="navbar-brand"><img src="../img/logo.png" height="45" width="45"> Herpic</a>
-      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-        Menu
-        <i class="fas fa-bars"></i>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="cursos.php">Cursos</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="../logout.php">CERRAR SESIÓN</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-
-  <!-- Page Header -->
-  <header class="masthead" style="background-image: url('../img/alumno.jpg')">
-    <div class="overlay"></div>
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8 col-md-10 mx-auto">
-          <div class="site-heading">
-            <h1>Bienvenido</h1>
-            <span class="subheading">
-            <?php
-              echo $usu;
-            ?>
-            </span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </header>
+?>
 
   <!-- conexión base de datos -->
   <?php
@@ -80,59 +25,94 @@
     /* Sacamos las id que necesitemos y las guardamos en variables */
     $consultaalumno = mysqli_query($conn, "SELECT id FROM alumnos WHERE usuario='$usu'");
     $idalumno = mysqli_fetch_array($consultaalumno);
-      //echo $idalumno['id'];
-
-    $consultacurso = mysqli_query($conn, "SELECT idcurso FROM alumnos_cursos WHERE idalumno='$idalumno[id]'");
-      //echo $idcurso['idcurso'];
-
+    
+    $_SESSION['idalumno'] = $idalumno['id'];
     
   ?>
 
-  <!-- Cursos matriculados -->
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Herpic - contact</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="../../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom fonts for this template -->
+  <link href="../../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+  <!-- Custom styles for this template -->
+  <link href="../../css/clean-blog.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand"><img src="../../img/logo.png" height="45" width="45"> Herpic</a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('../../img/examen.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="page-heading">
+            <h1>EXAMEN</h1>
+            <span class="subheading">Vas a comenzar el examen</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- avisos -->
   <div class="container">
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
-  <!-- bucle para mostrar todos los cursos  -->
-      <?php
-      
-      while ($idcurso = mysqli_fetch_array($consultacurso)){
-      $mostar_cursos_matriculados = mysqli_query($conn, "SELECT nombre, descripcion FROM cursos WHERE id='$idcurso[idcurso]'") or die("No estás matriculado en ningún curso");
-    
-        while ($reg = mysqli_fetch_array($mostar_cursos_matriculados)){
-      ?>
       <div class="post-preview">
           <a>
             <h2 class="post-title">
-              <?php
-                echo $reg['nombre'];
-              ?>
+                ATENCIÓN
             </h2>
             <h3 class="post-subtitle">
-              <?php
-                echo $reg['descripcion'];
-              ?>
+                Vas a comenzar el examen. Dura 40 minutos.
+                <br>
+                Una vez que empieces no hay marcha atrás. ¿Estás preparado?
             </h3>
           </a>
-          <form action="vercurso.php" method="POST">
+            <form action="doexamen.php" method="POST">
               <div class="form-group">
-                <button type="submit" class="btn btn-primary" id="sendMessageButton" name="acceder" value="<?php echo $idcurso['idcurso'] ?>">Acceder</button>
+                <button type="submit" class="btn btn-primary" id="sendMessageButton" name="examen">Hacer examen</button>
+              </div>
+            </form>
+            <form action="../alumno.php" method="POST">
+              <div class="form-group">
+                <button type="submit" class="btn btn-primary" id="sendMessageButton" name="prueba">Volver</button>
               </div>
             </form>
         </div>
         <hr>
-
-      <?php
-      }
-    }
-      mysqli_close($conn);
-      ?>
-
-      <form action="editalumno.php" method="POST">
-          <div class="form-group">
-            <button type="submit" class="btn btn-primary" id="sendMessageButton" name="editar">Editar datos</button>
-        </div>
-      </form>
-
   <!-- Footer -->
   <footer>
     <div class="container">
@@ -163,11 +143,15 @@
   </footer>
 
   <!-- Bootstrap core JavaScript -->
-  <script src="../vendor/jquery/jquery.min.js"></script>
-  <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../../vendor/jquery/jquery.min.js"></script>
+  <script src="../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Contact Form JavaScript -->
+  <script src="../../js/jqBootstrapValidation.js"></script>
+  <script src="../../js/contact_me.js"></script>
 
   <!-- Custom scripts for this template -->
-  <script src="../js/clean-blog.min.js"></script>
+  <script src="../../js/clean-blog.min.js"></script>
 
 </body>
 </html>

@@ -1,5 +1,6 @@
 <?php session_start(); 
   $usu = $_SESSION['usuario'];
+  $idcurso = $_POST['acceder'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -28,6 +29,26 @@
 
 <body>
 
+  <!-- conexión base de datos -->
+  <?php
+    $conn = mysqli_connect('localhost', 'root', '1234', 'herpic');
+
+    if (!$conn) {
+        die("Connection failed: " . mysqli_connect_error());
+    }
+    $tildes = $conn->query("SET NAMES 'utf8'"); //Con esto muestra las tíldes
+
+    /* Sacamos las id que necesitemos y las guardamos en variables */
+    $consultacurso = mysqli_query($conn, "SELECT nombre FROM cursos WHERE id='$idcurso'");
+    $curso = mysqli_fetch_array($consultacurso);
+      //echo $curso['nombre'];
+
+    $consultaexamen = mysqli_query($conn, "SELECT id, tema, temanum FROM examenes WHERE idcurso='$idcurso' AND publico=1 ORDER BY temanum");
+      //echo $idcurso['idcurso'];
+
+    
+  ?>
+
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
@@ -39,7 +60,7 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a class="nav-link" href="cursos.php">Cursos</a>
+            <a class="nav-link" href="alumno.php">Atrás</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="../logout.php">CERRAR SESIÓN</a>
@@ -50,13 +71,17 @@
   </nav>
 
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('../img/alumno.jpg')">
+  <header class="masthead" style="background-image: url('../img/vercurso.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="site-heading">
-            <h1>Bienvenido</h1>
+            <h1>
+                <?php
+                    echo $curso['nombre'];
+                ?>
+            </h1>
             <span class="subheading">
             <?php
               echo $usu;
@@ -68,26 +93,6 @@
     </div>
   </header>
 
-  <!-- conexión base de datos -->
-  <?php
-    $conn = mysqli_connect('localhost', 'root', '1234', 'herpic');
-
-    if (!$conn) {
-        die("Connection failed: " . mysqli_connect_error());
-    }
-    $tildes = $conn->query("SET NAMES 'utf8'"); //Con esto muestra las tíldes
-
-    /* Sacamos las id que necesitemos y las guardamos en variables */
-    $consultaalumno = mysqli_query($conn, "SELECT id FROM alumnos WHERE usuario='$usu'");
-    $idalumno = mysqli_fetch_array($consultaalumno);
-      //echo $idalumno['id'];
-
-    $consultacurso = mysqli_query($conn, "SELECT idcurso FROM alumnos_cursos WHERE idalumno='$idalumno[id]'");
-      //echo $idcurso['idcurso'];
-
-    
-  ?>
-
   <!-- Cursos matriculados -->
   <div class="container">
     <div class="row">
@@ -95,43 +100,37 @@
   <!-- bucle para mostrar todos los cursos  -->
       <?php
       
-      while ($idcurso = mysqli_fetch_array($consultacurso)){
-      $mostar_cursos_matriculados = mysqli_query($conn, "SELECT nombre, descripcion FROM cursos WHERE id='$idcurso[idcurso]'") or die("No estás matriculado en ningún curso");
-    
-        while ($reg = mysqli_fetch_array($mostar_cursos_matriculados)){
+      while ($examenes = mysqli_fetch_array($consultaexamen)){
       ?>
       <div class="post-preview">
           <a>
             <h2 class="post-title">
               <?php
-                echo $reg['nombre'];
+                echo "Título: " . $examenes['tema'];
               ?>
             </h2>
             <h3 class="post-subtitle">
               <?php
-                echo $reg['descripcion'];
+                echo "Tema: " . $examenes['temanum'];
               ?>
             </h3>
           </a>
-          <form action="vercurso.php" method="POST">
+            <form action="./examenes/hacerexamen.php" method="POST">
               <div class="form-group">
-                <button type="submit" class="btn btn-primary" id="sendMessageButton" name="acceder" value="<?php echo $idcurso['idcurso'] ?>">Acceder</button>
+                <button type="submit" class="btn btn-primary" id="sendMessageButton" name="examen" value="<?php echo $examenes['id'] ?>">Hacer examen</button>
+              </div>
+            </form>
+            <form action="hacerprueba.php" method="POST">
+              <div class="form-group">
+                <button type="submit" class="btn btn-primary" id="sendMessageButton" name="prueba" value="<?php echo $examenes['id'] ?>">Hacer prueba</button>
               </div>
             </form>
         </div>
         <hr>
-
       <?php
       }
-    }
       mysqli_close($conn);
       ?>
-
-      <form action="editalumno.php" method="POST">
-          <div class="form-group">
-            <button type="submit" class="btn btn-primary" id="sendMessageButton" name="editar">Editar datos</button>
-        </div>
-      </form>
 
   <!-- Footer -->
   <footer>
