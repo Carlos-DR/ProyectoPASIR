@@ -18,7 +18,7 @@ $idalumno = $_SESSION['idalumno'];
     $tildes = $conn->query("SET NAMES 'utf8'"); //Con esto muestra las tíldes
 
     /* Sacamos las id que necesitemos y las guardamos en variables */
-    $consultapregunta = mysqli_query($conn, "SELECT pregunta, correcta, incorrecta1, incorrecta2, incorrecta3 FROM preguntas WHERE idexamen='$idexamen' AND id NOT IN (".implode(",",$pregcont).") ORDER BY RAND()");
+    $consultapregunta = mysqli_query($conn, "SELECT id, pregunta, correcta, incorrecta1, incorrecta2, incorrecta3 FROM preguntas WHERE idexamen='$idexamen' AND id NOT IN (".implode(",",$pregcont).") ORDER BY RAND()");
     $pregunta = mysqli_fetch_array($consultapregunta);
     
   ?>
@@ -71,13 +71,19 @@ $idalumno = $_SESSION['idalumno'];
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="page-heading">
+          <span class="subheading">Llevas <?php echo $i; ?> preguntas.</span>
           </div>
         </div>
       </div>
     </div>
   </header>
 
-  <!-- avisos -->
+  <?php
+  //Abrimos un if para controlar el bucle que hemos creado manualmente
+  if ($i < 10) {
+  ?>
+
+  <!-- preguntas -->
   <div class="container">
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
@@ -90,28 +96,68 @@ $idalumno = $_SESSION['idalumno'];
             </h2>
             <h3 class="post-subtitle">
                 <?php
-                    $resp = array($pregunta['correcta'], $pregunta['incorrecta1'], $pregunta['incorrecta2'], $pregunta['incorrecta3']); 
-                    for ($p=0; $p < 4 ; $p++) { 
-                        $random = rand(0,3);
+                    if ($pregunta['correcta'] == NULL) {
                 ?>
-                    <input type="radio" name="transporte" value="1">
-                        <?php
-                            print_r($resp[$random]);
-                            echo "<br>";
-                        ?>
-                    </input>
+                  <div class="control-group">
+                    <div class="form-group floating-label-form-group controls">
+                    <form action="examen.php" method="POST">
+                      <label>Respuesta</label>
+                      <textarea maxlength="255" rows="5" class="form-control" placeholder="Escriba aqui su respuesta..." name="desarrollo"></textarea>
+                    </div>
+                    </h3>
+                    </a>
+                        <div class="form-group">
+                          <button type="submit" class="btn btn-primary" id="sendMessageButton" name="siguiente" value="<?php echo $pregunta['id'] ?>">Siguiente</button>
+                        </div>
+                      </form>
+                  </div>
                 <?php
                     }
-                ?>
-            </h3>
-          </a>
-            <form action="doexamen.php" method="POST">
-              <div class="form-group">
-                <button type="submit" class="btn btn-primary" id="sendMessageButton" name="examen">Siguiente</button>
-              </div>
-            </form>
-        </div>
+                    else {
+                      $resp = array($pregunta['correcta'], $pregunta['incorrecta1'], $pregunta['incorrecta2'], $pregunta['incorrecta3']);
+                      shuffle($resp);
+                      ?>
+                      <form action="examen.php" method="POST">
+                        <?php for ($p=0; $p < 4 ; $p++) { ?>
+                          <input type="radio" name="respuesta" value="<?php echo $resp[$p] ?>">
+                              <?php
+                                  print_r($resp[$p]);
+                                  echo "<br>";
+                              ?>
+                          </input>
+                        <?php } ?>
+                        </h3>
+                        <div class="form-group">
+                          <button type="submit" class="btn btn-primary" id="sendMessageButton" name="siguiente" value="<?php echo $pregunta['id'] ?>">Siguiente</button>
+                        </div>
+                      </form>
+                      <?php } ?>
         <hr>
+
+  <?php
+  //Cierre del if que hace el bucle
+  }
+
+  //Aqui abrimos otro if, que controla que ya tenemos 10 preguntas
+  elseif ($i == 10) {
+    ?>
+    <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <p>Examen finalizado.</p>
+        <form name="sentMessage" novalidate action="nota.php">
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary" id="sendMessageButton">Ver nota</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+<hr>
+<?php
+// Aquí cerramos el elsif
+  }
+?>
   <!-- Footer -->
   <footer>
     <div class="container">

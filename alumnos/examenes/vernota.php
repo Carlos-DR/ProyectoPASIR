@@ -1,17 +1,8 @@
 <!DOCTYPE html>
 <?php session_start(); 
 $usu = $_SESSION['usuario'];
-$idexamen = $_POST['examen'];
-$i = 0;
-$nota = 0;
-$pregcont = array(0);
-
-$_SESSION['i'] = $i;
-$_SESSION['nota'] = $nota;
-$_SESSION['idexamen'] = $idexamen;
-$_SESSION['pregunta'] = $pregcont;
-
-//print_r ($_SESSION['pregunta']);
+$idexamen = $_SESSION['idexamen'];
+$idalumno = $_SESSION['idalumno'];
 
 ?>
 
@@ -25,11 +16,11 @@ $_SESSION['pregunta'] = $pregcont;
     $tildes = $conn->query("SET NAMES 'utf8'"); //Con esto muestra las tíldes
 
     /* Sacamos las id que necesitemos y las guardamos en variables */
-    $consultaalumno = mysqli_query($conn, "SELECT id FROM alumnos WHERE usuario='$usu'");
-    $idalumno = mysqli_fetch_array($consultaalumno);
+    $consultanota = mysqli_query($conn, "SELECT nota FROM notas WHERE idalumno='$idalumno' AND idexamen='$idexamen'");
+    $nota = mysqli_fetch_array($consultanotas);
     
-    $_SESSION['idalumno'] = $idalumno['id'];
-    
+    $fallos = 10 - $nota['nota'];
+
   ?>
 
 <html lang="en">
@@ -80,8 +71,8 @@ $_SESSION['pregunta'] = $pregcont;
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="page-heading">
-            <h1>EXAMEN</h1>
-            <span class="subheading">Vas a comenzar el examen</span>
+            <h1>nota</h1>
+            <span class="subheading">Consulta su nota</span>
           </div>
         </div>
       </div>
@@ -95,22 +86,17 @@ $_SESSION['pregunta'] = $pregcont;
       <div class="post-preview">
           <a>
             <h2 class="post-title">
-                ATENCIÓN
+                Su nota es: <?php echo $nota['nota']; ?>
             </h2>
             <h3 class="post-subtitle">
-                Vas a comenzar el examen. Dura 40 minutos.
+                Ha tenido <?php echo $fallos; ?> fallos
                 <br>
-                Una vez que empieces no hay marcha atrás. ¿Estás preparado?
+                Es posible que esta nota no sea difinitiva, el profesor tiene que revisar el examen.
             </h3>
           </a>
-            <form action="doexamen.php" method="POST">
+            <form action="../alumno.php">
               <div class="form-group">
-                <button type="submit" class="btn btn-primary" id="sendMessageButton" name="examen">Hacer examen</button>
-              </div>
-            </form>
-            <form action="../alumno.php" method="POST">
-              <div class="form-group">
-                <button type="submit" class="btn btn-primary" id="sendMessageButton" name="prueba">Volver</button>
+                <button type="submit" class="btn btn-primary" id="sendMessageButton">Inicio</button>
               </div>
             </form>
         </div>
