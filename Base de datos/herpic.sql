@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 18-04-2020 a las 19:01:43
+-- Tiempo de generación: 22-04-2020 a las 16:37:40
 -- Versión del servidor: 10.4.11-MariaDB
 -- Versión de PHP: 7.4.3
 
@@ -67,7 +67,6 @@ CREATE TABLE `alumnos_cursos` (
 INSERT INTO `alumnos_cursos` (`idalumno`, `idcurso`) VALUES
 (1, 1),
 (1, 2),
-(1, 3),
 (2, 1),
 (2, 2);
 
@@ -137,8 +136,17 @@ CREATE TABLE `examenes` (
   `id` int(11) NOT NULL,
   `tema` varchar(50) NOT NULL,
   `temanum` int(3) NOT NULL,
+  `publico` tinyint(1) NOT NULL DEFAULT 0,
   `idcurso` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `examenes`
+--
+
+INSERT INTO `examenes` (`id`, `tema`, `temanum`, `publico`, `idcurso`) VALUES
+(1, 'Prueba 1', 1, 1, 2),
+(2, 'Examen 2', 3, 1, 2);
 
 -- --------------------------------------------------------
 
@@ -149,8 +157,16 @@ CREATE TABLE `examenes` (
 CREATE TABLE `notas` (
   `idalumno` int(11) NOT NULL,
   `idexamen` int(11) NOT NULL,
-  `nota` decimal(10,0) NOT NULL
+  `nota` decimal(10,0) NOT NULL DEFAULT 0,
+  `hecho` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `notas`
+--
+
+INSERT INTO `notas` (`idalumno`, `idexamen`, `nota`, `hecho`) VALUES
+(1, 2, '0', 0);
 
 -- --------------------------------------------------------
 
@@ -161,12 +177,38 @@ CREATE TABLE `notas` (
 CREATE TABLE `preguntas` (
   `id` int(11) NOT NULL,
   `pregunta` varchar(100) NOT NULL,
-  `correcta` varchar(50) NOT NULL,
-  `incorrecta1` varchar(50) NOT NULL,
-  `incorrecta2` varchar(50) NOT NULL,
-  `incorrecta3` varchar(50) NOT NULL,
+  `correcta` varchar(50) DEFAULT NULL,
+  `incorrecta1` varchar(50) DEFAULT NULL,
+  `incorrecta2` varchar(50) DEFAULT NULL,
+  `incorrecta3` varchar(50) DEFAULT NULL,
   `idexamen` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `preguntas`
+--
+
+INSERT INTO `preguntas` (`id`, `pregunta`, `correcta`, `incorrecta1`, `incorrecta2`, `incorrecta3`, `idexamen`) VALUES
+(1, 'pregunta 1', 'esta es la buena ', 'esta es mala', 'esta tambien', 'cuidao', 1),
+(2, 'Esta es la pregunta', NULL, NULL, NULL, NULL, 1),
+(3, 'Otra mas', 'jkadfsgj', 'kjbnlk', 'hjbl', 'hv', 1),
+(4, 'mas preguntas', 'kjdfgkj', 'kjhlkjh', 'kjh', 'kjhjkhb', 1),
+(5, 'jkfngkjn', 'khjbljhgvgv', 'ljhbvljh', 'jhlvbhj', 'ljkhbljh', 1),
+(6, 'fdghdfgh', NULL, NULL, NULL, NULL, 1),
+(7, 'dfgsdfhsj', 'dfgsdfgsdfgh', 'dsfgsdfg', 'dafgdsafgh', 'dfhsdfh', 1),
+(8, 'sdfgsdfgh', NULL, NULL, NULL, NULL, 1),
+(9, 'sfghsdfgh', 'gfdgsdfgsdfh', 'sdfhsdfh', 'sdfhgsdfh', 'dfhsdfgh', 1),
+(10, 'sdfhsdfgh', 'dsfhgsfdgh', 'hfgdh', 'dfsgsdfg', 'sdfh', 1),
+(23, 'Una pregunta', 'werterty', 'fdgj', 'dgasdf', 'fghdfgh', 2),
+(24, 'otra rpegunta', 'hsrght', 'asdffgsd', 'gdhjghkj', 'asdgfadfg', 2),
+(25, 'mas preuntas', 'kfhgjk', 'sdaf', 'dfhav', 'bhsfj', 2),
+(26, 'Illo no se me cocurre mas y quedan 7', 'fghjfsgj', 'dsfgadfh', 'sfgh', 'sfgjdhfgj', 2),
+(27, 'Tu lo sabes?', 'dfghd', 'fhsfgjsfj', 'sfgjdshgj', 'afgadfhg', 2),
+(28, 'cualquier pregunta', NULL, NULL, NULL, NULL, 2),
+(29, 'mas tio mas', NULL, NULL, NULL, NULL, 2),
+(30, 'por qué?', NULL, NULL, NULL, NULL, 2),
+(31, 'por qué no?', NULL, NULL, NULL, NULL, 2),
+(32, 'ultima pregunta', NULL, NULL, NULL, NULL, 2);
 
 -- --------------------------------------------------------
 
@@ -194,6 +236,32 @@ INSERT INTO `profesores` (`id`, `nombre`, `apellidos`, `usuario`, `email`, `cont
 (3, 'David', 'Galván', 'Jakl2', 'ksjdhf@kjsdfn.com', '81dc9bdb52d04dc20036dbd8313ed055', 0),
 (8, 'Manolito', 'Gafotas', 'ManuGafo', 'manolitos@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055', 0),
 (10, 'Juan', 'Morales Lopez', 'juanmi', 'juan@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `respuestas`
+--
+
+CREATE TABLE `respuestas` (
+  `id` int(11) NOT NULL,
+  `idpregunta` int(11) NOT NULL,
+  `idalumno` int(11) NOT NULL,
+  `respuesta` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `respuestas`
+--
+
+INSERT INTO `respuestas` (`id`, `idpregunta`, `idalumno`, `respuesta`) VALUES
+(1, 28, 1, 'Hola buenas'),
+(2, 31, 1, 'dfgsdf'),
+(3, 29, 1, 'asdfgadfg'),
+(4, 30, 1, 'asdfhadfgh'),
+(5, 2, 1, 'esto es una respuesta'),
+(6, 6, 1, 'dfgafd'),
+(7, 8, 1, 'afdsgafdg');
 
 --
 -- Índices para tablas volcadas
@@ -266,6 +334,14 @@ ALTER TABLE `profesores`
   ADD UNIQUE KEY `email` (`email`);
 
 --
+-- Indices de la tabla `respuestas`
+--
+ALTER TABLE `respuestas`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idpregunta` (`idpregunta`),
+  ADD KEY `idalumno` (`idalumno`);
+
+--
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
@@ -291,19 +367,25 @@ ALTER TABLE `cursos`
 -- AUTO_INCREMENT de la tabla `examenes`
 --
 ALTER TABLE `examenes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `preguntas`
 --
 ALTER TABLE `preguntas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT de la tabla `profesores`
 --
 ALTER TABLE `profesores`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT de la tabla `respuestas`
+--
+ALTER TABLE `respuestas`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Restricciones para tablas volcadas
@@ -341,6 +423,13 @@ ALTER TABLE `notas`
 --
 ALTER TABLE `preguntas`
   ADD CONSTRAINT `preguntas_ibfk_1` FOREIGN KEY (`idexamen`) REFERENCES `examenes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `respuestas`
+--
+ALTER TABLE `respuestas`
+  ADD CONSTRAINT `respuestas_ibfk_1` FOREIGN KEY (`idpregunta`) REFERENCES `preguntas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `respuestas_ibfk_2` FOREIGN KEY (`idalumno`) REFERENCES `alumnos` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
