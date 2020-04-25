@@ -17,8 +17,7 @@ $idalumno = $_SESSION['idalumno'];
 
     /* Sacamos las id que necesitemos y las guardamos en variables */
     $consultanota = mysqli_query($conn, "SELECT nota FROM notas WHERE idalumno='$idalumno' AND idexamen='$idexamen'");
-    $nota = mysqli_fetch_array($consultanotas);
-    
+    $nota = mysqli_fetch_array($consultanota);
     $fallos = 10 - $nota['nota'];
 
   ?>

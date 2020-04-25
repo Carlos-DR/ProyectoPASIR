@@ -19,7 +19,7 @@
 
 
     //Creamos variable insert para insetar datos
-    $insert = "INSERT INTO notas(idalumno, idexamen, nota, hecho) values('$idalumno', '$idexamen', '$nota', 1;)";
+    $insert = "INSERT INTO notas(idalumno, idexamen, nota, hecho) values('$idalumno', '$idexamen', '$nota', 1)";
     
     //Creamos variable return para conectarnos a la base de datos e insertar los datos de la variable insert 
     $return = mysqli_query($conn, $insert);

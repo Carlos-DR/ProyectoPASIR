@@ -43,9 +43,12 @@
     $curso = mysqli_fetch_array($consultacurso);
       //echo $curso['nombre'];
 
-    $consultaexamen = mysqli_query($conn, "SELECT id, tema, temanum FROM examenes WHERE idcurso='$idcurso' AND publico=1 ORDER BY temanum");
-      //echo $idcurso['idcurso'];
+    $consultaalumno = mysqli_query($conn, "SELECT id FROM alumnos WHERE usuario='$usu'");
+    $alumno = mysqli_fetch_array($consultaalumno);
+      //echo $alumno['id'];
 
+    $consultaexamen = mysqli_query($conn, "SELECT id, tema, temanum FROM examenes WHERE idcurso='$idcurso' AND publico=1 ORDER BY temanum");
+    
     
   ?>
 
@@ -99,7 +102,6 @@
       <div class="col-lg-8 col-md-10 mx-auto">
   <!-- bucle para mostrar todos los cursos  -->
       <?php
-      
       while ($examenes = mysqli_fetch_array($consultaexamen)){
       ?>
       <div class="post-preview">
@@ -111,10 +113,20 @@
             </h2>
             <h3 class="post-subtitle">
               <?php
-                echo "Tema: " . $examenes['temanum'];
+                echo "<b>Tema: </b>" . $examenes['temanum'];
+                  $consultanota = mysqli_query($conn, "SELECT nota, hecho FROM notas WHERE idexamen='$examenes[id]' AND idalumno='$alumno[id]'");
+                  $nota = mysqli_fetch_array($consultanota);
+                    //echo $nota['nota'];
+                if (isset($nota) && $nota['hecho'] == 1) {
+                  echo "<br><b>Nota: </b>" . $nota['nota'];
+                }
               ?>
             </h3>
           </a>
+          <?php
+            if (!isset($nota)) {
+              
+          ?>
             <form action="./examenes/hacerexamen.php" method="POST">
               <div class="form-group">
                 <button type="submit" class="btn btn-primary" id="sendMessageButton" name="examen" value="<?php echo $examenes['id'] ?>">Hacer examen</button>
@@ -128,6 +140,7 @@
         </div>
         <hr>
       <?php
+            }
       }
       mysqli_close($conn);
       ?>

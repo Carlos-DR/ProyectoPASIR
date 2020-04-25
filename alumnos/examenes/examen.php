@@ -22,7 +22,7 @@
     $desar = $_POST['desarrollo'];
 
 
-    if (isset($desar)) {
+    if (isset($desar) && strlen(trim($desar)) > 0) {
 
         //Creamos variable insert para insetar datos
         $insert = "INSERT INTO respuestas(idpregunta, idalumno, respuesta) values('$idpregunta', '$idalumno', '$desar')";
@@ -36,10 +36,10 @@
     elseif (isset($test)) {
 
         //Creamos una consulta para comprobar si la respuesta es la correcta
-        $consultarespuesta = mysqli_query($conn, "SELECT correcta FROM preguntas WHERE correcta='$test'");
+        $consultarespuesta = mysqli_query($conn, "SELECT id FROM preguntas WHERE correcta='$test'");
         $respuesta = mysqli_fetch_array($consultarespuesta);
 
-        if (isset($respuesta['correcta'])) {
+        if (isset($respuesta['id'])) {
             $_SESSION['nota'] = $_SESSION['nota']+1;
             header('Location: doexamen.php');
             mysqli_close($conn);

@@ -110,7 +110,7 @@ $_SESSION['pregunta'] = $pregcont;
             </form>
             <form action="../alumno.php" method="POST">
               <div class="form-group">
-                <button type="submit" class="btn btn-primary" id="sendMessageButton" name="prueba">Volver</button>
+                <button type="submit" class="btn btn-primary" id="sendMessageButton" name="volver">Volver</button>
               </div>
             </form>
         </div>
