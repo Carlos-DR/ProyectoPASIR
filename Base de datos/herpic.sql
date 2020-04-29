@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 22-04-2020 a las 16:37:40
+-- Tiempo de generación: 29-04-2020 a las 22:23:09
 -- Versión del servidor: 10.4.11-MariaDB
 -- Versión de PHP: 7.4.3
 
@@ -137,6 +137,7 @@ CREATE TABLE `examenes` (
   `tema` varchar(50) NOT NULL,
   `temanum` int(3) NOT NULL,
   `publico` tinyint(1) NOT NULL DEFAULT 0,
+  `mixto` tinyint(1) NOT NULL DEFAULT 0,
   `idcurso` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -144,9 +145,9 @@ CREATE TABLE `examenes` (
 -- Volcado de datos para la tabla `examenes`
 --
 
-INSERT INTO `examenes` (`id`, `tema`, `temanum`, `publico`, `idcurso`) VALUES
-(1, 'Prueba 1', 1, 1, 2),
-(2, 'Examen 2', 3, 1, 2);
+INSERT INTO `examenes` (`id`, `tema`, `temanum`, `publico`, `mixto`, `idcurso`) VALUES
+(1, 'Prueba 1', 1, 1, 1, 2),
+(2, 'Examen 2', 3, 1, 1, 2);
 
 -- --------------------------------------------------------
 
@@ -155,9 +156,11 @@ INSERT INTO `examenes` (`id`, `tema`, `temanum`, `publico`, `idcurso`) VALUES
 --
 
 CREATE TABLE `notas` (
+  `id` int(11) NOT NULL,
   `idalumno` int(11) NOT NULL,
   `idexamen` int(11) NOT NULL,
   `nota` decimal(10,0) NOT NULL DEFAULT 0,
+  `fallos` decimal(10,0) NOT NULL DEFAULT 0,
   `hecho` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -165,8 +168,9 @@ CREATE TABLE `notas` (
 -- Volcado de datos para la tabla `notas`
 --
 
-INSERT INTO `notas` (`idalumno`, `idexamen`, `nota`, `hecho`) VALUES
-(1, 2, '0', 0);
+INSERT INTO `notas` (`id`, `idalumno`, `idexamen`, `nota`, `fallos`, `hecho`) VALUES
+(2, 1, 2, '5', '0', 1),
+(4, 1, 1, '4', '3', 1);
 
 -- --------------------------------------------------------
 
@@ -234,8 +238,7 @@ INSERT INTO `profesores` (`id`, `nombre`, `apellidos`, `usuario`, `email`, `cont
 (1, 'Herpic', '', 'Herpic', 'herpic@gmail.com', '9150a8de9b1304a546f29798de4db840', 1),
 (2, 'Antonio', 'Cruz', 'antoniocruz', 'antoniocruz@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055', 0),
 (3, 'David', 'Galván', 'Jakl2', 'ksjdhf@kjsdfn.com', '81dc9bdb52d04dc20036dbd8313ed055', 0),
-(8, 'Manolito', 'Gafotas', 'ManuGafo', 'manolitos@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055', 0),
-(10, 'Juan', 'Morales Lopez', 'juanmi', 'juan@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055', 0);
+(8, 'Manolito', 'Gafotas', 'ManuGafo', 'manolitos@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055', 0);
 
 -- --------------------------------------------------------
 
@@ -255,13 +258,17 @@ CREATE TABLE `respuestas` (
 --
 
 INSERT INTO `respuestas` (`id`, `idpregunta`, `idalumno`, `respuesta`) VALUES
-(1, 28, 1, 'Hola buenas'),
-(2, 31, 1, 'dfgsdf'),
-(3, 29, 1, 'asdfgadfg'),
-(4, 30, 1, 'asdfhadfgh'),
-(5, 2, 1, 'esto es una respuesta'),
-(6, 6, 1, 'dfgafd'),
-(7, 8, 1, 'afdsgafdg');
+(41, 28, 1, 'respuesta'),
+(42, 32, 1, 'mas pregunta'),
+(43, 29, 1, 'mas tio mas'),
+(44, 30, 1, 'porque si'),
+(45, 31, 1, 'porque no'),
+(46, 6, 1, 'Altealorio'),
+(47, 8, 1, 'random'),
+(48, 2, 1, 'pregunta'),
+(49, 8, 1, 'random'),
+(50, 2, 1, 'Altealorio'),
+(51, 6, 1, 'more preguntas');
 
 --
 -- Índices para tablas volcadas
@@ -315,6 +322,7 @@ ALTER TABLE `examenes`
 -- Indices de la tabla `notas`
 --
 ALTER TABLE `notas`
+  ADD PRIMARY KEY (`id`),
   ADD KEY `idalumno` (`idalumno`),
   ADD KEY `idexamen` (`idexamen`);
 
@@ -355,7 +363,7 @@ ALTER TABLE `alumnos`
 -- AUTO_INCREMENT de la tabla `contactos`
 --
 ALTER TABLE `contactos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `cursos`
@@ -368,6 +376,12 @@ ALTER TABLE `cursos`
 --
 ALTER TABLE `examenes`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT de la tabla `notas`
+--
+ALTER TABLE `notas`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `preguntas`
@@ -385,7 +399,7 @@ ALTER TABLE `profesores`
 -- AUTO_INCREMENT de la tabla `respuestas`
 --
 ALTER TABLE `respuestas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- Restricciones para tablas volcadas
