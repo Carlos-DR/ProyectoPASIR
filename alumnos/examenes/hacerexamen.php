@@ -4,10 +4,12 @@ $usu = $_SESSION['usuario'];
 $idexamen = $_POST['examen'];
 $i = 0;
 $nota = 0;
+$fallos = 0;
 $pregcont = array(0);
 
 $_SESSION['i'] = $i;
 $_SESSION['nota'] = $nota;
+$_SESSION['fallos'] = $fallos;
 $_SESSION['idexamen'] = $idexamen;
 $_SESSION['pregunta'] = $pregcont;
 

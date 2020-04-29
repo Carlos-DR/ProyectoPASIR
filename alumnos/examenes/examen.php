@@ -45,6 +45,7 @@
             mysqli_close($conn);
         }
         else {
+            $_SESSION['fallos'] = $_SESSION['fallos']+1;
             header('Location: doexamen.php');
             mysqli_close($conn);
         }

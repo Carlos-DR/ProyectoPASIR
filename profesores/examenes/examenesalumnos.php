@@ -2,7 +2,8 @@
 <?php session_start(); 
   $usu = $_SESSION['usuario'];
   $idcurso = $_SESSION['idcurso'];
-  $idexamen = $_POST['ver'];
+  $idalumno = $_POST['ver'];
+  $_SESSION['idalumno'] = $idalumno;
 ?>
 <html lang="en">
 
@@ -41,7 +42,7 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a class="nav-link" href="examenes.php">Atrás</a>
+            <a class="nav-link" href="../profesor.php">Home</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="../../logout.php">CERRAR SESIÓN</a>
@@ -61,15 +62,15 @@
     $tildes = $conn->query("SET NAMES 'utf8'"); //Con esto muestra las tíldes
 
     /* Sacamos las id que necesitamos y las guardamos en variables*/
-    $consultaexamen = mysqli_query($conn, "SELECT tema, temanum, publico FROM examenes WHERE id='$idexamen'");
-    $examen = mysqli_fetch_array($consultaexamen);
+    $consultaalumno = mysqli_query($conn,"SELECT nombre, apellidos FROM alumnos WHERE id='$idalumno'");
+    $alumno = mysqli_fetch_array($consultaalumno); 
 
-    $consultapreg = mysqli_query($conn, "SELECT pregunta, correcta, incorrecta1, incorrecta2, incorrecta3 FROM preguntas WHERE idexamen='$idexamen'");
+    $consultanotas = mysqli_query($conn, "SELECT idexamen, nota, fallos, hecho FROM notas WHERE idalumno='$idalumno'");
 
   ?>
 
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('../../img/verexamen.jpg')">
+  <header class="masthead" style="background-image: url('../../img/examenesalumnos.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
@@ -77,12 +78,12 @@
           <div class="site-heading">
             <h1>
                 <?php
-                    echo "Examen: <br>" . $examen['tema'];
+                    echo "Exámenes <br>";
                 ?>
             </h1>
             <span class="subheading">
             <?php
-              echo "Tema: " . $examen['temanum'];
+              echo $alumno['nombre'] . " " . $alumno['apellidos'];
             ?>
             </span>
           </div>
@@ -97,38 +98,63 @@
       <div class="col-lg-8 col-md-10 mx-auto">
       <!-- bucle para mostrar todos los cursos  -->
       <?php
-        while ($preguntas = mysqli_fetch_array($consultapreg)){
+        while ($notas = mysqli_fetch_array($consultanotas)) {
+          $consultaexamen = mysqli_query($conn, "SELECT id, tema, temanum, mixto FROM examenes WHERE id='$notas[idexamen]'");
+          while ($examen = mysqli_fetch_array($consultaexamen)){
       ?>
         <div class="post-preview">
           <a>
             <h2 class="post-title">
             <?php
-                echo $preguntas['pregunta'];
+                echo "Tema: " . $examen['tema'] . ", " . $examen['temanum'];
             ?>
             </h2>
             <h3 class="post-subtitle">
-            <?php
-            if ($preguntas['correcta'] == NULL) {
-                echo "La pregunta es de desarrollo";
-            }
-            else{
-                echo "<b>Respuesta correcta: </b>" . $preguntas['correcta'];
-                echo "<br>";
-                echo "<b>Respuesta incorrecta: </b>" . $preguntas['incorrecta1'];
-                echo "<br>";
-                echo "<b>Respuesta incorrecta: </b>" . $preguntas['incorrecta2'];
-                echo "<br>";
-                echo "<b>Respuesta incorrecta: </b>" . $preguntas['incorrecta3'];
-            }
-            ?>
+              <?php
+                  echo "<b>Nota: </b>" . $notas['nota'];
+                  echo "<br>";
+                  echo "<b>Fallos: </b>" . $notas['fallos'];
+              ?>
             </h3>
           </a>
         </div>
+            <?php
+                if ($examen['mixto'] == 1) {
+            ?>
+            <!-- Botón ver respuestas -->
+            <div class="post-preview">
+              <form action="respalumno.php" method="POST">
+                <div class="form-group">
+                  <button type="submit" class="btn btn-primary" id="sendMessageButton" name="respuestas" value="<?php echo $examen['id']; ?>">Ver respuestas</button>
+                </div>
+              </form>
+              </div>
+            <?php
+              }
+            ?>
+            <!-- Botón corregir examen -->
+            <div class="post-preview">
+              <form action="corregirexamen.php" method="POST">
+                <div class="form-group">
+                  <button type="submit" class="btn btn-primary" id="sendMessageButton" name="corregir">Corregir examen</button>
+                </div>
+              </form>
+              </div>  
         <hr>
       <?php
     }
-      mysqli_close($conn);  
+  }
+      mysqli_close($conn);
       ?>
+
+      <!-- Botón atrás -->
+      <div class="post-preview">
+        <form action="../cursoprof.php" method="POST">
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary" id="sendMessageButton" name="mostrar" value="<?php echo $_SESSION['idcurso']; ?>">Atrás</button>
+          </div>
+        </form>
+      </div>
 
   <!-- Footer -->
   <footer>

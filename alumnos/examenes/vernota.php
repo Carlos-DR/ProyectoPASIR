@@ -16,9 +16,8 @@ $idalumno = $_SESSION['idalumno'];
     $tildes = $conn->query("SET NAMES 'utf8'"); //Con esto muestra las tíldes
 
     /* Sacamos las id que necesitemos y las guardamos en variables */
-    $consultanota = mysqli_query($conn, "SELECT nota FROM notas WHERE idalumno='$idalumno' AND idexamen='$idexamen'");
+    $consultanota = mysqli_query($conn, "SELECT nota, fallos FROM notas WHERE idalumno='$idalumno' AND idexamen='$idexamen'");
     $nota = mysqli_fetch_array($consultanota);
-    $fallos = 10 - $nota['nota'];
 
   ?>
 
@@ -88,9 +87,9 @@ $idalumno = $_SESSION['idalumno'];
                 Su nota es: <?php echo $nota['nota']; ?>
             </h2>
             <h3 class="post-subtitle">
-                Ha tenido <?php echo $fallos; ?> fallos
+                <b>Ha tenido: </b> <?php echo $nota['fallos']; ?> fallos
                 <br>
-                Es posible que esta nota no sea difinitiva, el profesor tiene que revisar el examen.
+                Es posible que esta nota no sea definitiva, el profesor tiene que revisar el examen.
             </h3>
           </a>
             <form action="../alumno.php">
