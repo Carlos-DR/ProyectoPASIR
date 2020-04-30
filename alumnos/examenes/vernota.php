@@ -19,6 +19,8 @@ $idalumno = $_SESSION['idalumno'];
     $consultanota = mysqli_query($conn, "SELECT nota, fallos FROM notas WHERE idalumno='$idalumno' AND idexamen='$idexamen'");
     $nota = mysqli_fetch_array($consultanota);
 
+    $consultapregunta = mysqli_query($conn, "SELECT pregunta, correcta FROM preguntas WHERE idexamen='$idexamen' AND correcta IS NOT NULL");
+
   ?>
 
 <html lang="en">
@@ -69,7 +71,7 @@ $idalumno = $_SESSION['idalumno'];
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="page-heading">
-            <h1>nota</h1>
+            <h1>RESULTADO</h1>
             <span class="subheading">Consulta su nota</span>
           </div>
         </div>
@@ -84,13 +86,33 @@ $idalumno = $_SESSION['idalumno'];
       <div class="post-preview">
           <a>
             <h2 class="post-title">
-                Su nota es: <?php echo $nota['nota']; ?>
+                Tu nota es: <?php echo $nota['nota']; ?>
             </h2>
             <h3 class="post-subtitle">
-                <b>Ha tenido: </b> <?php echo $nota['fallos']; ?> fallos
+                <b>Has tenido: </b> <?php echo $nota['fallos']; ?> fallos
                 <br>
-                Es posible que esta nota no sea definitiva, el profesor tiene que revisar el examen.
+                Es posible que esta nota no sea la definitiva, el profesor tiene que revisar el examen.
             </h3>
+            <h2 class="post-title">
+                Las respuestas correctas son:
+            </h2>
+          </a>
+          <hr>
+          <a>
+          <?php
+            while ($pregunta = mysqli_fetch_array($consultapregunta)) {
+          ?>
+            <h3 class="post-subtitle">
+              <?php
+                echo "<b>" . $pregunta['pregunta'] . "</b>";
+                echo "<br>";
+                echo $pregunta['correcta'];
+              ?>
+            </h3>
+            <hr>
+          <?php
+            }
+          ?>
           </a>
             <form action="../alumno.php">
               <div class="form-group">

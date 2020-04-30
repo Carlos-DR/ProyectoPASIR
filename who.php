@@ -6,7 +6,7 @@ $contra = $_POST['contrasenia'];
 
 $admin = strtoupper($usu);
 
-
+    //Identificador del profesor
     if ($who == 'profesor'){
         echo 'Soy un profesor';
         class loguear {
@@ -38,8 +38,9 @@ $admin = strtoupper($usu);
         $registros = mysqli_query($conn, $consulta) or die(mysqli_error($conn));
         $contador = mysqli_num_rows($registros);
         if ($contador != 1) {
-            header('location: index.php?error=Usuario o contraseña incorrectos');
+            header('location: login.php?error=Usuario o contraseña incorrectos');
         }
+        //Identificador del admin
         elseif ($admin == 'HERPIC') {
             session_start();
             $_SESSION['usuario'] = $usu; 
@@ -55,7 +56,8 @@ $admin = strtoupper($usu);
             
         mysqli_close($conn);
     }
-
+    
+    //Identificador del alumno
     elseif ($who == 'alumno'){
         echo 'Soy un alumno';
         class loguear {
@@ -87,7 +89,7 @@ $admin = strtoupper($usu);
         $registros = mysqli_query($conn, $consulta) or die(mysqli_error($conn));
         $contador = mysqli_num_rows($registros);
         if ($contador != 1) {
-            header('location: index.php?error=Usuario o contraseña incorrectos');
+            header('location: login.php?error=Usuario o contraseña incorrectos');
         } 
         else {
             session_start();

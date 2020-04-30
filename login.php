@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<?php session_start(); ?>
+<?php 
+session_start();
+?>
 <html lang="en">
 
 <head>
@@ -88,6 +90,11 @@
                   </div>
                   <p>
                   <button>Iniciar sesión</button>
+                  <?php
+                    if (isset($_GET["error"])) {
+                      echo "<p style='color:red;'> Usuario o contraseña incorrecta, por favor, intentelo de nuevo </p>";
+                    }
+                ?>
                   <p class="message">¿No estas registrado? <a href="#">Crear una cuenta</a></p>
                   <p class="message">¿Has olvidado tu contraseña? <a href="contrasenia.php">Rellena este formulario</a></p>
                 </form>

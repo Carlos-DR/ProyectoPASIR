@@ -123,6 +123,7 @@
               ?>
             </h3>
           </a>
+          <hr>
           <?php
             if (!isset($nota)) {
               
@@ -144,6 +145,14 @@
       }
       mysqli_close($conn);
       ?>
+      <!-- Botón corregir examen -->
+        <div class="post-preview">
+        <form action="alumno.php" method="POST">
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary" id="sendMessageButton">Atrás</button>
+          </div>
+        </form>
+      </div> 
 
   <!-- Footer -->
   <footer>

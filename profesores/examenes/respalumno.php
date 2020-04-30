@@ -3,8 +3,11 @@
   $usu = $_SESSION['usuario'];
   $idcurso = $_SESSION['idcurso'];
   $idalumno = $_SESSION['idalumno'];
-
   $idexamen = $_POST['respuestas'];
+
+  //Varible para contar las preguntas
+  $i = 0;
+
 ?>
 <html lang="en">
 
@@ -15,7 +18,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Herpic - Examen</title>
+  <title>Herpic - Respuestas</title>
 
   <!-- Bootstrap core CSS -->
   <link href="../../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -43,7 +46,7 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a class="nav-link" href="../examenesalumnos.php" >Atrás</a>
+            <a class="nav-link" href="../profesor.php" >HOME</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="../../logout.php">CERRAR SESIÓN</a>
@@ -109,7 +112,10 @@
           <a>
             <h2 class="post-title">
               <?php
-                  echo $pregunta['pregunta'];              
+                  echo $pregunta['pregunta'];
+                  //Contamos las preguntas, para mas adelante corregirlas
+                  $i = $i+1;
+                  //echo $i;              
               ?>
             </h2>
             <h3 class="post-subtitle">
@@ -122,14 +128,16 @@
         <hr>
       <?php
     }
-      mysqli_close($conn);  
+      mysqli_close($conn);
+      //Almacenamos el numero de preguntas en la sesión
+      $_SESSION['i'] = $i;
       ?>
 
       <!-- Botón corregir examen -->
       <div class="post-preview">
         <form action="corregirexamen.php" method="POST">
           <div class="form-group">
-            <button type="submit" class="btn btn-primary" id="sendMessageButton" name="corregir">Corregir examen</button>
+            <button type="submit" class="btn btn-primary" id="sendMessageButton" name="corregir" value="<?php echo $idexamen; ?>">Corregir examen</button>
           </div>
         </form>
       </div> 

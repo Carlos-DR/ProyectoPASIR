@@ -4,6 +4,7 @@
   $idcurso = $_SESSION['idcurso'];
   $idalumno = $_POST['ver'];
   $_SESSION['idalumno'] = $idalumno;
+
 ?>
 <html lang="en">
 
@@ -132,14 +133,6 @@
             <?php
               }
             ?>
-            <!-- Botón corregir examen -->
-            <div class="post-preview">
-              <form action="corregirexamen.php" method="POST">
-                <div class="form-group">
-                  <button type="submit" class="btn btn-primary" id="sendMessageButton" name="corregir">Corregir examen</button>
-                </div>
-              </form>
-              </div>  
         <hr>
       <?php
     }
