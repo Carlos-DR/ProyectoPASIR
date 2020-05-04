@@ -1,8 +1,28 @@
 <!DOCTYPE html>
 <?php session_start(); 
-  $usu = $_SESSION['usuario'];
-  $idcurso = $_POST['nuevo'];
+$usu = $_SESSION['usuario'];
+$idexamen = $_SESSION['idexamen'];
+$i = $_SESSION['i'];
+$pregcont = $_SESSION['pregunta'];
+$idalumno = $_SESSION['idalumno'];
+
 ?>
+
+  <!-- conexión base de datos -->
+  <?php
+    $conn = mysqli_connect('localhost', 'root', '1234', 'herpic');
+
+    if (!$conn) {
+        die("Connection failed: " . mysqli_connect_error());
+    }
+    $tildes = $conn->query("SET NAMES 'utf8'"); //Con esto muestra las tíldes
+
+    /* Sacamos las id que necesitemos y las guardamos en variables */
+    $consultapregunta = mysqli_query($conn, "SELECT id, pregunta, correcta, incorrecta1, incorrecta2, incorrecta3 FROM preguntas WHERE idexamen='$idexamen' AND id NOT IN (".implode(",",$pregcont).") ORDER BY RAND()");
+    $pregunta = mysqli_fetch_array($consultapregunta);
+    
+  ?>
+
 <html lang="en">
 
 <head>
@@ -12,7 +32,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Herpic - contact</title>
+  <title>Herpic - Examen</title>
 
   <!-- Bootstrap core CSS -->
   <link href="../../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -39,68 +59,88 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="../profesor.php">CANCELAR</a>
-          </li>
         </ul>
       </div>
     </div>
   </nav>
 
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('../../img/tema.jpg')">
+  <header class="masthead" style="background-image: url('../../img/examen.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="page-heading">
-            <h1>NUEVO EXAMEN</h1>
-            <span class="subheading">Crea un tema para un nuevo examen</span>
+          <span class="subheading">Llevas <?php echo $i; ?> preguntas.</span>
           </div>
         </div>
       </div>
     </div>
   </header>
 
-  <!-- Main Content -->
+  <?php
+  //Abrimos un if para controlar el bucle que hemos creado manualmente
+  if ($i < 10) {
+  ?>
 
+  <!-- preguntas -->
   <div class="container">
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
-        <p>Escriba el título y numero del Tema. Depués podrás crear el examen.</p>
-        <form name="sentMessage" novalidate action="newtemaexamen.php" method="POST">
-          <div class="control-group">
-            <div class="form-group floating-label-form-group controls">
-              <label>Título del tema</label>
-              <input maxlength="50" type="text" class="form-control" placeholder="Título tema" id="tema" name="tema" required data-validation-required-message="Por favor, escribe el título.">
-              <p class="help-block text-danger"></p>
-            </div>
-          </div>
-          <div class="control-group">
-            <div class="form-group floating-label-form-group controls">
-              <label>Numero del tema</label>
-              <input maxlength="3" type="number" class="form-control" placeholder="Numero del tema" id="num" name="num" required data-validation-required-message="Por favor, indica el numero.">
-              <p class="help-block text-danger"></p>
-            </div>
-          </div>
-          <br>
-              <label>Tipo</label>
-                <select name="tipo" require>
-                  <option value="0">Test</option>
-                  <option value="1">Mixto</option>
-                </select>
-          <br>
-          <hr>
-          <div id="success"></div>
+      <div class="post-preview">
+          <a>
+            <h2 class="post-title">
+                <?php
+                    echo "Pregunta: " . $pregunta['pregunta'];
+                ?>
+            </h2>
+            <h3 class="post-subtitle">
+            <?php
+                      $resp = array($pregunta['correcta'], $pregunta['incorrecta1'], $pregunta['incorrecta2'], $pregunta['incorrecta3']);
+                      shuffle($resp);
+                      ?>
+                      <form action="prueba.php" method="POST">
+                        <?php for ($p=0; $p < 4 ; $p++) { ?>
+                          <input type="radio" name="respuesta" value="<?php echo $resp[$p] ?>">
+                              <?php
+                                  print_r($resp[$p]);
+                                  echo "<br>";
+                              ?>
+                          </input>
+                        <?php 
+                            //Fin del for
+                            } ?>
+                        </h3>
+                        <div class="form-group">
+                          <button type="submit" class="btn btn-primary" id="sendMessageButton" name="siguiente" value="<?php echo $pregunta['id'] ?>">Siguiente</button>
+                        </div>
+                      </form>
+        <hr>
+
+  <?php
+  //Cierre del if que hace el bucle
+  }
+
+  //Aqui abrimos otro if, que controla que ya tenemos 10 preguntas
+  elseif ($i == 10) {
+    ?>
+    <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <p>Prueba Finalizada.</p>
+        <form name="sentMessage" novalidate action="notaprueba.php">
           <div class="form-group">
-            <button type="submit" class="btn btn-primary" id="sendMessageButton" name="curso" value="<?php echo $idcurso?>">Siguiente</button>
+            <button type="submit" class="btn btn-primary" id="sendMessageButton">Ver nota</button>
           </div>
         </form>
       </div>
     </div>
   </div>
 <hr>
-
+<?php
+// Aquí cerramos el elsif
+  }
+?>
   <!-- Footer -->
   <footer>
     <div class="container">

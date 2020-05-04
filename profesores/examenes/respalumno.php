@@ -67,7 +67,10 @@
 
     /* Sacamos las id que necesitamos y las guardamos en variables*/
     $consultaalumno = mysqli_query($conn,"SELECT nombre, apellidos FROM alumnos WHERE id='$idalumno'");
-    $alumno = mysqli_fetch_array($consultaalumno); 
+    $alumno = mysqli_fetch_array($consultaalumno);
+    
+    $consultanota = mysqli_query($conn,"SELECT nota, notatest FROM notas WHERE idalumno='$idalumno' AND idexamen='$idexamen'");
+    $nota = mysqli_fetch_array($consultanota);
 
     $consultapregunta = mysqli_query($conn, "SELECT id, pregunta FROM preguntas WHERE idexamen='$idexamen' AND correcta IS NULL");
     //$pregunta = mysqli_fetch_array($consultapregunta);
@@ -134,14 +137,17 @@
       ?>
 
       <!-- Botón corregir examen -->
+        <h3 class="post-subtitle">
+              Nueva Nota
+        </h3>
       <div class="post-preview">
-        <form action="corregirexamen.php" method="POST">
+        <form action="corregir.php" method="POST">
           <div class="form-group">
+            <input maxlength="2" type="number" placeholder="Nota" name="newnota" value="<?php echo  $nota['nota']?>"></input>
             <button type="submit" class="btn btn-primary" id="sendMessageButton" name="corregir" value="<?php echo $idexamen; ?>">Corregir examen</button>
           </div>
         </form>
       </div> 
-
       <!-- Botón atrás -->
       <div class="post-preview">
         <form action="examenesalumnos.php" method="POST">

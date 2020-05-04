@@ -10,6 +10,7 @@
     $tema = $_POST['tema'];
     $num = $_POST['num'];
     $idcurso = $_POST['curso'];
+    $tipo = $_POST['tipo'];
     $i = 0;
 
     //echo $tema . "<br>";
@@ -26,7 +27,7 @@
         echo $idexamen;
 
         //Creamos variable insert para insetar datos
-        $insert = "INSERT INTO examenes(id, tema, temanum, idcurso) values('$idexamen', '$tema', '$num', '$idcurso')";
+        $insert = "INSERT INTO examenes(id, tema, temanum, mixto, idcurso) values('$idexamen', '$tema', '$num', '$tipo', '$idcurso')";
 
         //Creamos variable return para conectarnos a la base de datos e insertar los datos de la variable insert 
         $return = mysqli_query($conn, $insert);
@@ -35,7 +36,19 @@
         session_start();
         $_SESSION['idexamen'] = $idexamen;
         $_SESSION['i'] = $i;
-        header('Location: nuevoexamen.php');
-        mysqli_close($conn);
+
+        if ($tipo == 0) {
+            header('Location: nuevoexamentest.php');
+            echo $tipo . "<br>";
+            mysqli_close($conn);
+        }
+        elseif ($tipo == 1) {
+            header('Location: nuevoexamen.php');
+            mysqli_close($conn);
+        }
+        else {
+            echo "Ha dao un caske xD";
+        }
+        
 
 ?>

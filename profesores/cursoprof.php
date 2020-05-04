@@ -1,3 +1,9 @@
+<!-- 
+La idea era buena, pero no funciona
+El navegador no deja entrar en este bucle.
+ -->
+
+
 <!DOCTYPE html>
 <?php session_start(); 
   $usu = $_SESSION['usuario'];
@@ -146,19 +152,10 @@
       <div class="post-preview">
         <form action="./examenes/temaexamen.php" method="POST">
           <div class="form-group">
-            <button type="submit" class="btn btn-primary" id="sendMessageButton" name="nuevo" value="<?php echo $idcurso?>">Nuevo Examen test</button>
+            <button type="submit" class="btn btn-primary" id="sendMessageButton" name="nuevo" value="<?php echo $idcurso?>">Nuevo Examen</button>
           </div>
         </form>
         </div>
-
-  <!-- Botón nuevo examen -->
-      <div class="post-preview">
-        <form action="./examenes/temaexamen.php" method="POST">
-          <div class="form-group">
-            <button type="submit" class="btn btn-primary" id="sendMessageButton" name="nuevo" value="<?php echo $idcurso?>">Nuevo Examen mixto</button>
-          </div>
-        </form>
-      </div>  
 
 
 

@@ -133,7 +133,7 @@
                 <button type="submit" class="btn btn-primary" id="sendMessageButton" name="examen" value="<?php echo $examenes['id'] ?>">Hacer examen</button>
               </div>
             </form>
-            <form action="hacerprueba.php" method="POST">
+            <form action="./pruebas/hacerprueba.php" method="POST">
               <div class="form-group">
                 <button type="submit" class="btn btn-primary" id="sendMessageButton" name="prueba" value="<?php echo $examenes['id'] ?>">Hacer prueba</button>
               </div>

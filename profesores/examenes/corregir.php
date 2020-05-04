@@ -4,12 +4,7 @@
     $idcurso = $_SESSION['idcurso'];
     $idalumno = $_SESSION['idalumno'];
     $idexamen = $_POST['corregir'];
-
-    $_SESSION['h'] = $_SESSION['h'] + 1;
-    
-    $idpregunta = $_SESSION['idpreg'];
-
-    array_push($_SESSION['pregunta'], $idpregunta);
+    $newnota = $_POST['newnota'];
 
     //Conexión con la base de datos
     $conn = mysqli_connect('localhost', 'root', '1234', 'herpic');
@@ -19,24 +14,30 @@
     }
     echo "Connected successfully" . "<br>";
 
-    //Varibles de respuestas
-    $corregir = $_POST['corregir'];
+    $consultanota = mysqli_query($conn,"SELECT nota, notatest FROM notas WHERE idalumno='$idalumno' AND idexamen='$idexamen'");
+    $nota = mysqli_fetch_array($consultanota);
 
 
-    if ($corregir == 1) {
+    if ($nota['notatest'] < $newnota) {
 
         //Creamos variable update para modificar la nota
-        $update = "UPDATE notas SET nota = nota +1 WHERE idalumno='$idalumno' AND idexamen='$idexamen'";
+        $update = "UPDATE notas SET nota = $newnota WHERE idalumno='$idalumno' AND idexamen='$idexamen'";
         
         //Creamos variable return para conectarnos a la base de datos y modificar la nota
         $return = mysqli_query($conn, $update);
 
-        header('Location: ./corregir.php');
+        header('Location: ../profesor.php');
         mysqli_close($conn);
     }
-    elseif ($corregir == 0) {
+    elseif ($nota['notatest'] > $newnota) {
+        echo "No se puede barjar la nota al alumno";
+        header('Location: ../profesor.php');
+        mysqli_close($conn);
 
-        header('Location: corregir.php');
+    }
+    elseif ($nota['notatest'] == $newnota) {
+        echo "Muy bien cruck";
+        header('Location: ../profesor.php');
         mysqli_close($conn);
 
     }

@@ -1,8 +1,39 @@
 <!DOCTYPE html>
 <?php session_start(); 
-  $usu = $_SESSION['usuario'];
-  $idcurso = $_POST['nuevo'];
+$usu = $_SESSION['usuario'];
+$idexamen = $_POST['prueba'];
+$i = 0;
+$nota = 0;
+$fallos = 0;
+$pregcont = array(0);
+
+$_SESSION['i'] = $i;
+$_SESSION['nota'] = $nota;
+$_SESSION['fallos'] = $fallos;
+$_SESSION['idexamen'] = $idexamen;
+$_SESSION['pregunta'] = $pregcont;
+
+//print_r ($_SESSION['pregunta']);
+
 ?>
+
+  <!-- conexión base de datos -->
+  <?php
+    $conn = mysqli_connect('localhost', 'root', '1234', 'herpic');
+
+    if (!$conn) {
+        die("Connection failed: " . mysqli_connect_error());
+    }
+    $tildes = $conn->query("SET NAMES 'utf8'"); //Con esto muestra las tíldes
+
+    /* Sacamos las id que necesitemos y las guardamos en variables */
+    $consultaalumno = mysqli_query($conn, "SELECT id FROM alumnos WHERE usuario='$usu'");
+    $idalumno = mysqli_fetch_array($consultaalumno);
+    
+    $_SESSION['idalumno'] = $idalumno['id'];
+    
+  ?>
+
 <html lang="en">
 
 <head>
@@ -39,68 +70,53 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="../profesor.php">CANCELAR</a>
-          </li>
         </ul>
       </div>
     </div>
   </nav>
 
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('../../img/tema.jpg')">
+  <header class="masthead" style="background-image: url('../../img/examen.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="page-heading">
-            <h1>NUEVO EXAMEN</h1>
-            <span class="subheading">Crea un tema para un nuevo examen</span>
+            <h1>EXAMEN</h1>
+            <span class="subheading">Vas a comenzar el examen</span>
           </div>
         </div>
       </div>
     </div>
   </header>
 
-  <!-- Main Content -->
-
+  <!-- avisos -->
   <div class="container">
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
-        <p>Escriba el título y numero del Tema. Depués podrás crear el examen.</p>
-        <form name="sentMessage" novalidate action="newtemaexamen.php" method="POST">
-          <div class="control-group">
-            <div class="form-group floating-label-form-group controls">
-              <label>Título del tema</label>
-              <input maxlength="50" type="text" class="form-control" placeholder="Título tema" id="tema" name="tema" required data-validation-required-message="Por favor, escribe el título.">
-              <p class="help-block text-danger"></p>
-            </div>
-          </div>
-          <div class="control-group">
-            <div class="form-group floating-label-form-group controls">
-              <label>Numero del tema</label>
-              <input maxlength="3" type="number" class="form-control" placeholder="Numero del tema" id="num" name="num" required data-validation-required-message="Por favor, indica el numero.">
-              <p class="help-block text-danger"></p>
-            </div>
-          </div>
-          <br>
-              <label>Tipo</label>
-                <select name="tipo" require>
-                  <option value="0">Test</option>
-                  <option value="1">Mixto</option>
-                </select>
-          <br>
-          <hr>
-          <div id="success"></div>
-          <div class="form-group">
-            <button type="submit" class="btn btn-primary" id="sendMessageButton" name="curso" value="<?php echo $idcurso?>">Siguiente</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-<hr>
-
+      <div class="post-preview">
+          <a>
+            <h2 class="post-title">
+                ATENCIÓN
+            </h2>
+            <h3 class="post-subtitle">
+                Vas a comenzar la prueba del examen. Dura 40 minutos.
+                <br>
+                Una vez que empieces no hay marcha atrás. ¿Estás preparado?
+            </h3>
+          </a>
+            <form action="doprueba.php" method="POST">
+              <div class="form-group">
+                <button type="submit" class="btn btn-primary" id="sendMessageButton" name="prueba">Realizar prueba</button>
+              </div>
+            </form>
+            <form action="../alumno.php" method="POST">
+              <div class="form-group">
+                <button type="submit" class="btn btn-primary" id="sendMessageButton" name="volver">Volver</button>
+              </div>
+            </form>
+        </div>
+        <hr>
   <!-- Footer -->
   <footer>
     <div class="container">

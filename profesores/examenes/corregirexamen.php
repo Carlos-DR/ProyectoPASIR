@@ -3,7 +3,10 @@
   $usu = $_SESSION['usuario'];
   $idcurso = $_SESSION['idcurso'];
   $idalumno = $_SESSION['idalumno'];
-  $idexamen = $_POST['corregir'];
+  $idexamen = $_SESSION['idexamen'];
+  
+  $i = $_SESSION['i'];
+  $pregcont = $_SESSION['pregcont'];
 ?>
 <html lang="en">
 
@@ -103,7 +106,7 @@
       <div class="col-lg-8 col-md-10 mx-auto">
       <!-- bucle para mostrar todos los cursos  -->
             <?php
-               if ($h<$i) {            
+               if ($i>0) {            
             ?>
             <div class="post-preview">
             <a>
@@ -139,13 +142,13 @@
                 <hr>
             <?php
             }
-            elseif ($h==$i) {
+            elseif ($i==0) {
             ?>
                 <div class="container">
                 <div class="row">
                   <div class="col-lg-8 col-md-10 mx-auto">
                     <p>Examen corregido</p>
-                    <form name="sentMessage" novalidate action="profesor.php">
+                    <form name="sentMessage" novalidate action="../profesor.php">
                       <div class="form-group">
                         <button type="submit" class="btn btn-primary" id="sendMessageButton">Volver</button>
                       </div>

@@ -100,7 +100,7 @@
       <!-- bucle para mostrar todos los cursos  -->
       <?php
         while ($notas = mysqli_fetch_array($consultanotas)) {
-          $consultaexamen = mysqli_query($conn, "SELECT id, tema, temanum, mixto FROM examenes WHERE id='$notas[idexamen]'");
+          $consultaexamen = mysqli_query($conn, "SELECT id, tema, temanum, mixto FROM examenes WHERE id='$notas[idexamen]' AND idcurso='$idcurso'");
           while ($examen = mysqli_fetch_array($consultaexamen)){
       ?>
         <div class="post-preview">

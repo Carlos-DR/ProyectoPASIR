@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <?php session_start(); 
-  $usu = $_SESSION['usuario'];
-  $idcurso = $_POST['nuevo'];
+$usu = $_SESSION['usuario'];
+$idexamen = $_SESSION['idexamen'];
+$i = $_SESSION['i'];
+//echo $idexamen;
 ?>
 <html lang="en">
 
@@ -40,7 +42,7 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a class="nav-link" href="../profesor.php">CANCELAR</a>
+            <a class="nav-link" href="cancelexamen.php">CANCELAR</a>
           </li>
         </ul>
       </div>
@@ -48,14 +50,14 @@
   </nav>
 
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('../../img/tema.jpg')">
+  <header class="masthead" style="background-image: url('../../img/examen.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="page-heading">
             <h1>NUEVO EXAMEN</h1>
-            <span class="subheading">Crea un tema para un nuevo examen</span>
+            <span class="subheading">Crear y sube un nuevo examen</span>
           </div>
         </div>
       </div>
@@ -64,42 +66,87 @@
 
   <!-- Main Content -->
 
+<?php
+  //Abrimos un if para controlar el bucle que hemos creado manualmente
+  if ($i < 10) {
+?>
+
   <div class="container">
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
-        <p>Escriba el título y numero del Tema. Depués podrás crear el examen.</p>
-        <form name="sentMessage" novalidate action="newtemaexamen.php" method="POST">
+        <p>El examen tiene <?php echo $i; ?> preguntas. </p>
+        <form name="sentMessage" novalidate action="newexamtest.php" method="POST">
           <div class="control-group">
             <div class="form-group floating-label-form-group controls">
-              <label>Título del tema</label>
-              <input maxlength="50" type="text" class="form-control" placeholder="Título tema" id="tema" name="tema" required data-validation-required-message="Por favor, escribe el título.">
+              <label>Pregunta</label>
+              <input maxlength="100" type="text" class="form-control" placeholder="Pregunta" id="pregunta" name="pregunta" required data-validation-required-message="Por favor, escriba la pregunta.">
               <p class="help-block text-danger"></p>
             </div>
           </div>
           <div class="control-group">
             <div class="form-group floating-label-form-group controls">
-              <label>Numero del tema</label>
-              <input maxlength="3" type="number" class="form-control" placeholder="Numero del tema" id="num" name="num" required data-validation-required-message="Por favor, indica el numero.">
+              <label>Respuesca correcta</label>
+              <input maxlength="50" type="text" class="form-control" placeholder="Respuesta correcta" id="respuestac" name="respuestac" required data-validation-required-message="Por favor, escribe la respuesta correcta.">
+              <p class="help-block text-danger"></p>
+            </div>
+          </div>
+          <div class="control-group">
+            <div class="form-group col-xs-12 floating-label-form-group controls">
+              <label>Respuesta incorrecta 1</label>
+              <input maxlength="50" type="text" class="form-control" placeholder="Respuesta incorrecta 1" id="respuestai1" name="respuestai1" required data-validation-required-message="Por favor, escribe la respuesta incorrecta.">
+              <p class="help-block text-danger"></p>
+            </div>
+          </div>
+          <div class="control-group">
+            <div class="form-group col-xs-12 floating-label-form-group controls">
+              <label>Respuesta incorrecta 2</label>
+              <input maxlength="50" type="text" class="form-control" placeholder="Respuesta incorrecta 2" id="respuestai2" name="respuestai2" required data-validation-required-message="Por favor, escribe la respuesta incorrecta.">
+              <p class="help-block text-danger"></p>
+            </div>
+          </div>
+          <div class="control-group">
+            <div class="form-group col-xs-12 floating-label-form-group controls">
+              <label>Respuesta incorrecta 3</label>
+              <input maxlength="50" type="text" class="form-control" placeholder="Respuesta incorrecta 3" id="respuestai3" name="respuestai3" required data-validation-required-message="Por favor, escribe la respuesta incorrecta.">
               <p class="help-block text-danger"></p>
             </div>
           </div>
           <br>
-              <label>Tipo</label>
-                <select name="tipo" require>
-                  <option value="0">Test</option>
-                  <option value="1">Mixto</option>
-                </select>
-          <br>
-          <hr>
-          <div id="success"></div>
+        <p class="help-block text-danger"></p>
           <div class="form-group">
-            <button type="submit" class="btn btn-primary" id="sendMessageButton" name="curso" value="<?php echo $idcurso?>">Siguiente</button>
+            <button type="submit" class="btn btn-primary" id="sendMessageButton">Enviar</button>
           </div>
         </form>
       </div>
     </div>
   </div>
 <hr>
+
+<?php
+  //Cierre del if que hace el bucle
+  }
+
+  //Aqui abrimos otro if, que controla que ya tenemos 10 preguntas
+  elseif ($i == 10) {
+    ?>
+    <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <p>El examen ya está completado.</p>
+        <form name="sentMessage" novalidate action="../profesor.php">
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary" id="sendMessageButton">Finalizar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+<hr>
+<?php
+// Aquí cerramos el elsif
+  }
+
+?>
 
   <!-- Footer -->
   <footer>

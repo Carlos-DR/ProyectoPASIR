@@ -80,35 +80,35 @@ $i = $_SESSION['i'];
           <div class="control-group">
             <div class="form-group floating-label-form-group controls">
               <label>Pregunta</label>
-              <input maxlength="100" type="text" class="form-control" placeholder="Pregunta" id="pregunta" name="pregunta" required data-validation-required-message="Por favor, escribe tu nombre.">
+              <input maxlength="100" type="text" class="form-control" placeholder="Pregunta" id="pregunta" name="pregunta" required data-validation-required-message="Por favor, escriba la pregunta.">
               <p class="help-block text-danger"></p>
             </div>
           </div>
           <div class="control-group">
             <div class="form-group floating-label-form-group controls">
               <label>Respuesca correcta</label>
-              <input maxlength="50" type="text" class="form-control" placeholder="Respuesta correcta" id="respuestac" name="respuestac" required data-validation-required-message="Por favor, escribe tu email.">
+              <input maxlength="50" type="text" class="form-control" placeholder="Respuesta correcta" id="respuestac" name="respuestac" required data-validation-required-message="Por favor, escribe la respuesta correcta.">
               <p class="help-block text-danger"></p>
             </div>
           </div>
           <div class="control-group">
             <div class="form-group col-xs-12 floating-label-form-group controls">
               <label>Respuesta incorrecta 1</label>
-              <input maxlength="50" type="text" class="form-control" placeholder="Respuesta incorrecta 1" id="respuestai1" name="respuestai1" required data-validation-required-message="Por favor, escribe tu número de teléfono.">
+              <input maxlength="50" type="text" class="form-control" placeholder="Respuesta incorrecta 1" id="respuestai1" name="respuestai1" required data-validation-required-message="Por favor, escribe la respuesta incorrecta.">
               <p class="help-block text-danger"></p>
             </div>
           </div>
           <div class="control-group">
             <div class="form-group col-xs-12 floating-label-form-group controls">
               <label>Respuesta incorrecta 2</label>
-              <input maxlength="50" type="text" class="form-control" placeholder="Respuesta incorrecta 2" id="respuestai2" name="respuestai2" required data-validation-required-message="Por favor, escribe tu número de teléfono.">
+              <input maxlength="50" type="text" class="form-control" placeholder="Respuesta incorrecta 2" id="respuestai2" name="respuestai2" required data-validation-required-message="Por favor, escribe la respuesta incorrecta.">
               <p class="help-block text-danger"></p>
             </div>
           </div>
           <div class="control-group">
             <div class="form-group col-xs-12 floating-label-form-group controls">
               <label>Respuesta incorrecta 3</label>
-              <input maxlength="50" type="text" class="form-control" placeholder="Respuesta incorrecta 3" id="respuestai3" name="respuestai3" required data-validation-required-message="Por favor, escribe tu número de teléfono.">
+              <input maxlength="50" type="text" class="form-control" placeholder="Respuesta incorrecta 3" id="respuestai3" name="respuestai3" required data-validation-required-message="Por favor, escribe la respuesta incorrecta.">
               <p class="help-block text-danger"></p>
             </div>
           </div>
