@@ -47,7 +47,7 @@
     $alumno = mysqli_fetch_array($consultaalumno);
       //echo $alumno['id'];
 
-    $consultaexamen = mysqli_query($conn, "SELECT id, tema, temanum FROM examenes WHERE idcurso='$idcurso' AND publico=1 ORDER BY temanum");
+    $consultaexamen = mysqli_query($conn, "SELECT id, tema, temanum, mixto FROM examenes WHERE idcurso='$idcurso' AND publico=1 ORDER BY temanum");
     
     
   ?>
@@ -102,6 +102,7 @@
       <div class="col-lg-8 col-md-10 mx-auto">
   <!-- bucle para mostrar todos los cursos  -->
       <?php
+      //Si no hay exámenes, apararece el mensaje de que no hay exámenes disponibles
       while ($examenes = mysqli_fetch_array($consultaexamen)){
       ?>
       <div class="post-preview">
@@ -126,18 +127,24 @@
           <hr>
           <?php
             if (!isset($nota)) {
-              
           ?>
             <form action="./examenes/hacerexamen.php" method="POST">
               <div class="form-group">
                 <button type="submit" class="btn btn-primary" id="sendMessageButton" name="examen" value="<?php echo $examenes['id'] ?>">Hacer examen</button>
               </div>
             </form>
+            <?php
+              //IF para que no aparezca el botón de hacer prueba cuando el examen sea mixto
+              if ($examenes['mixto'] == 0) {
+            ?>
             <form action="./pruebas/hacerprueba.php" method="POST">
               <div class="form-group">
                 <button type="submit" class="btn btn-primary" id="sendMessageButton" name="prueba" value="<?php echo $examenes['id'] ?>">Hacer prueba</button>
               </div>
             </form>
+            <?php
+              }
+            ?>
         </div>
         <hr>
       <?php

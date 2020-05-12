@@ -73,12 +73,22 @@
     }
     $tildes = $conn->query("SET NAMES 'utf8'"); //Con esto muestra las tíldes
 
-    /* Sacamos las id que necesitemos y las guardamos en variables 
+    //Sacamos las id que necesitemos y las guardamos en variables 
     $consultaalumno = mysqli_query($conn, "SELECT id FROM alumnos WHERE usuario='$usu'");
     $idalumno = mysqli_fetch_array($consultaalumno);
-      //echo $idalumno['id']*/
+      //echo $idalumno['id'];
 
-    $mostar_cursos = mysqli_query($conn, "SELECT id, nombre, descripcion FROM cursos") or die("No estás matriculado en ningún curso");
+    $consulta_curso_alumno = mysqli_query($conn, "SELECT idcurso FROM alumnos_cursos WHERE idalumno='$idalumno[id]'");
+    //array para almacenar los cursos en los que están matriculados los alumnos
+    $cursos_matriculados = array('0');
+
+    //Bucle para insertar el id de los cursos matriculados de los alumnos
+    while ($curso_alumno = mysqli_fetch_array($consulta_curso_alumno)) {
+      array_push($cursos_matriculados, $curso_alumno['idcurso']);
+    }
+    //print_r($cursos_matriculados);
+                                                                                                      //Con esto solo seleccionaremos los cursos en los que no esté matriculado el alumno
+    $mostar_cursos = mysqli_query($conn, "SELECT id, nombre, descripcion FROM cursos WHERE id NOT IN (".implode(",",$cursos_matriculados).")") or die("No estás matriculado en ningún curso");
   ?>
 
   <!-- Cursos matriculados -->
@@ -88,20 +98,20 @@
   <!-- bucle para mostrar todos los cursos  -->
       <?php      
 
-        while ($reg = mysqli_fetch_array($mostar_cursos)){
-          $idcurso = $reg['id'];    
+        while ($curso = mysqli_fetch_array($mostar_cursos)){
+          $idcurso = $curso['id'];    
           //echo $id_curso_no;
       ?>
       <div class="post-preview">
           <a>
             <h2 class="post-title">
               <?php
-                echo $reg['nombre'];
+                echo $curso['nombre'];
               ?>
             </h2>
             <h3 class="post-subtitle">
               <?php
-                echo $reg['descripcion'];
+                echo $curso['descripcion'];
               ?>
             </h3>
           </a>

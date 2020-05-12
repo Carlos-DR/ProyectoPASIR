@@ -1,7 +1,4 @@
 <!DOCTYPE html>
-<?php 
-session_start();
-?>
 <html lang="en">
 
 <head>
@@ -75,6 +72,17 @@ session_start();
                   <input maxlength="100" type="text" name="email" placeholder="Correo electrónico"/>
                   <input maxlength="75" type="password" name="contrasenia" placeholder="Contraseña"/>
                   <button>Registrar</button>
+                  <?php
+                    session_start();
+                    $reg = $_SESSION['registro'];
+            
+                    if (isset($reg) AND $reg == 1) {
+                      echo "<p style='color:red;'> El usuario ya existe, por favor, pruebe con otro nombre </p>";
+                    }
+                    elseif (isset($reg) AND $reg == 2) {
+                      echo "<p style='color:red;'> El email ya está registrado, por favor, pruebe con otro </p>";
+                    }
+                  ?>
                   <p class="message">¿Ya estás registrado? <a href="#">Iniciar sesión</a></p>
                 </form>
                 <!-- inicio de sesión--> 
@@ -94,7 +102,7 @@ session_start();
                     if (isset($_GET["error"])) {
                       echo "<p style='color:red;'> Usuario o contraseña incorrecta, por favor, intentelo de nuevo </p>";
                     }
-                ?>
+                  ?>
                   <p class="message">¿No estas registrado? <a href="#">Crear una cuenta</a></p>
                   <p class="message">¿Has olvidado tu contraseña? <a href="contrasenia.php">Rellena este formulario</a></p>
                 </form>
