@@ -51,7 +51,7 @@
         //Creamos variable return para conectarnos a la base de datos e insertar los datos de la variable insert 
         $return = mysqli_query($conn, $insert);
         echo "Se ha registrado satisfactoriamente";
-        header('Location: alumnos/cursos.php');
+        header('Location: login.php');
         mysqli_close($conn);
 
 ?>
