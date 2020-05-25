@@ -106,3 +106,9 @@ $admin = strtoupper($usu);
     }
 
 ?>
+
+<!-- Si hay problemas con la conexión, consulatar esta página:
+https://stackoverflow.com/questions/41645309/mysql-error-access-denied-for-user-rootlocalhost
+
+Básicamente es añadir en el fichero my.ini (my.conf en linux) la línea "skip-grant-tables" justo después de [mysqld]
+ -->

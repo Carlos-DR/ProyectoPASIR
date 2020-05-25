@@ -18,21 +18,15 @@
     $usurio = mysqli_fetch_array($consultausuario);
     if ($usurio['usuario'] == $usu) {
         echo "El usuario ya existe";
-        header('Location: login.php');
+        header('Location: userfail.php');
         mysqli_close($conn);
 
-        //Creamos una varible de sesión para indicar que el usuario existe
-        session_start();
-        $_SESSION['registro'] = 1; 
     }
     elseif ($usurio['email'] == $email) {
         echo "El email ya está registrado";
-        header('Location: login.php');
+        header('Location: emailfail.php');
         mysqli_close($conn);
 
-        //Creamos una varible de sesión para indicar que el correo Está en uso
-        session_start();
-        $_SESSION['registro'] = 2; 
     }
     else {
         //Creamos variable insert para insetar datos
@@ -41,7 +35,7 @@
         //Creamos variable return para conectarnos a la base de datos e insertar los datos de la variable insert 
         $return = mysqli_query($conn, $insert);
         echo "Se ha registrado satisfactoriamente";
-        header('Location: login.php');
+        header('Location: registrado.php');
         mysqli_close($conn);
     }
 

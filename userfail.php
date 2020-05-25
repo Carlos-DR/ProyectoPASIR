@@ -8,11 +8,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Herpic - login</title>
-
-  <!--Css para el login -->
-  <link href="./css/login.css" rel="stylesheet">
-  <link href="./css/select-alumno-profesor.css" rel="stylesheet">
+  <title>Herpic - Error</title>
 
   <!-- Bootstrap core CSS -->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -28,6 +24,7 @@
 </head>
 
 <body>
+
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
@@ -56,53 +53,37 @@
   </nav>
 
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('img/ciudad.jpg')">
+  <header class="masthead" style="background-image: url('img/nosotros.jpg')">
     <div class="overlay"></div>
     <div class="container">
-      <div class="row"> 
+      <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
-         <div class="page-heading">
-           <div class="login-page">
-              <div class="form">
-               <!-- registro -->
-                <form class="register-form" action="registro.php" method="POST">
-                  <input maxlength="50" type="text" name="nombre" placeholder="Nombre"/>
-                  <input maxlength="100" type="text" name="apellidos" placeholder="Apellidos"/>
-                  <input maxlength="50" type="text" name="usuario" placeholder="Nombre de Usuario"/>
-                  <input maxlength="100" type="text" name="email" placeholder="Correo electrónico"/>
-                  <input maxlength="75" type="password" name="contrasenia" placeholder="Contraseña"/>
-                  <button>Registrar</button>
-                  <p class="message">¿Ya estás registrado? <a href="#">Iniciar sesión</a></p>
-                </form>
-                <!-- inicio de sesión--> 
-                <form class="login-form" action="who.php" method="POST">
-                  <input maxlength="50" type="text" name="usuario" placeholder="Nombre de Usuario"/>
-                  <input maxlength="75" type="password" name="contrasenia" placeholder="Contraseña"/>
-                  <div class="custom-select" style="width:250px;">
-                    <select name="tipo" require>
-                      <option value="alumno">Alumno</option>
-                      <option value="alumno">Alumno</option>
-                      <option value="profesor">Profesor</option>
-                    </select>
-                  </div>
-                  <p>
-                  <button>Iniciar sesión</button>
-                  <?php
-                    if (isset($_GET["error"])) {
-                      echo "<p style='color:red;'> Usuario o contraseña incorrecta, por favor, intentelo de nuevo </p>";
-                    }
-                  ?>
-                  <p class="message">¿No estas registrado? <a href="#">Crear una cuenta</a></p>
-                  <p class="message">¿Has olvidado tu contraseña? <a href="contrasenia.php">Rellena este formulario</a></p>
-                </form>
-              </div>
-            </div>
+          <div class="page-heading">
+            <h1>Error</h1>
+            <span class="subheading">Registro fallido</span>
           </div>
         </div>
       </div>
     </div>
   </header>
+
+  <!-- Main Content -->
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <p>El usuario introducido ya existe, por favor, pruebe con otro</p>
+      </div>
+    </div>
+    <!-- Pager -->
+      <div class="clearfix">
+        <a class="btn btn-primary float-right" href="login.php"> Volver &rarr;</a>
+      </div>
+      </div>
+    </div>
+    </div>
+  </div>
   <hr>
+
   <!-- Footer -->
   <footer>
     <div class="container">
@@ -134,18 +115,11 @@
 
   <!-- Bootstrap core JavaScript -->
   <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script> 
-
-  <!-- Contact Form JavaScript 
-  <script src="js/jqBootstrapValidation.js"></script>
-  <script src="js/contact_me.js"></script> -->
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
   <!-- Custom scripts for this template -->
-  <script src="js/clean-blog.min.js"></script> 
+  <script src="js/clean-blog.min.js"></script>
 
-  <!-- Menú de login -->
-  <script src="./js/login.js"></script>
-  <script src="./js/select-alumno-profesor.js"></script>
-  </div>
 </body>
+
 </html>
