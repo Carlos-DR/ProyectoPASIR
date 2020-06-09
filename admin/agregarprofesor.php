@@ -1,5 +1,16 @@
 <!DOCTYPE html>
-<?php session_start(); ?>
+<?php 
+    session_start();
+    $idcurso = $_POST['prof'];
+
+    $conn = mysqli_connect('localhost', 'root', '1234', 'herpic');
+
+    if (!$conn) {
+        die("Connection failed: " . mysqli_connect_error());
+    }
+    $consultacurso = mysqli_query($conn, "SELECT nombre FROM cursos WHERE id='$idcurso'");
+    $curso = mysqli_fetch_array($consultacurso);
+?>
 <html lang="en">
 
 <head>
@@ -37,10 +48,7 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-            <a class="nav-link" href="admincursos.php">Cursos</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="contactos.php">Contactos</a>
+            <a class="nav-link" href="admin.php">Home</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="../logout.php">Cerrar sesión</a>
@@ -51,14 +59,14 @@
   </nav>
 
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('../img/admin.jpg')">
+  <header class="masthead" style="background-image: url('../img/newprof.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="site-heading">
-            <h1>ADMINISTRACIÓN</h1>
-            <span class="subheading">Crea y elimina profesores</span>
+            <h1>Curso <?php echo $curso['nombre']; ?></h1>
+            <span class="subheading">Agrega profesores al curso</span>
           </div>
         </div>
       </div>
@@ -67,11 +75,7 @@
 
   <!-- conexión base de datos -->
   <?php
-    $conn = mysqli_connect('localhost', 'root', '1234', 'herpic');
 
-    if (!$conn) {
-        die("Connection failed: " . mysqli_connect_error());
-    }
     $tildes = $conn->query("SET NAMES 'utf8'"); //Con esto muestra las tíldes
     $mostar_profe = mysqli_query($conn, "SELECT id, nombre, apellidos, usuario, email FROM profesores WHERE admin=0")
   ?>
@@ -82,34 +86,27 @@
       <div class="col-lg-8 col-md-10 mx-auto">
       <!-- bucle para mostrar todos los profesores  -->
       <?php
-        while ($reg = mysqli_fetch_array($mostar_profe)){
-          $idprof = $reg['id'];
+        while ($prof = mysqli_fetch_array($mostar_profe)){
+          $idprof = $prof['id'];
       ?>
       <div class="post-preview">
           <a>
             <h2 class="post-title">
               <?php
-                echo $reg['nombre'] . " " .$reg['apellidos'];
+                echo $prof['nombre'] . " " .$prof['apellidos'];
               ?>
             </h2>
             <h3 class="post-subtitle">
               <?php
-                echo "<b> Usuario: </b>" . $reg['usuario'];
-                echo "<br>";
-                echo "<b> Email: </b>" . $reg['email'];
+                echo "<b> Usuario: </b>" . $prof['usuario'];
               ?>
             </h3>
           </a>
-            <form action="editprof.php" method="POST">
+            <form action="addprof.php" method="POST">
               <div class="form-group">
-                <button type="submit" class="btn btn-primary" id="sendMessageButton" name="editar" value="<?php echo $idprof ?>">Editar</button>
+                <button type="submit" class="btn btn-primary" id="sendMessageButton" name="add" value="<?php echo $idcurso . " " . $idprof ?>">Agregar al curso</button>
               </div>
-            </form>
-            <form action="eliminarprof.php" method="POST">
-              <div class="form-group">
-              <button type="submit" class="btn btn-primary" id="sendMessageButton" name="eliminar" value="<?php echo $idprof ?>">Eliminar</button>
-              </div>
-            </form>      
+            </form>     
         </div>
         <hr>
 

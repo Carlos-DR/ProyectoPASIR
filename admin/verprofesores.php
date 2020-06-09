@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<?php session_start(); ?>
+<?php 
+  session_start(); 
+  $idcurso = $_POST['ver'];
+?>
 <html lang="en">
 
 <head>
@@ -37,10 +40,7 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-            <a class="nav-link" href="admincursos.php">Cursos</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="contactos.php">Contactos</a>
+            <a class="nav-link" href="admincursos.php">Atrás</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="../logout.php">Cerrar sesión</a>
@@ -51,14 +51,14 @@
   </nav>
 
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url('../img/admin.jpg')">
+  <header class="masthead" style="background-image: url('../img/cursos-admin.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="site-heading">
             <h1>ADMINISTRACIÓN</h1>
-            <span class="subheading">Crea y elimina profesores</span>
+            <span class="subheading">Crea y elimina cursos</span>
           </div>
         </div>
       </div>
@@ -73,43 +73,41 @@
         die("Connection failed: " . mysqli_connect_error());
     }
     $tildes = $conn->query("SET NAMES 'utf8'"); //Con esto muestra las tíldes
-    $mostar_profe = mysqli_query($conn, "SELECT id, nombre, apellidos, usuario, email FROM profesores WHERE admin=0")
+
+    $consulta_idprof = mysqli_query($conn, "SELECT idprofesor FROM cursos_profesores WHERE idcurso='$idcurso'");
+    $idprof =  mysqli_fetch_array($consulta_idprof);
+
+    $consulta_prof =  mysqli_query($conn, "SELECT id, nombre, apellidos, usuario FROM profesores WHERE id='$idprof[idprofesor]'");
+    //echo $idcurso . $idprof['idprofesor'];
   ?>
 
   <!-- Cursos matriculados -->
   <div class="container">
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
-      <!-- bucle para mostrar todos los profesores  -->
+      <!-- bucle para mostrar todos los profesores del curso existentes  -->
       <?php
-        while ($reg = mysqli_fetch_array($mostar_profe)){
-          $idprof = $reg['id'];
+        while ($profesor = mysqli_fetch_array($consulta_prof)){
+          $id = $profesor['id'];
       ?>
       <div class="post-preview">
           <a>
             <h2 class="post-title">
               <?php
-                echo $reg['nombre'] . " " .$reg['apellidos'];
+                echo $profesor['nombre']. " " .$profesor['apellidos'];
               ?>
             </h2>
             <h3 class="post-subtitle">
               <?php
-                echo "<b> Usuario: </b>" . $reg['usuario'];
-                echo "<br>";
-                echo "<b> Email: </b>" . $reg['email'];
+                echo "<b> Usuario: </b>" . $profesor['usuario'];
               ?>
             </h3>
           </a>
-            <form action="editprof.php" method="POST">
+            <form action="eliminarcursoprofesor.php" method="POST">
               <div class="form-group">
-                <button type="submit" class="btn btn-primary" id="sendMessageButton" name="editar" value="<?php echo $idprof ?>">Editar</button>
+                <button type="submit" class="btn btn-primary" id="sendMessageButton" name="fuera" value="<?php echo $idcurso . " " . $idprof['idprofesor'] ?>">Eliminar del curso</button>
               </div>
-            </form>
-            <form action="eliminarprof.php" method="POST">
-              <div class="form-group">
-              <button type="submit" class="btn btn-primary" id="sendMessageButton" name="eliminar" value="<?php echo $idprof ?>">Eliminar</button>
-              </div>
-            </form>      
+            </form>    
         </div>
         <hr>
 
@@ -117,9 +115,9 @@
       }
       mysqli_close($conn);
       ?>  
-      <form action="newprof.php">
+      <form action="agregarprofesor.php" method="POST">
         <div class="form-group">
-          <button type="submit" class="btn btn-primary" id="sendMessageButton">Nuevo Profesor</button>
+          <button type="submit" class="btn btn-primary" id="sendMessageButton" name="prof" value="<?php echo $idcurso?>">Añadir profesor</button>
         </div>
       </form>   
 
