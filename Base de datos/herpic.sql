@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.1
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 29-04-2020 a las 22:23:09
+-- Tiempo de generación: 10-06-2020 a las 17:16:36
 -- Versión del servidor: 10.4.11-MariaDB
--- Versión de PHP: 7.4.3
+-- Versión de PHP: 7.4.5
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -47,7 +46,8 @@ CREATE TABLE `alumnos` (
 
 INSERT INTO `alumnos` (`id`, `nombre`, `apellidos`, `usuario`, `email`, `contrasenia`, `temp`, `psswd`) VALUES
 (1, 'Carlos', 'Domínguez Rastrojo', 'cdomras', 'carlos@ciudadjardin.com', '81dc9bdb52d04dc20036dbd8313ed055', 0, NULL),
-(2, 'Tanish', '3000', 'diosito', 'tanish@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055', 0, NULL);
+(2, 'David', 'Galván Ferrero', 'jakl2', 'david@iesciudadjardin.com', '81dc9bdb52d04dc20036dbd8313ed055', 0, NULL),
+(3, 'Victor', 'Gonzalez', 'Linko', 'victor@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055', 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -66,9 +66,8 @@ CREATE TABLE `alumnos_cursos` (
 
 INSERT INTO `alumnos_cursos` (`idalumno`, `idcurso`) VALUES
 (1, 1),
-(1, 2),
-(2, 1),
-(2, 2);
+(2, 2),
+(3, 3);
 
 -- --------------------------------------------------------
 
@@ -101,9 +100,9 @@ CREATE TABLE `cursos` (
 --
 
 INSERT INTO `cursos` (`id`, `nombre`, `descripcion`) VALUES
-(1, 'Inglés', 'Aprende inglés con nosotros'),
-(2, 'Oposiciones abogados', 'Prepárate para las oposiciones'),
-(3, 'Streamlabs', 'Aprende a stremear con el tio Herpic');
+(1, 'IAW', 'Implantación de Aplicaciones Web'),
+(2, 'SAD', 'Seguridad y Alta Disponibilidad'),
+(3, 'SRI', 'Servicios de Red e Internet');
 
 -- --------------------------------------------------------
 
@@ -121,10 +120,9 @@ CREATE TABLE `cursos_profesores` (
 --
 
 INSERT INTO `cursos_profesores` (`idcurso`, `idprofesor`) VALUES
-(2, 2),
-(3, 8),
-(1, 3),
-(3, 2);
+(2, 3),
+(3, 4),
+(1, 2);
 
 -- --------------------------------------------------------
 
@@ -146,8 +144,8 @@ CREATE TABLE `examenes` (
 --
 
 INSERT INTO `examenes` (`id`, `tema`, `temanum`, `publico`, `mixto`, `idcurso`) VALUES
-(1, 'Prueba 1', 1, 1, 1, 2),
-(2, 'Examen 2', 3, 1, 1, 2);
+(1, 'PHP', 1, 1, 0, 1),
+(2, 'HTML', 2, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -161,16 +159,16 @@ CREATE TABLE `notas` (
   `idexamen` int(11) NOT NULL,
   `nota` decimal(10,0) NOT NULL DEFAULT 0,
   `fallos` decimal(10,0) NOT NULL DEFAULT 0,
-  `hecho` tinyint(1) NOT NULL DEFAULT 0
+  `hecho` tinyint(1) NOT NULL DEFAULT 0,
+  `notatest` decimal(10,0) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `notas`
 --
 
-INSERT INTO `notas` (`id`, `idalumno`, `idexamen`, `nota`, `fallos`, `hecho`) VALUES
-(2, 1, 2, '5', '0', 1),
-(4, 1, 1, '4', '3', 1);
+INSERT INTO `notas` (`id`, `idalumno`, `idexamen`, `nota`, `fallos`, `hecho`, `notatest`) VALUES
+(6, 1, 2, '7', '0', 1, '5');
 
 -- --------------------------------------------------------
 
@@ -193,26 +191,26 @@ CREATE TABLE `preguntas` (
 --
 
 INSERT INTO `preguntas` (`id`, `pregunta`, `correcta`, `incorrecta1`, `incorrecta2`, `incorrecta3`, `idexamen`) VALUES
-(1, 'pregunta 1', 'esta es la buena ', 'esta es mala', 'esta tambien', 'cuidao', 1),
-(2, 'Esta es la pregunta', NULL, NULL, NULL, NULL, 1),
-(3, 'Otra mas', 'jkadfsgj', 'kjbnlk', 'hjbl', 'hv', 1),
-(4, 'mas preguntas', 'kjdfgkj', 'kjhlkjh', 'kjh', 'kjhjkhb', 1),
-(5, 'jkfngkjn', 'khjbljhgvgv', 'ljhbvljh', 'jhlvbhj', 'ljkhbljh', 1),
-(6, 'fdghdfgh', NULL, NULL, NULL, NULL, 1),
-(7, 'dfgsdfhsj', 'dfgsdfgsdfgh', 'dsfgsdfg', 'dafgdsafgh', 'dfhsdfh', 1),
-(8, 'sdfgsdfgh', NULL, NULL, NULL, NULL, 1),
-(9, 'sfghsdfgh', 'gfdgsdfgsdfh', 'sdfhsdfh', 'sdfhgsdfh', 'dfhsdfgh', 1),
-(10, 'sdfhsdfgh', 'dsfhgsfdgh', 'hfgdh', 'dfsgsdfg', 'sdfh', 1),
-(23, 'Una pregunta', 'werterty', 'fdgj', 'dgasdf', 'fghdfgh', 2),
-(24, 'otra rpegunta', 'hsrght', 'asdffgsd', 'gdhjghkj', 'asdgfadfg', 2),
-(25, 'mas preuntas', 'kfhgjk', 'sdaf', 'dfhav', 'bhsfj', 2),
-(26, 'Illo no se me cocurre mas y quedan 7', 'fghjfsgj', 'dsfgadfh', 'sfgh', 'sfgjdhfgj', 2),
-(27, 'Tu lo sabes?', 'dfghd', 'fhsfgjsfj', 'sfgjdshgj', 'afgadfhg', 2),
-(28, 'cualquier pregunta', NULL, NULL, NULL, NULL, 2),
-(29, 'mas tio mas', NULL, NULL, NULL, NULL, 2),
-(30, 'por qué?', NULL, NULL, NULL, NULL, 2),
-(31, 'por qué no?', NULL, NULL, NULL, NULL, 2),
-(32, 'ultima pregunta', NULL, NULL, NULL, NULL, 2);
+(33, 'Pregunta 1', 'Respuesta correcta 1', 'Respuesta incorrecta 1', 'Respuesta incorrecta 2', 'Respuesta incorrecta 3', 1),
+(34, 'Pregunta 2', 'Respuesta correcta 2', 'Respuesta incorrecta 4', 'Respuesta incorrecta 5', 'Respuesta incorrecta 6', 1),
+(35, 'Pregunta 3', 'Respuesta correcta 3', 'Respuesta incorrecta 7', 'Respuesta incorrecta 8', 'Respuesta incorrecta 9', 1),
+(36, 'Pregunta 4', 'Respuesta correcta 4', 'Respuesta incorrecta 10', 'Respuesta incorrecta 11', 'Respuesta incorrecta 12', 1),
+(37, 'Pregunta 5', 'Respuesta correcta 5', 'Respuesta incorrecta 13', 'Respuesta incorrecta 14', 'Respuesta incorrecta 15', 1),
+(38, 'Pregunta 6', 'Respuesta correcta 6', 'Respuesta incorrecta 16', 'Respuesta incorrecta 17', 'Respuesta incorrecta 18', 1),
+(39, 'Pregunta 7', 'Respuesta correcta 7', 'Respuesta incorrecta 19', 'Respuesta incorrecta 20', 'Respuesta incorrecta 21', 1),
+(40, 'Pregunta 7', 'Respuesta correcta 7', 'Respuesta incorrecta 19', 'Respuesta incorrecta 20', 'Respuesta incorrecta 21', 1),
+(41, 'Pregunta 9', 'Respuesta correcta 9', 'Respuesta incorrecta 22', 'Respuesta incorrecta 23', 'Respuesta incorrecta 24', 1),
+(42, 'Pregunta 10', 'Respuesta correcta 10', 'Respuesta incorrecta 25', 'Respuesta incorrecta 26', 'Respuesta incorrecta 27', 1),
+(43, 'Pregunta larga 1', NULL, NULL, NULL, NULL, 2),
+(44, 'Pregunta Larga 2', NULL, NULL, NULL, NULL, 2),
+(45, 'pregunta larga 3', NULL, NULL, NULL, NULL, 2),
+(46, 'Pregunta larga 4', NULL, NULL, NULL, NULL, 2),
+(47, 'Pregunta larga 5', NULL, NULL, NULL, NULL, 2),
+(48, 'Pregunta test 1', 'Respuesta correcta test 1', 'Respuesta incorrecta test 1', 'Respuesta incorrecta test 2', 'Respuesta incorrecta test 3', 2),
+(49, 'Pregunta test 2', 'Respuesta correcta test 2', 'Respuesta incorrecta test 4', 'Respuesta incorrecta test 5', 'Respuesta incorrecta test 6', 2),
+(50, 'Pregunta test 3', 'Respuesta correcta test 3', 'Respuesta incorrecta test 7', 'Respuesta incorrecta test 8', 'Respuesta incorrecta test 9', 2),
+(51, 'Pregunta test 4', 'Respuesta correcta test 4', 'Respuesta incorrecta test 10', 'Respuesta incorrecta test 11', 'Respuesta incorrecta test 12', 2),
+(52, 'Pregunta test 5', 'Respuesta correcta test 5', 'Respuesta incorrecta test 13', 'Respuesta incorrecta test 14', 'Respuesta incorrecta test 15', 2);
 
 -- --------------------------------------------------------
 
@@ -236,9 +234,9 @@ CREATE TABLE `profesores` (
 
 INSERT INTO `profesores` (`id`, `nombre`, `apellidos`, `usuario`, `email`, `contrasenia`, `admin`) VALUES
 (1, 'Herpic', '', 'Herpic', 'herpic@gmail.com', '9150a8de9b1304a546f29798de4db840', 1),
-(2, 'Antonio', 'Cruz', 'antoniocruz', 'antoniocruz@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055', 0),
-(3, 'David', 'Galván', 'Jakl2', 'ksjdhf@kjsdfn.com', '81dc9bdb52d04dc20036dbd8313ed055', 0),
-(8, 'Manolito', 'Gafotas', 'ManuGafo', 'manolitos@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055', 0);
+(2, 'Antonio', 'Cruz', 'antoniocruz', 'antoniocruz@iesciudadjardin.com', '81dc9bdb52d04dc20036dbd8313ed055', 0),
+(3, 'Hugo', 'Fernández', 'hugfer', 'hugofernandez@iesciudadjardin.com', '81dc9bdb52d04dc20036dbd8313ed055', 0),
+(4, 'Juan Luis', 'López', 'juanlu', 'juanluislopez@iesciudadjardin.com', '81dc9bdb52d04dc20036dbd8313ed055', 0);
 
 -- --------------------------------------------------------
 
@@ -258,17 +256,11 @@ CREATE TABLE `respuestas` (
 --
 
 INSERT INTO `respuestas` (`id`, `idpregunta`, `idalumno`, `respuesta`) VALUES
-(41, 28, 1, 'respuesta'),
-(42, 32, 1, 'mas pregunta'),
-(43, 29, 1, 'mas tio mas'),
-(44, 30, 1, 'porque si'),
-(45, 31, 1, 'porque no'),
-(46, 6, 1, 'Altealorio'),
-(47, 8, 1, 'random'),
-(48, 2, 1, 'pregunta'),
-(49, 8, 1, 'random'),
-(50, 2, 1, 'Altealorio'),
-(51, 6, 1, 'more preguntas');
+(67, 47, 1, 'Respuesta larga 5'),
+(68, 46, 1, 'Respuesta larga 4'),
+(69, 43, 1, 'Respuesta larga 1'),
+(70, 45, 1, 'Respuesta larga 3'),
+(71, 44, 1, 'Respuesta larga 2');
 
 --
 -- Índices para tablas volcadas
@@ -357,19 +349,19 @@ ALTER TABLE `respuestas`
 -- AUTO_INCREMENT de la tabla `alumnos`
 --
 ALTER TABLE `alumnos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `contactos`
 --
 ALTER TABLE `contactos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `cursos`
 --
 ALTER TABLE `cursos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `examenes`
@@ -381,25 +373,25 @@ ALTER TABLE `examenes`
 -- AUTO_INCREMENT de la tabla `notas`
 --
 ALTER TABLE `notas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `preguntas`
 --
 ALTER TABLE `preguntas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
 -- AUTO_INCREMENT de la tabla `profesores`
 --
 ALTER TABLE `profesores`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `respuestas`
 --
 ALTER TABLE `respuestas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
 
 --
 -- Restricciones para tablas volcadas

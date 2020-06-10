@@ -6,9 +6,17 @@
     $nota = $_SESSION['nota'];
     $fallos = $_SESSION['fallos'];
 
-    $idpregunta = $_POST['siguiente'];
+    echo "Usuario: " . $usu;
+    echo "<br>";
+    echo "idexamen: " . $idexamen;
+    echo "<br>";
+    echo "idalumno: " . $idexamen;
+    echo "<br>";
+    echo "nota: " . $nota;
+    echo "<br>";
+    echo "fallos: " . $fallos;
+    echo "<br>";
 
-    array_push($_SESSION['pregunta'], $idpregunta);
 
     //Conexión con la base de datos
     $conn = mysqli_connect('localhost', 'root', '1234', 'herpic');
