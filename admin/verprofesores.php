@@ -75,9 +75,9 @@
     $tildes = $conn->query("SET NAMES 'utf8'"); //Con esto muestra las tíldes
 
     $consulta_idprof = mysqli_query($conn, "SELECT idprofesor FROM cursos_profesores WHERE idcurso='$idcurso'");
-    $idprof =  mysqli_fetch_array($consulta_idprof);
+    //$idprof =  mysqli_fetch_array($consulta_idprof);
 
-    $consulta_prof =  mysqli_query($conn, "SELECT id, nombre, apellidos, usuario FROM profesores WHERE id='$idprof[idprofesor]'");
+    //$consulta_prof =  mysqli_query($conn, "SELECT id, nombre, apellidos, usuario FROM profesores WHERE id='$idprof[idprofesor]'");
     //echo $idcurso . $idprof['idprofesor'];
   ?>
 
@@ -87,8 +87,11 @@
       <div class="col-lg-8 col-md-10 mx-auto">
       <!-- bucle para mostrar todos los profesores del curso existentes  -->
       <?php
-        while ($profesor = mysqli_fetch_array($consulta_prof)){
-          $id = $profesor['id'];
+        while ($idprof =  mysqli_fetch_array($consulta_idprof)) {
+          $consulta_prof =  mysqli_query($conn, "SELECT id, nombre, apellidos, usuario FROM profesores WHERE id='$idprof[idprofesor]'");
+        
+          while ($profesor = mysqli_fetch_array($consulta_prof)){
+            $id = $profesor['id'];
       ?>
       <div class="post-preview">
           <a>
@@ -113,6 +116,7 @@
 
       <?php
       }
+    }
       mysqli_close($conn);
       ?>  
       <form action="agregarprofesor.php" method="POST">

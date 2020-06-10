@@ -77,6 +77,8 @@
   <?php
 
     $tildes = $conn->query("SET NAMES 'utf8'"); //Con esto muestra las tíldes
+    
+
     $mostar_profe = mysqli_query($conn, "SELECT id, nombre, apellidos, usuario, email FROM profesores WHERE admin=0")
   ?>
 
